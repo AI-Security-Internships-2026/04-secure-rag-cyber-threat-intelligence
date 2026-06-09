@@ -1,0 +1,10 @@
+langchain
+openai
+chromadb
+stix2
+taxii2-client
+fastapi
+uvicorn
+pandas
+numpy
+python-dotenv
