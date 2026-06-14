@@ -17,7 +17,7 @@ Be honest — problems and blockers are normal and help your supervisor support 
 
 **Branch:** `maria-week-01`
 
-**PR link:** _[Add link after opening PR]_
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/1
 
 ### Completed this week
 - [x] Read README and proposal
