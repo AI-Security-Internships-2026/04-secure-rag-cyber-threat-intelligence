@@ -1,6 +1,7 @@
 # Weekly Progress Log: Secure RAG Pipeline for Cyber Threat Intelligence Sharing
 
 **Student:** Maria Mahmood
+
 **GitHub username:** MariaMahmood18
 
 ---
@@ -15,6 +16,7 @@ Be honest — problems and blockers are normal and help your supervisor support 
 ## Week 1
 
 **Branch:** `maria-week-01`
+
 **PR link:** _[Add link after opening PR]_
 
 ### Completed this week

@@ -1,6 +1,7 @@
 # Literature Review: Secure RAG Pipeline for Cyber Threat Intelligence Sharing
 
 **Student:** Maria Mahmood
+
 **Updated:** 14-06-2026
 
 ---
@@ -54,8 +55,6 @@ Use Google Scholar, IEEE Xplore, ACM DL, arXiv, or USENIX Security.
 | | Dataset | | |
 | | Library / Tool | | | -->
 
-
----
 
 ## Relevant Resources Summary
 
