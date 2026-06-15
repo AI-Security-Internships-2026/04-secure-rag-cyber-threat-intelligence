@@ -1,7 +1,8 @@
 # Weekly Progress Log: Secure RAG Pipeline for Cyber Threat Intelligence Sharing
 
-**Student:** _[Fill in your name]_
-**GitHub username:** _[Fill in]_
+**Student:** Maria Mahmood
+
+**GitHub username:** MariaMahmood18
 
 ---
 
@@ -14,21 +15,26 @@ Be honest — problems and blockers are normal and help your supervisor support 
 
 ## Week 1
 
-**Branch:** `your-name-week-01`
-**PR link:** _[Add link after opening PR]_
+**Branch:** `maria-week-01`
+
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/1
 
 ### Completed this week
-- [ ] Read README and proposal
-- [ ] Set up local environment (Python venv, dependencies)
-- [ ] Ran `src/main.py` successfully
-- [ ] Wrote personal introduction (below)
-- [ ] Identified 5 related papers / tools / datasets
+- [x] Read README and proposal
+- [x] Set up local environment (Python venv, dependencies)
+- [x] Ran `src/main.py` successfully
+- [x] Wrote personal introduction (below)
+- [x] Identified 5 related papers / tools / datasets
 
 ### Personal Introduction
-_Write 3–5 sentences about your background, skills, and what you hope to learn._
+My name is Maria Mahmood, currently I'm pursuing MS in Artificial Intelligence at NUST, Islamabad. 
+I have hands-on experience in Python, TensorFlow, PyTorch, and have previously built a 
+RAG-based pipeline for radiology report summarization under OCR noise. Through this internship, 
+I hope to extend my RAG knowledge into cybersecurity — learning how STIX/TAXII threat intelligence 
+is processed and how privacy-preserving techniques apply to intelligence sharing systems.
 
 ### Problems / Blockers
-_Describe any issues you faced. Did you solve them? How?_
+No major blockers this week.
 
 ### Next week plan
 - Read the 5 papers identified this week
@@ -37,7 +43,7 @@ _Describe any issues you faced. Did you solve them? How?_
 
 ---
 
-## Week 2
+<!-- ## Week 2
 
 **Branch:** `your-name-week-02`
 **PR link:** _[Add link after opening PR]_
@@ -53,4 +59,4 @@ _Describe any issues you faced. Did you solve them? How?_
 
 ---
 
-_(Add a new section each week)_
+_(Add a new section each week)_ -->
