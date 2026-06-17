@@ -43,7 +43,7 @@ No major blockers this week.
 
 ---
 
-<!-- ## Week 2
+## Week 2
 
 **Branch:** `your-name-week-02`
 **PR link:** _[Add link after opening PR]_
@@ -59,4 +59,4 @@ No major blockers this week.
 
 ---
 
-_(Add a new section each week)_ -->
+_(Add a new section each week)_
