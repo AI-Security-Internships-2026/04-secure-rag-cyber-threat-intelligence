@@ -121,20 +121,30 @@ Use Google Scholar, IEEE Xplore, ACM DL, arXiv, or USENIX Security.
 ### Resource 4 — SD-RAG (Secure Retrieval-Augmented Generation)
 
 | Field | Content |
-|---|---|
-| **Full title** | SD-RAG: Selective Disclosure in Retrieval-Augmented Generation |
-| **Authors** | Research Authors |
+| ---| --- |
+| **Full title** | SD-RAG: A Prompt-Injection-Resilient Framework for Selective Disclosure in Retrieval-Augmented Generation |
+| **Authors** | Aiman Al Masoud, Marco Arazzi, Antonino Nocera |
 | **Year** | 2026 |
 | **Venue** | arXiv |
 | **URL / DOI** | https://doi.org/10.48550/arXiv.2601.11199 |
-| **Method** | Retrieval-time filtering and selective disclosure before LLM input |
-| **Dataset** | RAG benchmark datasets |
-| **Key result** | Reduces prompt injection and sensitive data leakage in RAG systems |
-| **Limitation** | Not specialized for cyber threat intelligence use cases |
-| **Relevance to our project** | Direct theoretical foundation for secure RAG design |
+| **Method** | Introduces a secure RAG pipeline that applies privacy constraints and redacts sensitive information after retrieval but before sending context to the final LLM. |
+| **Dataset** | Synthetic Redaction-Aware Contextual Question Answering (RCQA) dataset created by the authors. |
+| **Key result** | Achieved up to a 58% improvement in privacy score and showed strong resistance to prompt injection attacks. |
+| **Limitation** | Assumes the knowledge base is trusted and not poisoned; does not address multi-turn inference attacks and adds some latency due to redaction. |
+| **Relevance to our project** | Provides a practical approach for sanitizing sensitive threat intelligence before it reaches the answering model, which aligns with secure STIX/TAXII sharing. |
 
 **Notes / Quotes:**
-> Focuses on controlling what information is revealed to the LLM during retrieval.
+
++ Existing RAG systems are vulnerable because retrieved documents containing sensitive information and untrusted user prompts are processed by the same LLM, making prompt injection attacks capable of leaking confidential data.
+
++ SD-RAG introduces selective disclosure, where privacy constraints are enforced before answer generation so that the answering model only receives information that is safe to expose.
+
++ Privacy policies are expressed as human-readable natural language constraints and are semantically linked to document chunks, enabling fine-grained and dynamic control over information disclosure.
+
++ The paper shows that privacy protection should be treated as a separate stage in the RAG pipeline rather than relying on prompt instructions like "do not reveal sensitive information."
+
++ For cyber threat intelligence sharing, the same principle could be used to prevent exposure of sensitive STIX/TAXII information such as internal IP addresses, proprietary indicators, analyst identities, or organization-specific intelligence while still allowing useful threat-related queries.
+
 
 ---
 
