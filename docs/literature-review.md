@@ -188,6 +188,86 @@ Use Google Scholar, IEEE Xplore, ACM DL, arXiv, or USENIX Security.
 
 ---
 
+### Resource 7 — MISP (Malware Information Sharing Platform)
+
+| Field | Content |
+|---|---|
+| **Full title** | Malware Information Sharing Platform and Threat Sharing |
+| **Authors** | CIRCL Luxembourg |
+| **Year** | Ongoing |
+| **Venue** | Open Source Platform |
+| **URL / DOI** | https://github.com/MISP/MISP |
+| **Method** | Collaborative threat intelligence sharing platform supporting indicators, events, and CTI exchange |
+| **Dataset** | Real-world threat intelligence feeds and indicators |
+| **Key result** | One of the most widely deployed CTI sharing platforms globally |
+| **Limitation** | Limited semantic search and no integrated RAG capabilities |
+| **Relevance to our project** | Provides a practical reference for CTI sharing workflows and privacy considerations in intelligence exchange |
+
+**Notes / Quotes:**
+> MISP is widely used by CERTs, SOCs, and security organizations for collaborative cyber threat intelligence sharing.
+
+---
+
+### Resource 8 — MITRE CTI Repository
+
+| Field | Content |
+|---|---|
+| **Full title** | MITRE Cyber Threat Intelligence Repository |
+| **Authors** | MITRE Corporation |
+| **Year** | Ongoing |
+| **Venue** | GitHub Repository |
+| **URL / DOI** | https://github.com/mitre/cti |
+| **Method** | Collection of ATT&CK and CAPEC knowledge represented in STIX format |
+| **Dataset** | STIX 2.1 threat intelligence objects |
+| **Key result** | Provides machine-readable threat intelligence ready for ingestion |
+| **Limitation** | Focuses on structured CTI rather than retrieval or generation |
+| **Relevance to our project** | Excellent source of realistic STIX objects for ingestion and evaluation experiments |
+
+**Notes / Quotes:**
+> The repository contains ATT&CK data represented directly in STIX format, making it highly suitable for testing STIX-based pipelines.
+
+---
+
+### Resource 9 — Retrieval-Augmented Generation Implementation Guide
+
+| Field | Content |
+|---|---|
+| **Full title** | Question Answering using Embeddings-based Search |
+| **Authors** | OpenAI |
+| **Year** | Ongoing |
+| **Venue** | OpenAI Cookbook |
+| **URL / DOI** | https://github.com/openai/openai-cookbook |
+| **Method** | Embedding generation, vector retrieval, context injection, and answer generation |
+| **Dataset** | User-provided documents |
+| **Key result** | Provides a complete reference implementation of a RAG pipeline |
+| **Limitation** | Does not address privacy-preserving retrieval or CTI-specific requirements |
+| **Relevance to our project** | Useful baseline architecture before adding STIX processing and privacy controls |
+
+**Notes / Quotes:**
+> Demonstrates the standard retrieval → augmentation → generation workflow used by most modern RAG systems.
+
+---
+
+### Resource 10 — TrustShare Framework for Secure Threat Intelligence Sharing
+
+| Field | Content |
+|---|---|
+| **Full title** | TrustShare: A Framework for Secure and Privacy-Preserving Cyber Threat Intelligence Sharing |
+| **Authors** | A. Trivellato et al. |
+| **Year** | 2025 |
+| **Venue** | Future Internet |
+| **URL / DOI** | https://doi.org/10.3390/fi17070289 |
+| **Method** | Combines STIX/TAXII sharing with trust management, access control, and privacy-preserving mechanisms |
+| **Dataset** | Threat intelligence sharing scenarios |
+| **Key result** | Demonstrates improved security and trust in CTI exchange environments |
+| **Limitation** | Does not integrate LLMs or RAG-based retrieval |
+| **Relevance to our project** | Closest existing work to privacy-preserving CTI sharing and can inspire the access-control layer of the proposed system |
+
+**Notes / Quotes:**
+> Trust management and access control are critical requirements when organizations exchange sensitive threat intelligence.
+
+---
+
 ## Reference Table (Quick Overview)
 
 | # | Title (short) | Authors | Year | Method | Dataset | Relevance |
@@ -198,6 +278,11 @@ Use Google Scholar, IEEE Xplore, ACM DL, arXiv, or USENIX Security.
 | 4 | SD-RAG | Research | 2026 | Secure RAG design | Benchmarks | Privacy filtering |
 | 5 | RAG Poisoning POC | Prompt Security | 2025 | Attack simulation | Embeddings | Threat model |
 | 6 | Secure RAG Framework | Research | 2025 | System security analysis | RAG systems | Architecture design |
+| 6 | Secure RAG Framework | Research Authors | 2025 | System security analysis | RAG systems | Architecture design |
+| 7 | MISP | CIRCL Luxembourg | Ongoing | CTI Sharing Platform | Threat indicators | Intelligence sharing |
+| 8 | MITRE CTI Repository | MITRE | Ongoing | STIX Repository | ATT&CK & CAPEC STIX | STIX ingestion source |
+| 9 | OpenAI RAG Cookbook | OpenAI | Ongoing | RAG Implementation | User documents | Baseline RAG design |
+| 10 | TrustShare | Trivellato et al. | 2025 | Privacy-preserving CTI sharing | CTI sharing scenarios | Access control & privacy |
 
 ---
 
@@ -211,6 +296,12 @@ Use Google Scholar, IEEE Xplore, ACM DL, arXiv, or USENIX Security.
 | LangChain | Framework | https://github.com/langchain-ai/langchain | RAG pipeline builder |
 | ChromaDB | Vector DB | https://github.com/chroma-core/chroma | Embedding storage |
 | RAG Poisoning POC | Security Tool | https://github.com/prompt-security/RAG_Poisoning_POC | Attack simulation |
+| MISP | Platform | https://github.com/MISP/MISP | Threat intelligence sharing platform |
+| MITRE CTI Repository | Dataset | https://github.com/mitre/cti | STIX-formatted ATT&CK and CAPEC data |
+| OpenAI Cookbook | Implementation Guide | https://github.com/openai/openai-cookbook | Reference RAG implementations |
+| TrustShare | Research Framework | https://doi.org/10.3390/fi17070289 | Privacy-preserving CTI sharing architecture |
+| TAXII 2.1 | Standard | https://oasis-open.github.io/cti-documentation/ | CTI exchange protocol |
+| FastAPI | Framework | https://fastapi.tiangolo.com | API layer for prototype deployment |
 
 ---
 
