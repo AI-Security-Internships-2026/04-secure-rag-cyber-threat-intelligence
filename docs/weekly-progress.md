@@ -47,7 +47,7 @@ No major blockers this week.
 ## Week 2
 
 **Branch:** `maria-week-02`
-**PR link:** _[Add after PR]_
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/2
 
 ### Completed this week
 - [x] Uncommented Week 2 templates in weekly-progress.md and literature-review.md
