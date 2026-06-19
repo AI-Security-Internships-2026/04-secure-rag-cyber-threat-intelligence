@@ -25,6 +25,7 @@ Be honest — problems and blockers are normal and help your supervisor support 
 - [x] Ran `src/main.py` successfully
 - [x] Wrote personal introduction (below)
 - [x] Identified 5 related papers / tools / datasets
+- [x] Expanded literature review to 10 resources covering CTI tools, RAG frameworks, and security standards
 
 ### Personal Introduction
 My name is Maria Mahmood, currently I'm pursuing MS in Artificial Intelligence at NUST, Islamabad. 
