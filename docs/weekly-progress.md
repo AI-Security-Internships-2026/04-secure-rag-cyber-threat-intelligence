@@ -45,17 +45,24 @@ No major blockers this week.
 
 ## Week 2
 
-**Branch:** `your-name-week-02`
-**PR link:** _[Add link after opening PR]_
+**Branch:** `maria-week-02`
+**PR link:** _[Add after PR]_
 
 ### Completed this week
--
+- [x] Uncommented Week 2 templates in weekly-progress.md and literature-review.md
+- [x] Read SD-RAG paper in detail and added structured notes to literature review
+- [x] Added DOIs for Resource 4 (SD-RAG) and Resource 6 (Secure RAG Framework)
+- [x] Installed and tested STIX2 library with a MITRE ATT&CK style object
+- [x] Installed and tested ChromaDB with a sample CTI document
+- [x] Drafted docs/proposal.md Sections 2, 3, 4 and 5
 
 ### Problems / Blockers
--
+No major blockers this week.
 
 ### Next week plan
--
+- Begin implementing the ingestion pipeline in src/
+- Connect STIX2 parser to ChromaDB embeddings
+- Test end-to-end retrieval with sample CTI data
 
 ---
 
