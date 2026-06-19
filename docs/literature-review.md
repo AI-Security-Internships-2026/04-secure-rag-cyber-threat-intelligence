@@ -126,7 +126,7 @@ Use Google Scholar, IEEE Xplore, ACM DL, arXiv, or USENIX Security.
 | **Authors** | Research Authors |
 | **Year** | 2026 |
 | **Venue** | arXiv |
-| **URL / DOI** | https://arxiv.org/abs/2601.11199 |
+| **URL / DOI** | https://doi.org/10.48550/arXiv.2601.11199 |
 | **Method** | Retrieval-time filtering and selective disclosure before LLM input |
 | **Dataset** | RAG benchmark datasets |
 | **Key result** | Reduces prompt injection and sensitive data leakage in RAG systems |
@@ -166,7 +166,7 @@ Use Google Scholar, IEEE Xplore, ACM DL, arXiv, or USENIX Security.
 | **Authors** | Research Authors |
 | **Year** | 2025 |
 | **Venue** | arXiv |
-| **URL / DOI** | https://arxiv.org/abs/2505.08728 |
+| **URL / DOI** | https://doi.org/10.48550/arXiv.2505.08728 |
 | **Method** | System-level breakdown of RAG security vulnerabilities and mitigations |
 | **Dataset** | Multiple RAG system benchmarks |
 | **Key result** | Defines attack surfaces in retrieval, embedding, and generation layers |
