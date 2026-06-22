@@ -25,6 +25,7 @@ Be honest — problems and blockers are normal and help your supervisor support 
 - [x] Ran `src/main.py` successfully
 - [x] Wrote personal introduction (below)
 - [x] Identified 5 related papers / tools / datasets
+- [x] Expanded literature review to 10 resources covering CTI tools, RAG frameworks, and security standards
 
 ### Personal Introduction
 My name is Maria Mahmood, currently I'm pursuing MS in Artificial Intelligence at NUST, Islamabad. 
@@ -43,20 +44,27 @@ No major blockers this week.
 
 ---
 
-<!-- ## Week 2
+## Week 2
 
-**Branch:** `your-name-week-02`
-**PR link:** _[Add link after opening PR]_
+**Branch:** `maria-week-02`
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/2
 
 ### Completed this week
--
+- [x] Uncommented Week 2 templates in weekly-progress.md and literature-review.md
+- [x] Read SD-RAG paper in detail and added structured notes to literature review
+- [x] Added DOIs for Resource 4 (SD-RAG) and Resource 6 (Secure RAG Framework)
+- [x] Installed and tested STIX2 library with a MITRE ATT&CK style object
+- [x] Installed and tested ChromaDB with a sample CTI document
+- [x] Drafted docs/proposal.md Sections 2, 3, 4 and 5
 
 ### Problems / Blockers
--
+No major blockers this week.
 
 ### Next week plan
--
+- Begin implementing the ingestion pipeline in src/
+- Connect STIX2 parser to ChromaDB embeddings
+- Test end-to-end retrieval with sample CTI data
 
 ---
 
-_(Add a new section each week)_ -->
+_(Add a new section each week)_
