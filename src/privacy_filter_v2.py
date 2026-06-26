@@ -1,11 +1,22 @@
 import re
 from presidio_analyzer import AnalyzerEngine # type: ignore
+from presidio_analyzer.nlp_engine import NlpEngineProvider # type: ignore
 from presidio_anonymizer import AnonymizerEngine # type: ignore
 from presidio_anonymizer.entities import OperatorConfig # type: ignore
 
 # Initialize Presidio engines
 analyzer = AnalyzerEngine()
 anonymizer = AnonymizerEngine()
+
+# Known safe URLs/domains that should never be redacted
+WHITELIST_URLS = [
+    "attack.mitre.org",
+    "mitre.org",
+    "github.com",
+    "microsoft.com",
+    "nvd.nist.gov",
+    "cve.mitre.org",
+]
 
 # CTI-specific patterns Presidio doesn't cover natively
 CTI_PATTERNS = {
@@ -17,6 +28,7 @@ CTI_PATTERNS = {
 def redact_with_presidio(text: str) -> tuple[str, list]:
     """
     Uses Microsoft Presidio for NER-based detection of sensitive info.
+    Skips whitelisted URLs and domains.
     Falls back to regex for CTI-specific indicators Presidio doesn't cover.
     """
     found = []
@@ -27,7 +39,7 @@ def redact_with_presidio(text: str) -> tuple[str, list]:
         language="en",
         entities=[
             "IP_ADDRESS",
-            "EMAIL_ADDRESS", 
+            "EMAIL_ADDRESS",
             "DOMAIN_NAME",
             "PERSON",
             "ORGANIZATION",
@@ -35,12 +47,18 @@ def redact_with_presidio(text: str) -> tuple[str, list]:
         ]
     )
 
-    if results:
-        found.extend([f"{r.entity_type}: {text[r.start:r.end]}" for r in results])
+    # Filter out whitelisted URLs and domains
+    filtered_results = [
+        r for r in results
+        if not any(safe in text[r.start:r.end] for safe in WHITELIST_URLS)
+    ]
+
+    if filtered_results:
+        found.extend([f"{r.entity_type}: {text[r.start:r.end]}" for r in filtered_results])
 
     anonymized = anonymizer.anonymize(
         text=text,
-        analyzer_results=results,
+        analyzer_results=filtered_results,
         operators={
             "IP_ADDRESS": OperatorConfig("replace", {"new_value": "[IP REDACTED]"}),
             "EMAIL_ADDRESS": OperatorConfig("replace", {"new_value": "[EMAIL REDACTED]"}),
@@ -92,6 +110,7 @@ if __name__ == "__main__":
     Exploits CVE-2021-44228 vulnerability.
     Domain used: malicious-site.com
     Reported by John Smith from CrowdStrike.
+    Reference: attack.mitre.org
     """
 
     print("=== Presidio-Based Privacy Filter Test ===\n")
