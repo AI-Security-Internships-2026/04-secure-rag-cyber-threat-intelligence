@@ -67,4 +67,30 @@ No major blockers this week.
 
 ---
 
+## Week 3
+
+**Branch:** `maria-week-03`
+**PR link:** _[Add link after opening PR]_
+
+### Completed this week
+- [x] Downloaded real MITRE ATT&CK STIX bundle (858 attack techniques)
+- [x] Built ingestion pipeline (`src/ingest.py`) to parse and load STIX objects into ChromaDB
+- [x] Built semantic query script (`src/query.py`) and verified correct results using vector search
+- [x] Built regex-based privacy filter (`src/privacy_filter.py`) to redact IPs, hashes, domains, emails and CVEs
+- [x] Upgraded privacy filter (`src/privacy_filter_v2.py`) using Microsoft Presidio for NER-based detection of person names, emails, IPs and URLs
+- [x] Added domain whitelist to both filters to prevent false positives on public reference URLs like attack.mitre.org
+- [x] Added prompt injection detection to block malicious queries before they reach ChromaDB
+- [x] Built unified pipeline (`src/pipeline.py`) supporting both regex and Presidio privacy methods
+- [x] Documented MITRE ATT&CK dataset in `datasets/mitre-attack.md`
+- [x] Added Presidio and spaCy to `requirements.txt`
+
+### Problems / Blockers
+Regex filter was initially flagging `attack.mitre.org` as a sensitive domain — a false positive. Solved by adding a whitelist of known safe public domains to both privacy filters.
+
+### Next week plan
+- Explore and improve privacy filtering in more depth — evaluate both regex and Presidio methods against more complex CTI data
+- Study and plan scalability approach — how to handle multiple concurrent users with no GPU
+- Research rate limiting and authentication strategies for the proxy layer
+- Begin wrapping the pipeline in FastAPI for multi-user query handling
+
 _(Add a new section each week)_
