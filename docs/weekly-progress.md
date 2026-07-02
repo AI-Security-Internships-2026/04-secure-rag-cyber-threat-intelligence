@@ -98,7 +98,7 @@ Regex filter was initially flagging `attack.mitre.org` as a sensitive domain —
 ## Week 4
 
 **Branch:** `maria-week-04`
-**PR link:** _[Add link after opening PR]_
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/4
 
 ### Completed this week
 - [x] Designed 10 test queries covering different MITRE ATT&CK attack categories
