@@ -70,7 +70,7 @@ No major blockers this week.
 ## Week 3
 
 **Branch:** `maria-week-03`
-**PR link:** _[Add link after opening PR]_
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/3
 
 ### Completed this week
 - [x] Downloaded real MITRE ATT&CK STIX bundle (858 attack techniques)
@@ -92,5 +92,35 @@ Regex filter was initially flagging `attack.mitre.org` as a sensitive domain —
 - Study and plan scalability approach — how to handle multiple concurrent users with no GPU
 - Research rate limiting and authentication strategies for the proxy layer
 - Begin wrapping the pipeline in FastAPI for multi-user query handling
+
+---
+
+## Week 4
+
+**Branch:** `maria-week-04`
+**PR link:** _[Add link after opening PR]_
+
+### Completed this week
+- [x] Designed 10 test queries covering different MITRE ATT&CK attack categories
+- [x] Built manual evaluation script (`src/evaluate_manual.py`) with human relevance judgment
+- [x] Built automatic evaluation script (`src/evaluate_auto.py`) using exact name matching
+- [x] Built combo evaluation script (`src/evaluate_auto_v2.py`) combining exact and semantic matching
+- [x] Manual Precision@3: 78.3%
+- [x] Automatic Precision@3: 30.0%
+- [x] Combined Precision@3: 36.7%
+- [x] Identified incomplete ground truth problem explaining gap between manual and automatic scores
+- [x] Saved all evaluation results to experiments/results/
+
+### Problems / Blockers
+Gap between manual (78.3%) and automatic (36.7%) precision reveals incomplete ground truth problem, predefined expected technique names don't cover all valid answers the pipeline returns.
+
+### Next week plan
+- Integrate Groq Cloud LLM API to complete RAG pipeline with actual response generation
+- Build FastAPI wrapper with /query, /health and /stats endpoints
+- Add API key authentication and role based access control
+- Add rate limiting per user
+- Add query logging for auditing
+
+---
 
 _(Add a new section each week)_
