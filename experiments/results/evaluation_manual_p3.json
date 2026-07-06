@@ -1,0 +1,7 @@
+{
+  "metric": "Precision@3",
+  "average_precision": 0.783,
+  "total_results": 30,
+  "total_relevant": 23.5,
+  "notes": "Manual human relevance judgment across 10 queries, 3 results each"
+}
