@@ -10,6 +10,9 @@ from privacy_filter import is_prompt_injection
 client = chromadb.PersistentClient(path="data/chromadb")
 collection = client.get_or_create_collection("mitre_attack")
 
+# Change this for P@N_RESULTS evaluation
+N_RESULTS = 10
+
 # 10 test queries with predefined expected technique names
 TEST_QUERIES_WITH_EXPECTED = [
     {
@@ -55,7 +58,6 @@ TEST_QUERIES_WITH_EXPECTED = [
 ]
 
 def exact_match(retrieved_name: str, expected_list: list) -> bool:
-    """Checks if retrieved name exactly or partially matches any expected name."""
     retrieved_lower = retrieved_name.lower()
     return any(
         exp.lower() in retrieved_lower or retrieved_lower in exp.lower()
@@ -63,35 +65,26 @@ def exact_match(retrieved_name: str, expected_list: list) -> bool:
     )
 
 def semantic_match(retrieved_name: str, expected_list: list) -> float:
-    """
-    Uses ChromaDB to measure semantic similarity between retrieved
-    technique name and expected technique names.
-    Returns a similarity score between 0 and 1.
-    """
-    # Query ChromaDB with the retrieved name against expected names
     results = collection.query(
         query_texts=[retrieved_name],
         n_results=3
     )
     retrieved_names = [meta["name"] for meta in results["metadatas"][0]]
-
-    # Check if any expected technique appears in the semantic neighbours
     for name in retrieved_names:
         if any(exp.lower() in name.lower() or name.lower() in exp.lower()
                for exp in expected_list):
             return 1.0
-
     return 0.0
 
 def evaluate_combo():
     print("=" * 60)
-    print("COMBO EVALUATION — EXACT + SEMANTIC MATCHING")
+    print(f"COMBINED EVALUATION — EXACT + SEMANTIC MATCHING — P@{N_RESULTS}")
     print("=" * 60)
 
     exact_total = 0
     semantic_total = 0
     combo_total = 0
-    total_results = 0
+    total_queries = 0
     results_log = []
 
     for i, test in enumerate(TEST_QUERIES_WITH_EXPECTED):
@@ -106,7 +99,7 @@ def evaluate_combo():
             print("BLOCKED: Prompt injection detected.")
             continue
 
-        results = collection.query(query_texts=[query], n_results=3)
+        results = collection.query(query_texts=[query], n_results=N_RESULTS)
         retrieved_names = [meta["name"] for meta in results["metadatas"][0]]
 
         query_exact = 0
@@ -123,7 +116,7 @@ def evaluate_combo():
             combo_icon = "✅" if is_combo else "❌"
 
             print(f"  {name}")
-            print(f"    Exact: {exact_icon}  Semantic: {semantic_icon}  Combo: {combo_icon}")
+            print(f"    Exact: {exact_icon}  Semantic: {semantic_icon}  Combined: {combo_icon}")
 
             if is_exact:
                 query_exact += 1
@@ -133,12 +126,12 @@ def evaluate_combo():
                 query_combo += 1
 
         n = len(retrieved_names)
-        print(f"  Precision — Exact: {query_exact/n:.2f} | Semantic: {query_semantic/n:.2f} | Combo: {query_combo/n:.2f}")
+        print(f"  Precision@{N_RESULTS} — Exact: {query_exact/n:.2f} | Semantic: {query_semantic/n:.2f} | Combined: {query_combo/n:.2f}")
 
         exact_total += query_exact / n
         semantic_total += query_semantic / n
         combo_total += query_combo / n
-        total_results += 1
+        total_queries += 1
 
         results_log.append({
             "query": query,
@@ -149,28 +142,31 @@ def evaluate_combo():
             "combo_precision": query_combo / n
         })
 
-    n_queries = total_results
     print("\n" + "=" * 60)
     print("OVERALL EVALUATION RESULTS")
     print("=" * 60)
-    print(f"Queries evaluated: {n_queries}")
-    print(f"Exact Match Precision@3:    {exact_total/n_queries:.2f} ({exact_total/n_queries*100:.1f}%)")
-    print(f"Semantic Match Precision@3: {semantic_total/n_queries:.2f} ({semantic_total/n_queries*100:.1f}%)")
-    print(f"Combo Precision@3:          {combo_total/n_queries:.2f} ({combo_total/n_queries*100:.1f}%)")
-    print(f"Manual Precision@3:         0.78 (78.3%) — from evaluate_manual.py")
+    print(f"Metric: Precision@{N_RESULTS}")
+    print(f"Queries evaluated: {total_queries}")
+    print(f"Exact Match Precision@{N_RESULTS}:    {exact_total/total_queries:.2f} ({exact_total/total_queries*100:.1f}%)")
+    print(f"Semantic Match Precision@{N_RESULTS}: {semantic_total/total_queries:.2f} ({semantic_total/total_queries*100:.1f}%)")
+    print(f"Combined Precision@{N_RESULTS}:       {combo_total/total_queries:.2f} ({combo_total/total_queries*100:.1f}%)")
+    print(f"Manual Precision@{N_RESULTS}:         0.78 (78.3%) — from evaluate_manual.py")
     print("=" * 60)
 
-    # Save results
+    # Save results with dynamic filename
     os.makedirs("experiments/results", exist_ok=True)
-    with open("experiments/results/evaluation_combo.json", "w") as f:
+    output_path = f"experiments/results/evaluation_combined_p{N_RESULTS}.json"
+    with open(output_path, "w") as f:
         json.dump({
-            "exact_precision": exact_total / n_queries,
-            "semantic_precision": semantic_total / n_queries,
-            "combo_precision": combo_total / n_queries,
+            "metric": f"Precision@{N_RESULTS}",
+            "n_results": N_RESULTS,
+            "exact_precision": exact_total / total_queries,
+            "semantic_precision": semantic_total / total_queries,
+            "combo_precision": combo_total / total_queries,
             "manual_precision": 0.783,
             "results": results_log
         }, f, indent=2)
-    print("\nResults saved to experiments/results/evaluation_combo.json")
+    print(f"\nResults saved to {output_path}")
 
 if __name__ == "__main__":
     evaluate_combo()

@@ -1,14 +1,17 @@
 import chromadb # type: ignore
 import sys
 import os
+import json
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from privacy_filter import is_prompt_injection
-from privacy_filter_v2 import redact_with_presidio
 
 # Connect to ChromaDB
 client = chromadb.PersistentClient(path="data/chromadb")
 collection = client.get_or_create_collection("mitre_attack")
+
+# Change this for P@N_RESULTS evaluation
+N_RESULTS = 10
 
 # 10 test queries with predefined expected technique names
 TEST_QUERIES_WITH_EXPECTED = [
@@ -56,12 +59,11 @@ TEST_QUERIES_WITH_EXPECTED = [
 
 def evaluate_auto():
     print("=" * 60)
-    print("AUTOMATIC RETRIEVAL EVALUATION — MITRE ATT&CK RAG PIPELINE")
+    print(f"AUTOMATIC RETRIEVAL EVALUATION — P@{N_RESULTS}")
     print("=" * 60)
 
     total_queries = 0
     total_precision = 0
-
     results_log = []
 
     for i, test in enumerate(TEST_QUERIES_WITH_EXPECTED):
@@ -76,14 +78,11 @@ def evaluate_auto():
             print("BLOCKED: Prompt injection detected.")
             continue
 
-        results = collection.query(query_texts=[query], n_results=3)
-
+        results = collection.query(query_texts=[query], n_results=N_RESULTS)
         retrieved_names = [meta["name"] for meta in results["metadatas"][0]]
 
-        # Check how many retrieved results match expected
         relevant = 0
         for name in retrieved_names:
-            # Partial match — check if expected technique name appears in retrieved name
             matched = any(
                 exp.lower() in name.lower() or name.lower() in exp.lower()
                 for exp in expected
@@ -94,7 +93,7 @@ def evaluate_auto():
                 relevant += 1
 
         precision = relevant / len(retrieved_names)
-        print(f"  Precision: {precision:.2f} ({precision*100:.0f}%)")
+        print(f"  Precision@{N_RESULTS}: {precision:.2f} ({precision*100:.0f}%)")
 
         total_precision += precision
         total_queries += 1
@@ -106,23 +105,28 @@ def evaluate_auto():
             "precision": precision
         })
 
+    avg_precision = total_precision / total_queries if total_queries > 0 else 0
+
     print("\n" + "=" * 60)
     print("OVERALL EVALUATION RESULTS")
     print("=" * 60)
-    avg_precision = total_precision / total_queries if total_queries > 0 else 0
+    print(f"Metric: Precision@{N_RESULTS}")
     print(f"Queries evaluated: {total_queries}")
-    print(f"Average Precision@3: {avg_precision:.2f} ({avg_precision*100:.1f}%)")
+    print(f"Average Precision@{N_RESULTS}: {avg_precision:.2f} ({avg_precision*100:.1f}%)")
     print("=" * 60)
 
-    # Save results to file
-    import json
+    # Save results with dynamic filename
     os.makedirs("experiments/results", exist_ok=True)
-    with open("experiments/results/evaluation_auto.json", "w") as f:
+    output_path = f"experiments/results/evaluation_auto_p{N_RESULTS}.json"
+    with open(output_path, "w") as f:
         json.dump({
+            "metric": f"Precision@{N_RESULTS}",
             "average_precision": avg_precision,
+            "n_results": N_RESULTS,
+            "total_queries": total_queries,
             "results": results_log
         }, f, indent=2)
-    print("\nResults saved to experiments/results/evaluation_auto.json")
+    print(f"\nResults saved to {output_path}")
 
 
 if __name__ == "__main__":
