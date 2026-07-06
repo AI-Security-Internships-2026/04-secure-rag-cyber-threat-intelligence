@@ -150,7 +150,7 @@ def evaluate_combo():
     print(f"Exact Match Precision@{N_RESULTS}:    {exact_total/total_queries:.2f} ({exact_total/total_queries*100:.1f}%)")
     print(f"Semantic Match Precision@{N_RESULTS}: {semantic_total/total_queries:.2f} ({semantic_total/total_queries*100:.1f}%)")
     print(f"Combined Precision@{N_RESULTS}:       {combo_total/total_queries:.2f} ({combo_total/total_queries*100:.1f}%)")
-    print(f"Manual Precision@{N_RESULTS}:         0.78 (78.3%) — from evaluate_manual.py")
+    print(f"Manual Precision@{N_RESULTS}:         See experiments/results/evaluation_manual_p{N_RESULTS}.json")
     print("=" * 60)
 
     # Save results with dynamic filename
