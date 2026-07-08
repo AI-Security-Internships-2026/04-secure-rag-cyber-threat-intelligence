@@ -54,6 +54,11 @@ def is_prompt_injection(query: str) -> bool:
         "you are now",
         "act as",
         "jailbreak",
+        "exact ip address",
+        "exact file hash",
+        "give me the hash",
+        "list all ip",
+        "show me the ip",
     ]
     query_lower = query.lower()
     return any(sig in query_lower for sig in injection_signatures)
