@@ -1,8 +1,8 @@
-from fastapi import FastAPI, Header, HTTPException
-from fastapi.responses import HTMLResponse
-from pydantic import BaseModel
-from dotenv import load_dotenv
-import chromadb
+from fastapi import FastAPI, Header, HTTPException # type: ignore
+from fastapi.responses import HTMLResponse # type: ignore
+from pydantic import BaseModel # type: ignore
+from dotenv import load_dotenv # type: ignore
+import chromadb # type: ignore
 import json
 import time
 import os
@@ -270,5 +270,5 @@ def interface():
     """
 
 if __name__ == "__main__":
-    import uvicorn
+    import uvicorn # type: ignore
     uvicorn.run(app, host="0.0.0.0", port=8000)
