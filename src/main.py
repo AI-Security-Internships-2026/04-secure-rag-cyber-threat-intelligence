@@ -26,6 +26,15 @@ collection = client.get_or_create_collection("mitre_attack")
 # Stub auth
 VALID_API_KEYS = {
     "analyst-key-001": "analyst",
+    "analyst-key-002": "analyst",
+    "analyst-key-003": "analyst",
+    "analyst-key-004": "analyst",
+    "analyst-key-005": "analyst",
+    "analyst-key-006": "analyst",
+    "analyst-key-007": "analyst",
+    "analyst-key-008": "analyst",
+    "analyst-key-009": "analyst",
+    "analyst-key-010": "analyst",
     "admin-key-001": "admin",
     "guest-key-001": "guest"
 }
