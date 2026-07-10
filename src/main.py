@@ -32,7 +32,7 @@ VALID_API_KEYS = {
 
 # Rate limiting
 request_counts = {}
-RATE_LIMIT = 10
+RATE_LIMIT = 100
 
 # Stats
 stats = {
