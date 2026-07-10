@@ -113,7 +113,7 @@ async def query(request: QueryRequest, x_api_key: str = Header(...)):
         redacted_items.extend(found)
 
     # Stage 5 — LLM Generation
-    answer = generate_response(request.query, clean_chunks)
+    answer = await generate_response(request.query, clean_chunks)
 
     # Stage 6 — Output scanner
     cleaned_answer, leaked_items, leaked = scan_output(answer)
