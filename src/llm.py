@@ -1,5 +1,5 @@
 from groq import Groq  # type: ignore[import]
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 import os
 
 load_dotenv()
