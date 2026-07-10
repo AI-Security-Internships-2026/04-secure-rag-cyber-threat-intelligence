@@ -74,7 +74,7 @@ def get_stats(x_api_key: str = Header(...)):
     }
 
 @app.post("/query")
-def query(request: QueryRequest, x_api_key: str = Header(...)):
+async def query(request: QueryRequest, x_api_key: str = Header(...)):
     # Auth check
     if x_api_key not in VALID_API_KEYS:
         raise HTTPException(status_code=401, detail="Invalid API key")
