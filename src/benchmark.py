@@ -32,57 +32,35 @@ def parse_locust_output(output: str) -> dict:
         "min_response_ms": 0,
         "max_response_ms": 0,
         "median_response_ms": 0,
-        "p95_response_ms": 0,
-        "p99_response_ms": 0,
     }
 
     lines = output.split("\n")
-    
-    # Find the LAST Aggregated line — that's the final summary
     aggregated_lines = [l for l in lines if "Aggregated" in l and "|" in l]
-    
+
     if not aggregated_lines:
-        print("WARNING: No aggregated line found in output")
-        print("Raw output sample:", output[:500])
+        print("WARNING: No aggregated line found")
         return results
-    
+
     last_line = aggregated_lines[-1]
-    parts = [p.strip() for p in last_line.split("|")]
-    
-    try:
-        # Parts: [name, reqs/fails, avg/min/max/med, req/s failures/s]
-        req_fail_part = parts[1].strip().split()
-        results["total_requests"] = int(req_fail_part[0])
-        
-        fail_str = req_fail_part[1]
-        results["failed_requests"] = int(fail_str.split("(")[0])
-        fail_pct = float(fail_str.split("(")[1].replace("%)", ""))
-        results["failure_rate_pct"] = fail_pct
 
-        timing_part = parts[2].strip().split()
-        results["avg_response_ms"] = int(timing_part[0])
-        results["min_response_ms"] = int(timing_part[1])
-        results["max_response_ms"] = int(timing_part[2])
-        results["median_response_ms"] = int(timing_part[3])
+    # Use regex to extract all numbers robustly
+    # Pattern: Aggregated <reqs> <fails>(<pct>%) | <avg> <min> <max> <med> | <rps> <failrps>
+    match = re.search(
+        r'Aggregated\s+(\d+)\s+(\d+)\((\d+\.?\d*)%\)\s*\|\s*(\d+)\s+(\d+)\s+(\d+)\s+(\d+)\s*\|\s*(\d+\.?\d*)\s+(\d+\.?\d*)',
+        last_line
+    )
 
-        rps_part = parts[3].strip().split()
-        results["requests_per_second"] = float(rps_part[0])
-        
-    except Exception as e:
-        print(f"Parse error: {e}")
-        print(f"Line was: {last_line}")
-
-    # Get percentiles
-    for line in lines:
-        if "Aggregated" in line and "50%" in line:
-            try:
-                pcts = line.split("|")
-                values = pcts[1].strip().split()
-                results["median_response_ms"] = int(values[0])
-                results["p95_response_ms"] = int(values[4])
-                results["p99_response_ms"] = int(values[6])
-            except Exception:
-                pass
+    if match:
+        results["total_requests"] = int(match.group(1))
+        results["failed_requests"] = int(match.group(2))
+        results["failure_rate_pct"] = float(match.group(3))
+        results["avg_response_ms"] = int(match.group(4))
+        results["min_response_ms"] = int(match.group(5))
+        results["max_response_ms"] = int(match.group(6))
+        results["median_response_ms"] = int(match.group(7))
+        results["requests_per_second"] = float(match.group(8))
+    else:
+        print(f"Could not parse line: {last_line}")
 
     return results
 
