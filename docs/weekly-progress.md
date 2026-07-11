@@ -126,7 +126,7 @@ Gap between manual (78.3%) and automatic (36.7%) precision reveals incomplete gr
 ## Week 5
 
 **Branch:** `maria-week-05`
-**PR link:** _[Add link after opening PR]_
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/5
 
 ### Completed this week
 - [x] Integrated Groq Cloud LLM API (llama-3.1-8b-instant) to complete the RAG pipeline with actual response generation
