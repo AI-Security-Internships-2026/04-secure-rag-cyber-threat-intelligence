@@ -1,4 +1,6 @@
 {
+  "metric": "Precision@3",
+  "n_results": 3,
   "exact_precision": 0.3,
   "semantic_precision": 0.3,
   "combo_precision": 0.36666666666666664,
@@ -44,9 +46,9 @@
         "OS Credential Dumping"
       ],
       "expected": [
-        "Lateral Movement",
-        "Pass the Hash",
-        "Remote Services"
+        "Remote Services",
+        "Lateral Tool Transfer",
+        "Use Alternate Authentication Material"
       ],
       "exact_precision": 0.0,
       "semantic_precision": 0.0,

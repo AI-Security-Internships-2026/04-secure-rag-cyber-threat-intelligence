@@ -11,7 +11,7 @@ client = chromadb.PersistentClient(path="data/chromadb")
 collection = client.get_or_create_collection("mitre_attack")
 
 # Change this for P@N_RESULTS evaluation
-N_RESULTS = 10
+N_RESULTS = 3
 
 # 10 test queries with predefined expected technique names
 TEST_QUERIES_WITH_EXPECTED = [
@@ -25,7 +25,7 @@ TEST_QUERIES_WITH_EXPECTED = [
     },
     {
         "query": "lateral movement across network using stolen credentials",
-        "expected": ["Lateral Movement", "Pass the Hash", "Remote Services"]
+        "expected": ["Remote Services", "Lateral Tool Transfer", "Use Alternate Authentication Material"]
     },
     {
         "query": "data exfiltration to external server",

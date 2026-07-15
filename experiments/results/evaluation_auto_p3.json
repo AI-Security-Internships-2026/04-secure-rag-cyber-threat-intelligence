@@ -1,5 +1,8 @@
 {
+  "metric": "Precision@3",
   "average_precision": 0.3,
+  "n_results": 3,
+  "total_queries": 10,
   "results": [
     {
       "query": "ransomware encrypting files for extortion",
@@ -37,9 +40,9 @@
         "OS Credential Dumping"
       ],
       "expected": [
-        "Lateral Movement",
-        "Pass the Hash",
-        "Remote Services"
+        "Remote Services",
+        "Lateral Tool Transfer",
+        "Use Alternate Authentication Material"
       ],
       "precision": 0.0
     },

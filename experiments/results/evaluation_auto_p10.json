@@ -61,9 +61,9 @@
         "Pass the Ticket"
       ],
       "expected": [
-        "Lateral Movement",
-        "Pass the Hash",
-        "Remote Services"
+        "Remote Services",
+        "Lateral Tool Transfer",
+        "Use Alternate Authentication Material"
       ],
       "precision": 0.2
     },
