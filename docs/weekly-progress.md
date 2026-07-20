@@ -216,13 +216,15 @@ Initial load test showed an 88% failure rate due to all simulated users sharing 
 
 ### CPU-Only Scalability Benchmark (No LLM)
 
-| Metric | Value |
-|---|---|
-| Requests/sec (single-threaded) | 1.27 |
-| Average latency | 784.77ms |
-| Median latency | 755.69ms |
-| P95 latency | 993.69ms |
-| P99 latency | 1873.99ms |
+| Metric | Presidio Method | Regex Method | Delta / Speedup |
+| :--- | :--- | :--- | :--- |
+| **Requests/sec** | 1.24 | 3.12 | +151.6% (2.52x speedup) |
+| **Average Latency** | 803.41ms | 320.97ms | 482.44ms faster |
+| **Median Latency** | 739.84ms | 309.17ms | 430.67ms faster |
+| **P95 Latency** | 1010.64ms | 398.49ms | 612.15ms faster |
+| **P99 Latency** | 2383.15ms | 564.75ms | 1818.40ms faster |
+| **Min / Max Latency** | 501.98ms / 2383.15ms | 287.84ms / 564.75ms | — |
+| **Total Completed Requests** | 38 (over 30.53s) | 94 (over 30.17s) | +56 requests |
 
 ### Problems / Blockers
 
