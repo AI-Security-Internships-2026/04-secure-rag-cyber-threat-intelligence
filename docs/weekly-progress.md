@@ -192,7 +192,7 @@ Initial load test showed an 88% failure rate due to all simulated users sharing 
 ## Week 6
 
 **Branch:** `maria-week-06`
-**PR link:** _[Add link after opening PR]_
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/7
 
 ### Completed this week
 
