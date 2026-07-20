@@ -1,0 +1,21 @@
+{
+  "test_date": "2026-07-20",
+  "hardware": {
+    "cpu_cores_physical": 8,
+    "cpu_cores_logical": 16,
+    "ram_gb": 15.35,
+    "os": "Windows",
+    "gpu": "None \u2014 CPU only"
+  },
+  "test_type": "cpu_only_no_llm",
+  "description": "Measures raw CPU throughput for injection check + ChromaDB retrieval + Presidio privacy filter, with LLM generation completely excluded.",
+  "duration_seconds": 30.61,
+  "total_requests_completed": 39,
+  "requests_per_second": 1.27,
+  "avg_latency_ms": 784.77,
+  "median_latency_ms": 755.69,
+  "min_latency_ms": 503.96,
+  "max_latency_ms": 1873.99,
+  "p95_latency_ms": 993.69,
+  "p99_latency_ms": 1873.99
+}

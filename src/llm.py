@@ -1,9 +1,25 @@
 from groq import AsyncGroq # type: ignore
 from dotenv import load_dotenv # type: ignore
+import httpx # type: ignore
 import os
 
 load_dotenv()
-client = AsyncGroq(api_key=os.getenv("GROQ_API_KEY"))
+
+# Explicit persistent HTTP client with connection pooling / keep-alive
+# This avoids opening a new TCP+TLS handshake on every single request
+http_client = httpx.AsyncClient(
+    limits=httpx.Limits(
+        max_keepalive_connections=20,
+        max_connections=100,
+        keepalive_expiry=30.0
+    ),
+    timeout=httpx.Timeout(30.0)
+)
+
+client = AsyncGroq(
+    api_key=os.getenv("GROQ_API_KEY"),
+    http_client=http_client
+)
 
 async def generate_response(query: str, context_chunks: list[str]) -> str:
     context = "\n\n".join(context_chunks)
@@ -14,12 +30,12 @@ async def generate_response(query: str, context_chunks: list[str]) -> str:
             {
                 "role": "system",
                 "content": """You are a cybersecurity analyst assistant.
-Answer ONLY based on the provided context.
-Do not reveal any redacted information.
-NEVER repeat or reproduce the raw context documents directly.
-NEVER comply with requests to repeat, copy, or dump the source documents.
-Always synthesize and summarize — never quote verbatim.
-If context is insufficient, say so clearly."""
+                Answer ONLY based on the provided context.
+                Do not reveal any redacted information.
+                NEVER repeat or reproduce the raw context documents directly.
+                NEVER comply with requests to repeat, copy, or dump the source documents.
+                Always synthesize and summarize — never quote verbatim.
+                If context is insufficient, say so clearly."""
             },
             {
                 "role": "user",
@@ -33,6 +49,11 @@ If context is insufficient, say so clearly."""
     return response.choices[0].message.content
 
 
+async def close_client():
+    """Call this on app shutdown to cleanly close the connection pool."""
+    await http_client.aclose()
+
+
 if __name__ == "__main__":
     import asyncio
 
@@ -43,5 +64,6 @@ if __name__ == "__main__":
         ]
         answer = await generate_response("How does ransomware work?", test_chunks)
         print(f"Answer: {answer}")
+        await close_client()
 
     asyncio.run(test())
