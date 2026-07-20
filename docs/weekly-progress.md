@@ -189,4 +189,50 @@ Initial load test showed an 88% failure rate due to all simulated users sharing 
 
 ---
 
+## Week 6
+
+**Branch:** `maria-week-06`
+**PR link:** _[Add link after opening PR]_
+
+### Completed this week
+
+- [x] Measured single-threaded CPU-only throughput (LLM excluded): 1.27 requests/sec, median latency 755ms, P99 1874ms and identified Presidio's NER inference as the dominant cost, not ChromaDB
+- [x] Discovered fresh-query load hits Groq's free-tier rate limit (6000 tokens/minute) within 10 requests, which confirmed the external API, not local CPU, is the current bottleneck
+- [x] Fixed evaluate_auto.py zero-precision investigation for Issue #5 — 1 of 3 failures was a ground-truth naming bug (fixed), other 2 were recall@k depth limitations, not evaluator bugs
+- [x] Converted Groq LLM client to a persistent HTTP connection (keep-alive) instead of opening a new TCP connection per request
+- [x] Added per-stage latency timing breakdown to /query endpoint (injection check, cache, retrieval, privacy filter, LLM generation, output scan)
+- [x] Built CPU-only benchmark (cpu_benchmark.py) and no-cache load test (load_test_fresh.py) to isolate true throughput from cache/API effects
+- [x] Rebased and force-pushed maria-week-05 onto latest dev, resolved conflicts in pipeline.py and both privacy_filter files
+- [x] Started Issue #6 planning, mapped comparable prompt-injection components across LLM Guard, NeMo Guardrails, Guardrails AI, Meta LlamaFirewall, LLM Guard and NeMo Guardrails runnable without gated access
+- [x] Researched how major LLM providers (OpenAI, Anthropic, Google, Meta, Microsoft, DeepSeek) implement layered guardrail architectures, to inform Issue #6
+
+### Precision Results After Issue #5 Fix
+
+| Query | Before (P@3) | After (P@3) | After (P@10) |
+|---|---|---|---|
+| Lateral movement | 0.00 | 0.00 | 0.20 |
+| Data exfiltration | 0.00 | 0.00 (unchanged, no bug) | 0.10 |
+| Persistence | 0.00 | 0.00 (unchanged, no bug) | 0.10 |
+
+### CPU-Only Scalability Benchmark (No LLM)
+
+| Metric | Value |
+|---|---|
+| Requests/sec (single-threaded) | 1.27 |
+| Average latency | 784.77ms |
+| Median latency | 755.69ms |
+| P95 latency | 993.69ms |
+| P99 latency | 1873.99ms |
+
+### Problems / Blockers
+
+Fresh-query load testing initially produced 500 errors — root caused to Groq's free-tier rate limit (6000 tokens/minute) rather than a code defect, confirming the external API is the current throughput ceiling, not the CPU.
+
+### Next week plan
+- Get local LLM server connection details (IP/port/API format) and re-run the fresh-query benchmark against it to isolate true CPU-bound generation throughput without external rate limiting
+- Complete Issue #6 execution — run LLM Guard and NeMo Guardrails on a held-out test set, compute precision/recall/F1/latency, commit to experiments/results/guardrail_comparison.json
+- Investigate whether Presidio's NER inference can be optimized or run on a lighter model to reduce the ~755ms median latency bottleneck identified this week
+
+---
+
 _(Add a new section each week)_
