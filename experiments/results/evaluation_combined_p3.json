@@ -1,0 +1,170 @@
+{
+  "metric": "Precision@3",
+  "n_results": 3,
+  "exact_precision": 0.3,
+  "semantic_precision": 0.3,
+  "combo_precision": 0.36666666666666664,
+  "manual_precision": 0.783,
+  "results": [
+    {
+      "query": "ransomware encrypting files for extortion",
+      "retrieved": [
+        "Data Encrypted for Impact",
+        "Selective Exclusion",
+        "Archive Collected Data"
+      ],
+      "expected": [
+        "Data Encrypted for Impact",
+        "Inhibit System Recovery",
+        "Selective Exclusion"
+      ],
+      "exact_precision": 0.6666666666666666,
+      "semantic_precision": 0.3333333333333333,
+      "combo_precision": 0.6666666666666666
+    },
+    {
+      "query": "phishing email to steal credentials",
+      "retrieved": [
+        "Email Accounts",
+        "Phishing",
+        "Spearphishing Link"
+      ],
+      "expected": [
+        "Phishing",
+        "Spearphishing Attachment",
+        "Spearphishing Link"
+      ],
+      "exact_precision": 0.6666666666666666,
+      "semantic_precision": 0.6666666666666666,
+      "combo_precision": 0.6666666666666666
+    },
+    {
+      "query": "lateral movement across network using stolen credentials",
+      "retrieved": [
+        "Web Portal Capture",
+        "Chat Messages",
+        "OS Credential Dumping"
+      ],
+      "expected": [
+        "Remote Services",
+        "Lateral Tool Transfer",
+        "Use Alternate Authentication Material"
+      ],
+      "exact_precision": 0.0,
+      "semantic_precision": 0.0,
+      "combo_precision": 0.0
+    },
+    {
+      "query": "data exfiltration to external server",
+      "retrieved": [
+        "Automated Exfiltration",
+        "Scheduled Transfer",
+        "Exfiltration Over Physical Medium"
+      ],
+      "expected": [
+        "Exfiltration Over C2 Channel",
+        "Exfiltration Over Web Service",
+        "Transfer Data to Cloud Account"
+      ],
+      "exact_precision": 0.0,
+      "semantic_precision": 0.0,
+      "combo_precision": 0.0
+    },
+    {
+      "query": "privilege escalation to gain admin access",
+      "retrieved": [
+        "Abuse Elevation Control Mechanism",
+        "Bypass User Account Control",
+        "Bypass User Account Control"
+      ],
+      "expected": [
+        "Abuse Elevation Control Mechanism",
+        "Access Token Manipulation",
+        "Exploitation for Privilege Escalation"
+      ],
+      "exact_precision": 0.3333333333333333,
+      "semantic_precision": 0.3333333333333333,
+      "combo_precision": 0.3333333333333333
+    },
+    {
+      "query": "command and control communication with malware",
+      "retrieved": [
+        "Dynamic Resolution",
+        "Standard Cryptographic Protocol",
+        "Encrypted Channel"
+      ],
+      "expected": [
+        "Application Layer Protocol",
+        "Encrypted Channel",
+        "Non-Standard Port"
+      ],
+      "exact_precision": 0.3333333333333333,
+      "semantic_precision": 0.0,
+      "combo_precision": 0.3333333333333333
+    },
+    {
+      "query": "defense evasion by disabling security tools",
+      "retrieved": [
+        "Disabling Security Tools",
+        "Disable or Modify Tools",
+        "Modify or Spoof Tool UI"
+      ],
+      "expected": [
+        "Impair Defenses",
+        "Disable or Modify Tools",
+        "Indicator Removal"
+      ],
+      "exact_precision": 0.3333333333333333,
+      "semantic_precision": 0.6666666666666666,
+      "combo_precision": 0.6666666666666666
+    },
+    {
+      "query": "password dumping from memory",
+      "retrieved": [
+        "Password Managers",
+        "Security Account Manager",
+        "OS Credential Dumping"
+      ],
+      "expected": [
+        "OS Credential Dumping",
+        "LSASS Memory",
+        "Credentials from Password Stores"
+      ],
+      "exact_precision": 0.3333333333333333,
+      "semantic_precision": 0.6666666666666666,
+      "combo_precision": 0.6666666666666666
+    },
+    {
+      "query": "persistence mechanism after system reboot",
+      "retrieved": [
+        "RC Scripts",
+        "Boot or Logon Initialization Scripts",
+        "Re-opened Applications"
+      ],
+      "expected": [
+        "Boot or Logon Autostart Execution",
+        "Scheduled Task/Job",
+        "Create or Modify System Process"
+      ],
+      "exact_precision": 0.0,
+      "semantic_precision": 0.0,
+      "combo_precision": 0.0
+    },
+    {
+      "query": "reconnaissance scanning open ports and services",
+      "retrieved": [
+        "Active Scanning",
+        "Scan Databases",
+        "Vulnerability Scanning"
+      ],
+      "expected": [
+        "Network Service Discovery",
+        "Active Scanning",
+        "Network Service Scanning"
+      ],
+      "exact_precision": 0.3333333333333333,
+      "semantic_precision": 0.3333333333333333,
+      "combo_precision": 0.3333333333333333
+    }
+  ]
+}

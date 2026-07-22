@@ -1,0 +1,240 @@
+{
+  "metric": "Precision@10",
+  "n_results": 10,
+  "exact_precision": 0.21000000000000002,
+  "semantic_precision": 0.24000000000000005,
+  "combo_precision": 0.26000000000000006,
+  "manual_precision": 0.783,
+  "results": [
+    {
+      "query": "ransomware encrypting files for extortion",
+      "retrieved": [
+        "Data Encrypted for Impact",
+        "Selective Exclusion",
+        "Archive Collected Data",
+        "Data Encrypted",
+        "Financial Theft",
+        "Archive via Utility",
+        "Encrypted/Encoded File",
+        "Archive via Custom Method",
+        "Compression",
+        "Data Compressed"
+      ],
+      "expected": [
+        "Data Encrypted for Impact",
+        "Inhibit System Recovery",
+        "Selective Exclusion"
+      ],
+      "exact_precision": 0.3,
+      "semantic_precision": 0.3,
+      "combo_precision": 0.4
+    },
+    {
+      "query": "phishing email to steal credentials",
+      "retrieved": [
+        "Email Accounts",
+        "Phishing",
+        "Spearphishing Link",
+        "Impersonation",
+        "Impersonation",
+        "Phishing for Information",
+        "Email Accounts",
+        "Spearphishing Link",
+        "Email Spoofing",
+        "Financial Theft"
+      ],
+      "expected": [
+        "Phishing",
+        "Spearphishing Attachment",
+        "Spearphishing Link"
+      ],
+      "exact_precision": 0.4,
+      "semantic_precision": 0.4,
+      "combo_precision": 0.4
+    },
+    {
+      "query": "lateral movement across network using stolen credentials",
+      "retrieved": [
+        "Web Portal Capture",
+        "Chat Messages",
+        "OS Credential Dumping",
+        "Network Sniffing",
+        "Password Guessing",
+        "External Remote Services",
+        "Compromise Accounts",
+        "Modify Authentication Process",
+        "Exploitation of Remote Services",
+        "Pass the Ticket"
+      ],
+      "expected": [
+        "Remote Services",
+        "Lateral Tool Transfer",
+        "Use Alternate Authentication Material"
+      ],
+      "exact_precision": 0.2,
+      "semantic_precision": 0.3,
+      "combo_precision": 0.3
+    },
+    {
+      "query": "data exfiltration to external server",
+      "retrieved": [
+        "Automated Exfiltration",
+        "Scheduled Transfer",
+        "Exfiltration Over Physical Medium",
+        "Exfiltration to Cloud Storage",
+        "Archive Collected Data",
+        "Data Encrypted",
+        "Exfiltration Over Web Service",
+        "Data Transfer Size Limits",
+        "Exfiltration over USB",
+        "File Transfer Protocols"
+      ],
+      "expected": [
+        "Exfiltration Over C2 Channel",
+        "Exfiltration Over Web Service",
+        "Transfer Data to Cloud Account"
+      ],
+      "exact_precision": 0.1,
+      "semantic_precision": 0.1,
+      "combo_precision": 0.1
+    },
+    {
+      "query": "privilege escalation to gain admin access",
+      "retrieved": [
+        "Abuse Elevation Control Mechanism",
+        "Bypass User Account Control",
+        "Bypass User Account Control",
+        "Exploitation for Privilege Escalation",
+        "Account Manipulation",
+        "Group Policy Modification",
+        "Temporary Elevated Cloud Access",
+        "Additional Cloud Roles",
+        "Valid Accounts",
+        "Application Deployment Software"
+      ],
+      "expected": [
+        "Abuse Elevation Control Mechanism",
+        "Access Token Manipulation",
+        "Exploitation for Privilege Escalation"
+      ],
+      "exact_precision": 0.2,
+      "semantic_precision": 0.2,
+      "combo_precision": 0.2
+    },
+    {
+      "query": "command and control communication with malware",
+      "retrieved": [
+        "Dynamic Resolution",
+        "Standard Cryptographic Protocol",
+        "Encrypted Channel",
+        "Data Obfuscation",
+        "Custom Command and Control Protocol",
+        "Service Execution",
+        "Command and Scripting Interpreter",
+        "Network Device CLI",
+        "Python",
+        "Graphical User Interface"
+      ],
+      "expected": [
+        "Application Layer Protocol",
+        "Encrypted Channel",
+        "Non-Standard Port"
+      ],
+      "exact_precision": 0.1,
+      "semantic_precision": 0.0,
+      "combo_precision": 0.1
+    },
+    {
+      "query": "defense evasion by disabling security tools",
+      "retrieved": [
+        "Disabling Security Tools",
+        "Disable or Modify Tools",
+        "Modify or Spoof Tool UI",
+        "Spoof Security Alerting",
+        "Impair Defenses",
+        "Exploitation for Defense Impairment",
+        "Standard Cryptographic Protocol",
+        "Disable or Modify Tools",
+        "Disable or Modify Network Device Firewall",
+        "Encrypted Channel"
+      ],
+      "expected": [
+        "Impair Defenses",
+        "Disable or Modify Tools",
+        "Indicator Removal"
+      ],
+      "exact_precision": 0.3,
+      "semantic_precision": 0.4,
+      "combo_precision": 0.4
+    },
+    {
+      "query": "password dumping from memory",
+      "retrieved": [
+        "Password Managers",
+        "Security Account Manager",
+        "OS Credential Dumping",
+        "/etc/passwd and /etc/shadow",
+        "LSASS Memory",
+        "Password Cracking",
+        "LSA Secrets",
+        "Credentials from Password Stores",
+        "Brute Force",
+        "Keylogging"
+      ],
+      "expected": [
+        "OS Credential Dumping",
+        "LSASS Memory",
+        "Credentials from Password Stores"
+      ],
+      "exact_precision": 0.3,
+      "semantic_precision": 0.5,
+      "combo_precision": 0.5
+    },
+    {
+      "query": "persistence mechanism after system reboot",
+      "retrieved": [
+        "RC Scripts",
+        "Boot or Logon Initialization Scripts",
+        "Re-opened Applications",
+        "Clear Persistence",
+        "Logon Script (Windows)",
+        "Systemd Service",
+        "Boot or Logon Autostart Execution",
+        "Re-opened Applications",
+        "Rc.common",
+        "Active Setup"
+      ],
+      "expected": [
+        "Boot or Logon Autostart Execution",
+        "Scheduled Task/Job",
+        "Create or Modify System Process"
+      ],
+      "exact_precision": 0.1,
+      "semantic_precision": 0.1,
+      "combo_precision": 0.1
+    },
+    {
+      "query": "reconnaissance scanning open ports and services",
+      "retrieved": [
+        "Active Scanning",
+        "Scan Databases",
+        "Vulnerability Scanning",
+        "Scanning IP Blocks",
+        "Network Security Appliances",
+        "Client Configurations",
+        "Commonly Used Port",
+        "Internet Connection Discovery",
+        "Traffic Signaling",
+        "Exploitation of Remote Services"
+      ],
+      "expected": [
+        "Network Service Discovery",
+        "Active Scanning",
+        "Network Service Scanning"
+      ],
+      "exact_precision": 0.1,
+      "semantic_precision": 0.1,
+      "combo_precision": 0.1
+    }
+  ]
+}

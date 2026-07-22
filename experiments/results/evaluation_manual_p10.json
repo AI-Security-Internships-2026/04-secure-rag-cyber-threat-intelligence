@@ -1,0 +1,569 @@
+{
+  "metric": "Precision@10",
+  "average_precision": 0.74,
+  "n_results": 10,
+  "total_results": 100,
+  "total_relevant": 74.0,
+  "results": [
+    {
+      "query": "ransomware encrypting files for extortion",
+      "results": [
+        {
+          "name": "Data Encrypted for Impact",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Selective Exclusion",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Archive Collected Data",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Data Encrypted",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Financial Theft",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Archive via Utility",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Encrypted/Encoded File",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Archive via Custom Method",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Compression",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Data Compressed",
+          "judgment": "p",
+          "score": 0.5
+        }
+      ],
+      "precision": 0.65
+    },
+    {
+      "query": "phishing email to steal credentials",
+      "results": [
+        {
+          "name": "Email Accounts",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Phishing",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Spearphishing Link",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Impersonation",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Impersonation",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Phishing for Information",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Email Accounts",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Spearphishing Link",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Email Spoofing",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Financial Theft",
+          "judgment": "p",
+          "score": 0.5
+        }
+      ],
+      "precision": 0.95
+    },
+    {
+      "query": "lateral movement across network using stolen credentials",
+      "results": [
+        {
+          "name": "Web Portal Capture",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Chat Messages",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "OS Credential Dumping",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Network Sniffing",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Password Guessing",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "External Remote Services",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Compromise Accounts",
+          "judgment": "n",
+          "score": 0
+        },
+        {
+          "name": "Modify Authentication Process",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Exploitation of Remote Services",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Pass the Ticket",
+          "judgment": "y",
+          "score": 1
+        }
+      ],
+      "precision": 0.5
+    },
+    {
+      "query": "data exfiltration to external server",
+      "results": [
+        {
+          "name": "Automated Exfiltration",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Scheduled Transfer",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Exfiltration Over Physical Medium",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Exfiltration to Cloud Storage",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Archive Collected Data",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Data Encrypted",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Exfiltration Over Web Service",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Data Transfer Size Limits",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Exfiltration over USB",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "File Transfer Protocols",
+          "judgment": "y",
+          "score": 1
+        }
+      ],
+      "precision": 0.75
+    },
+    {
+      "query": "privilege escalation to gain admin access",
+      "results": [
+        {
+          "name": "Abuse Elevation Control Mechanism",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Bypass User Account Control",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Bypass User Account Control",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Exploitation for Privilege Escalation",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Account Manipulation",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Group Policy Modification",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Temporary Elevated Cloud Access",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Additional Cloud Roles",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Valid Accounts",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Application Deployment Software",
+          "judgment": "p",
+          "score": 0.5
+        }
+      ],
+      "precision": 0.9
+    },
+    {
+      "query": "command and control communication with malware",
+      "results": [
+        {
+          "name": "Dynamic Resolution",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Standard Cryptographic Protocol",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Encrypted Channel",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Data Obfuscation",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Custom Command and Control Protocol",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Service Execution",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Command and Scripting Interpreter",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Network Device CLI",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Python",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Graphical User Interface",
+          "judgment": "p",
+          "score": 0.5
+        }
+      ],
+      "precision": 0.75
+    },
+    {
+      "query": "defense evasion by disabling security tools",
+      "results": [
+        {
+          "name": "Disabling Security Tools",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Disable or Modify Tools",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Modify or Spoof Tool UI",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Spoof Security Alerting",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Impair Defenses",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Exploitation for Defense Impairment",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Standard Cryptographic Protocol",
+          "judgment": "n",
+          "score": 0
+        },
+        {
+          "name": "Disable or Modify Tools",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Disable or Modify Network Device Firewall",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Encrypted Channel",
+          "judgment": "y",
+          "score": 1
+        }
+      ],
+      "precision": 0.9
+    },
+    {
+      "query": "password dumping from memory",
+      "results": [
+        {
+          "name": "Password Managers",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Security Account Manager",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "OS Credential Dumping",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "/etc/passwd and /etc/shadow",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "LSASS Memory",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Password Cracking",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "LSA Secrets",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Credentials from Password Stores",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Brute Force",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Keylogging",
+          "judgment": "p",
+          "score": 0.5
+        }
+      ],
+      "precision": 0.7
+    },
+    {
+      "query": "persistence mechanism after system reboot",
+      "results": [
+        {
+          "name": "RC Scripts",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Boot or Logon Initialization Scripts",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Re-opened Applications",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Clear Persistence",
+          "judgment": "n",
+          "score": 0
+        },
+        {
+          "name": "Logon Script (Windows)",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Systemd Service",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Boot or Logon Autostart Execution",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Re-opened Applications",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Rc.common",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Active Setup",
+          "judgment": "y",
+          "score": 1
+        }
+      ],
+      "precision": 0.9
+    },
+    {
+      "query": "reconnaissance scanning open ports and services",
+      "results": [
+        {
+          "name": "Active Scanning",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Scan Databases",
+          "judgment": "y",
+          "score": 1
+        },
+        {
+          "name": "Vulnerability Scanning",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Scanning IP Blocks",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Network Security Appliances",
+          "judgment": "p",
+          "score": 0.5
+        },
+        {
+          "name": "Client Configurations",
+          "judgment": "n",
+          "score": 0
+        },
+        {
+          "name": "Commonly Used Port",
+          "judgment": "n",
+          "score": 0
+        },
+        {
+          "name": "Internet Connection Discovery",
+          "judgment": "n",
+          "score": 0
+        },
+        {
+          "name": "Traffic Signaling",
+          "judgment": "n",
+          "score": 0
+        },
+        {
+          "name": "Exploitation of Remote Services",
+          "judgment": "p",
+          "score": 0.5
+        }
+      ],
+      "precision": 0.4
+    }
+  ]
+}
