@@ -1,0 +1,650 @@
+{
+  "test_date": "2026-07-26",
+  "v1_baseline": {
+    "filter_version": "v1_baseline",
+    "total_test_cases": 28,
+    "true_positives": 16,
+    "false_positives": 5,
+    "false_negatives": 9,
+    "precision": 0.7619,
+    "recall": 0.64,
+    "f1_score": 0.6957,
+    "eval_time_ms": 1.12
+  },
+  "v3_hardened": {
+    "filter_version": "v3_hardened",
+    "total_test_cases": 28,
+    "true_positives": 25,
+    "false_positives": 5,
+    "false_negatives": 0,
+    "precision": 0.8333,
+    "recall": 1.0,
+    "f1_score": 0.9091,
+    "eval_time_ms": 1.65
+  },
+  "v1_detail": [
+    {
+      "text": "Malware beacons to C2 server at 192.168.1.45 every 60 seconds.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "192.168.1.45"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "The dropper hash is a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4.",
+      "true_positives": [
+        [
+          "FILE_HASH_MD5",
+          "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "SHA1 of the payload: da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "FILE_HASH_SHA1",
+          "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        ]
+      ]
+    },
+    {
+      "text": "Full SHA256 signature: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822...",
+      "true_positives": [
+        [
+          "FILE_HASH_SHA256",
+          "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Domain used for phishing: malicious-site.com",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "malicious-site.com"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Contact analyst john.smith@company.com for more details.",
+      "true_positives": [
+        [
+          "EMAIL",
+          "john.smith@company.com"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "company.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "text": "Exploits CVE-2021-44228 (Log4Shell) vulnerability.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2021-44228"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "C2 observed at 192[.]168[.]1[.]45 in the sandbox run.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "192[.]168[.]1[.]45"
+        ]
+      ]
+    },
+    {
+      "text": "Second beacon IP: 10(.)0(.)0(.)5 per the pcap.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "10(.)0(.)0(.)5"
+        ]
+      ]
+    },
+    {
+      "text": "Also seen: 172{.}16{.}0{.}9 as backup C2.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "172{.}16{.}0{.}9"
+        ]
+      ]
+    },
+    {
+      "text": "Payload downloaded from evil[.]com/dropper.exe",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DOMAIN",
+          "evil[.]com"
+        ]
+      ]
+    },
+    {
+      "text": "Registered attacker infra at bad-domain[.]net for phishing kits.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DOMAIN",
+          "bad-domain[.]net"
+        ]
+      ]
+    },
+    {
+      "text": "Technique documented at attack.mitre.org/techniques/T1110.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "See advisory on nvd.nist.gov for the full CVSS score.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Source code hosted at github.com/mitre/cti.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Reference: cve.mitre.org for the canonical record.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Patch notes published on microsoft.com/security-updates.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "The tool is currently at version 1.2.3.4 in our internal build.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "1.2.3.4"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "text": "Malicious script saved as script.py on the compromised host.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Config file located at settings.ini in the install directory.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Ratio recorded was 0.998 during the benchmark run.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Malformed address 999.999.999.999 appeared in a corrupted log line.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "999.999.999.999"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "text": "The archive is named backup.tar for the nightly job.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Adversaries use malware communicating with C2 server at 192.168.1.45. ...",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2021-44228"
+        ],
+        [
+          "DOMAIN",
+          "malicious-site.com"
+        ],
+        [
+          "EMAIL",
+          "john.smith@company.com"
+        ],
+        [
+          "FILE_HASH_MD5",
+          "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
+        ],
+        [
+          "IP_ADDRESS",
+          "192.168.1.45"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "company.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "text": "Defanged report: C2 at 45[.]33[.]21[.]100, dropper served from phish-p...",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2023-23397"
+        ],
+        [
+          "FILE_HASH_MD5",
+          "5d41402abc4b2a76b9719d911017c592"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DOMAIN",
+          "phish-panel[.]ru"
+        ],
+        [
+          "IP_ADDRESS",
+          "45[.]33[.]21[.]100"
+        ]
+      ]
+    },
+    {
+      "text": "Analyst contact: john.smith@company.com regarding the incident.",
+      "true_positives": [
+        [
+          "EMAIL",
+          "john.smith@company.com"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "company.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "text": "Payload beaconed to mail.evil.com, also seen contacting evil.com direc...",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "evil.com"
+        ],
+        [
+          "DOMAIN",
+          "mail.evil.com"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Dropper hosted at hxxp://evil[.]com/payload.exe for delivery.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DEFANGED_URL",
+          "hxxp://evil[.]com/payload.exe"
+        ]
+      ]
+    }
+  ],
+  "v3_detail": [
+    {
+      "text": "Malware beacons to C2 server at 192.168.1.45 every 60 seconds.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "192.168.1.45"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "The dropper hash is a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4.",
+      "true_positives": [
+        [
+          "FILE_HASH_MD5",
+          "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "SHA1 of the payload: da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "true_positives": [
+        [
+          "FILE_HASH_SHA1",
+          "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Full SHA256 signature: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822...",
+      "true_positives": [
+        [
+          "FILE_HASH_SHA256",
+          "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Domain used for phishing: malicious-site.com",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "malicious-site.com"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Contact analyst john.smith@company.com for more details.",
+      "true_positives": [
+        [
+          "EMAIL",
+          "john.smith@company.com"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "company.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "text": "Exploits CVE-2021-44228 (Log4Shell) vulnerability.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2021-44228"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "C2 observed at 192[.]168[.]1[.]45 in the sandbox run.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "192[.]168[.]1[.]45"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Second beacon IP: 10(.)0(.)0(.)5 per the pcap.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "10(.)0(.)0(.)5"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Also seen: 172{.}16{.}0{.}9 as backup C2.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "172{.}16{.}0{.}9"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Payload downloaded from evil[.]com/dropper.exe",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "evil[.]com"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Registered attacker infra at bad-domain[.]net for phishing kits.",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "bad-domain[.]net"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Technique documented at attack.mitre.org/techniques/T1110.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "See advisory on nvd.nist.gov for the full CVSS score.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Source code hosted at github.com/mitre/cti.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Reference: cve.mitre.org for the canonical record.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Patch notes published on microsoft.com/security-updates.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "The tool is currently at version 1.2.3.4 in our internal build.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "1.2.3.4"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "text": "Malicious script saved as script.py on the compromised host.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Config file located at settings.ini in the install directory.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Ratio recorded was 0.998 during the benchmark run.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Malformed address 999.999.999.999 appeared in a corrupted log line.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "The archive is named backup.tar for the nightly job.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Adversaries use malware communicating with C2 server at 192.168.1.45. ...",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2021-44228"
+        ],
+        [
+          "DOMAIN",
+          "malicious-site.com"
+        ],
+        [
+          "EMAIL",
+          "john.smith@company.com"
+        ],
+        [
+          "FILE_HASH_MD5",
+          "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
+        ],
+        [
+          "IP_ADDRESS",
+          "192.168.1.45"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "company.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "text": "Defanged report: C2 at 45[.]33[.]21[.]100, dropper served from phish-p...",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2023-23397"
+        ],
+        [
+          "DOMAIN",
+          "phish-panel[.]ru"
+        ],
+        [
+          "FILE_HASH_MD5",
+          "5d41402abc4b2a76b9719d911017c592"
+        ],
+        [
+          "IP_ADDRESS",
+          "45[.]33[.]21[.]100"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Analyst contact: john.smith@company.com regarding the incident.",
+      "true_positives": [
+        [
+          "EMAIL",
+          "john.smith@company.com"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "company.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "text": "Payload beaconed to mail.evil.com, also seen contacting evil.com direc...",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "evil.com"
+        ],
+        [
+          "DOMAIN",
+          "mail.evil.com"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "text": "Dropper hosted at hxxp://evil[.]com/payload.exe for delivery.",
+      "true_positives": [
+        [
+          "DEFANGED_URL",
+          "hxxp://evil[.]com/payload.exe"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "evil[.]com"
+        ]
+      ],
+      "false_negatives": []
+    }
+  ]
+}
