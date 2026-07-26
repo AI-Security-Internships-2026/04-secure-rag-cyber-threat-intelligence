@@ -237,4 +237,38 @@ Fresh-query load testing initially produced 500 errors — root caused to Groq's
 
 ---
 
+## Week 7
+
+**Branch:** `maria-week-07`
+**PR link:** _(add after opening PR)_
+
+### Completed this week
+- [x] Improved the regex privacy filter (`privacy_filter_v3.py`).
+- [x] Added support for defanged IOCs (e.g. `192[.]168[.]1[.]45`, `evil[.]com`) — as v1 missed all of these, which is how analysts actually write indicators
+- [x] Fixed IP regex to validate real octets (0-255) — v1 was flagging junk like `999.999.999.999` as a valid IP
+- [x] Added SHA1 hash pattern (v1 only had MD5/SHA256)
+- [x] Fixed the domain whitelist check — old version used a substring match that could be tricked, new version checks exact domain/subdomain
+- [x] Built a labeled test set (`regex_test_set.py`, 28 cases) and an evaluator (`evaluate_regex.py`) to score v1 vs v3 with precision/recall/F1 instead of eyeballing it
+
+### Results
+
+| Metric | v1 | v3 |
+|---|---|---|
+| Precision | 76.2% | 83.3% |
+| Recall | 64.0% | 100.0% |
+| F1 | 69.6% | 90.9% |
+
+Biggest gap was recall, v1 was silently missing every defanged indicator.
+
+### Problems / Blockers
+
+A known limitation that regex can't tell a real IP apart from a version number written the same way (`1.2.3.4`) which is not fixable with regex alone, this is what the Presidio layer is for.
+
+### Next week plan
+- Wire v3 into `pipeline.py`/`main.py` so it's actually live
+- Add CPU/RAM logging per query
+- Build the concurrency ramp test (2–64 threads, decreasing sleep) as per supervisors instructions.
+
+---
+
 _(Add a new section each week)_
