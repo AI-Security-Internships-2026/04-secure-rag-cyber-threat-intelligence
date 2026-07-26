@@ -99,6 +99,24 @@ python src/main.py
 
 ---
 
+## Roadmap to September 8, 2026
+
+**Current state:** correct CPU bottleneck profiling, STIX2/TAXII-based MITRE ATT&CK ingestion, and a `docs/guardrail-comparison-mapping.md` already started, mapping components across four guardrail frameworks (issue #6).
+
+**Novel contribution target:** don't just detect prompt injection on the way in — verify that the RAG system's *output* citations (MITRE ATT&CK technique IDs) are actually grounded in real, relevant data, the same pattern that proved valuable in the SOC-guardrails project's CVE-verification work.
+
+| Date | Milestone |
+|---|---|
+| Aug 2 | Finish `guardrail-comparison-mapping.md`; pick 2 runnable frameworks for real integration |
+| Aug 9 | Implement an input guardrail (prompt-injection/malicious query filtering) on the RAG endpoint |
+| Aug 16 | Implement an output grounding-check: verify LLM-cited ATT&CK technique IDs actually exist and are relevant, flagging fabricated/ungrounded citations |
+| Aug 23 | Benchmark the grounding-check's false-positive/negative rate on a labeled set of real vs. fabricated citations |
+| Aug 30 | Full guardrail-comparison write-up (issue #6), integrated into the pipeline |
+| Sep 6 | Paper/report draft |
+| **Sep 8** | **Final submission** |
+
+---
+
 ## Supervisor Note
 
 This repository is managed by **CNIT/PNTLab Pisa, TECIP, Scuola Superiore Sant'Anna**.
