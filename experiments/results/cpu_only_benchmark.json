@@ -1,0 +1,35 @@
+{
+  "test_date": "2026-07-20",
+  "hardware": {
+    "cpu_cores_physical": 8,
+    "cpu_cores_logical": 16,
+    "ram_gb": 15.35,
+    "os": "Windows",
+    "gpu": "None \u2014 CPU only"
+  },
+  "presidio": {
+    "privacy_method": "presidio",
+    "duration_seconds": 30.53,
+    "total_requests_completed": 38,
+    "requests_per_second": 1.24,
+    "avg_latency_ms": 803.41,
+    "median_latency_ms": 739.84,
+    "min_latency_ms": 501.98,
+    "max_latency_ms": 2383.15,
+    "p95_latency_ms": 1010.64,
+    "p99_latency_ms": 2383.15
+  },
+  "regex": {
+    "privacy_method": "regex",
+    "duration_seconds": 30.17,
+    "total_requests_completed": 94,
+    "requests_per_second": 3.12,
+    "avg_latency_ms": 320.97,
+    "median_latency_ms": 309.17,
+    "min_latency_ms": 287.84,
+    "max_latency_ms": 564.75,
+    "p95_latency_ms": 398.49,
+    "p99_latency_ms": 564.75
+  },
+  "regex_speedup_factor": 2.52
+}

@@ -1,0 +1,27 @@
+{
+  "test_date": "2026-07-20",
+  "hardware": {
+    "cpu_cores_physical": 8,
+    "cpu_cores_logical": 16,
+    "ram_gb": 15.35,
+    "gpu": "None — CPU only"
+  },
+  "test_type": "fresh_query_no_cache",
+  "description": "Every query is unique, forcing full pipeline execution (retrieval + privacy filter + LLM generation) with zero cache benefit, to measure honest CPU-bound throughput.",
+  "results": {
+    "total_requests": 10,
+    "failed_requests": 3,
+    "failure_rate_pct": 30.0,
+    "requests_per_second": 0.36,
+    "median_response_ms": 12000,
+    "min_response_ms": 3523,
+    "max_response_ms": 25123
+  },
+  "bottleneck_finding": "CPU is NOT the bottleneck. Hit Groq free-tier rate limit (6000 tokens/minute) within first 10 fresh requests, causing 500 errors after 429 rate-limit responses. Real ceiling is external API rate limit, not local compute.",
+  "changes_made_this_week": [
+    "Converted LLM client to persistent HTTP connection (httpx.AsyncClient with keepalive) instead of opening new TCP connection per request",
+    "Added per-stage latency timing breakdown to /query endpoint (injection check, cache check, retrieval, privacy filter, LLM generation, output scan)",
+    "Built dedicated no-cache load test (load_test_fresh.py) using unique queries to measure true generation throughput"
+  ],
+  "next_step": "Repeat this same test against the local LLM server (once connection details are provided) to isolate true CPU-bound throughput without external API rate limiting."
+}
