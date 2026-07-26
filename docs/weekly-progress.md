@@ -240,7 +240,7 @@ Fresh-query load testing initially produced 500 errors — root caused to Groq's
 ## Week 7
 
 **Branch:** `maria-week-07`
-**PR link:** _(add after opening PR)_
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/8
 
 ### Completed this week
 - [x] Improved the regex privacy filter (`privacy_filter_v3.py`).
