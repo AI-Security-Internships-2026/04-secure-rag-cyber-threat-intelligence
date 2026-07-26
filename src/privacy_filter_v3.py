@@ -1,5 +1,5 @@
-"""
-privacy_filter_v3.py — Improved regex-based CTI redaction filter.
+r"""
+privacy_filter_v3.py — Hardened regex-based CTI redaction filter.
 
 Improvements over privacy_filter.py (v1):
 1. Validates real IP octets (0-255) instead of \d{1,3} which matches junk like 999.999.999.999
@@ -37,6 +37,9 @@ def _is_whitelisted(domain: str) -> bool:
             return True
     return False
 
+
+# Building blocks for regex patterns  
+
 # One valid IP octet: 0-255
 _OCTET = r'(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)'
 
@@ -56,8 +59,9 @@ _DOMAIN_SEP = r'(?:\.|\[\.\]|\(\.\)|\{\.\}|\[dot\]|\(dot\)|\s\[dot\]\s)'
 _TLDS = r'(?:com|net|org|io|gov|edu|mil|info|biz|co|ru|cn|xyz|top|club|online|site|tk)'
 DOMAIN_PATTERN = rf'\b(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{{0,61}}[a-zA-Z0-9])?{_DOMAIN_SEP}){{1,4}}{_TLDS}\b'
 
-# Defanged protocol prefixes (hxxp / hxxps) — flag but do not require for domain match
-DEFANGED_PROTOCOL_PATTERN = r'\bhxxps?://'
+# Defanged URL — captures the whole hxxp://... string, not just the protocol,
+# so it can be redacted as one unit (previously defined but never wired in — dead code)
+DEFANGED_URL_PATTERN = r'\bhxxps?://[^\s,;]+'
 
 EMAIL_PATTERN = r'\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.\-\[\]\(\)]+\.[a-zA-Z]{2,}\b'
 CVE_PATTERN = r'CVE-\d{4}-\d{4,7}'
@@ -70,14 +74,12 @@ PATTERNS = {
     "DOMAIN": DOMAIN_PATTERN,
     "EMAIL": EMAIL_PATTERN,
     "CVE": CVE_PATTERN,
+    "DEFANGED_URL": DEFANGED_URL_PATTERN,
 }
 
-# Check Order: 
-# Hashes must be checked before shorter patterns could partially consume them, and SHA256 before MD5 is irrelevant since lengths differ exactly.
-# Check DOMAIN before EMAIL isn't required either since patterns don't overlap
-# Structurally redacted longest-match-first per label group to avoid double-marking substrings.
+# Set label order
 _LABEL_ORDER = ["FILE_HASH_SHA256", "FILE_HASH_SHA1", "FILE_HASH_MD5",
-                "EMAIL", "IP_ADDRESS", "DOMAIN", "CVE"]
+                "EMAIL", "DEFANGED_URL", "IP_ADDRESS", "DOMAIN", "CVE"]
 
 
 def extract_entities(text: str) -> list:
