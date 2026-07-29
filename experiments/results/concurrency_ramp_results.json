@@ -1,0 +1,162 @@
+{
+  "test_date": "2026-07-29",
+  "config": {
+    "thread_levels": [
+      2,
+      4,
+      8,
+      16,
+      32,
+      64
+    ],
+    "duration_per_level_seconds": 15,
+    "sleep_start": 2.0,
+    "sleep_step": 0.1
+  },
+  "results": [
+    {
+      "thread_count": 2,
+      "sleep_time_seconds": 2.0,
+      "elapsed_seconds": 16.01,
+      "total_requests": 16,
+      "requests_per_second": 1.0,
+      "accuracy": {
+        "true_positives": 12,
+        "false_positives": 1,
+        "false_negatives": 0,
+        "precision": 0.9231,
+        "recall": 1.0,
+        "f1_score": 0.96
+      },
+      "resources": {
+        "avg_cpu_pct": 5.38,
+        "max_cpu_pct": 21.3,
+        "avg_ram_pct": 70.34,
+        "max_ram_pct": 70.8,
+        "avg_ram_used_mb": 11052.74,
+        "max_ram_used_mb": 11129.21,
+        "samples_collected": 32
+      }
+    },
+    {
+      "thread_count": 4,
+      "sleep_time_seconds": 1.9,
+      "elapsed_seconds": 15.21,
+      "total_requests": 32,
+      "requests_per_second": 2.1,
+      "accuracy": {
+        "true_positives": 29,
+        "false_positives": 5,
+        "false_negatives": 0,
+        "precision": 0.8529,
+        "recall": 1.0,
+        "f1_score": 0.9206
+      },
+      "resources": {
+        "avg_cpu_pct": 6.18,
+        "max_cpu_pct": 60.4,
+        "avg_ram_pct": 68.85,
+        "max_ram_pct": 71.1,
+        "avg_ram_used_mb": 10821.39,
+        "max_ram_used_mb": 11166.27,
+        "samples_collected": 31
+      }
+    },
+    {
+      "thread_count": 8,
+      "sleep_time_seconds": 1.8,
+      "elapsed_seconds": 16.21,
+      "total_requests": 72,
+      "requests_per_second": 4.44,
+      "accuracy": {
+        "true_positives": 62,
+        "false_positives": 11,
+        "false_negatives": 0,
+        "precision": 0.8493,
+        "recall": 1.0,
+        "f1_score": 0.9185
+      },
+      "resources": {
+        "avg_cpu_pct": 3.23,
+        "max_cpu_pct": 7.2,
+        "avg_ram_pct": 68.2,
+        "max_ram_pct": 68.4,
+        "avg_ram_used_mb": 10718.03,
+        "max_ram_used_mb": 10746.72,
+        "samples_collected": 33
+      }
+    },
+    {
+      "thread_count": 16,
+      "sleep_time_seconds": 1.7,
+      "elapsed_seconds": 15.31,
+      "total_requests": 144,
+      "requests_per_second": 9.41,
+      "accuracy": {
+        "true_positives": 129,
+        "false_positives": 25,
+        "false_negatives": 0,
+        "precision": 0.8377,
+        "recall": 1.0,
+        "f1_score": 0.9117
+      },
+      "resources": {
+        "avg_cpu_pct": 3.3,
+        "max_cpu_pct": 8.0,
+        "avg_ram_pct": 68.05,
+        "max_ram_pct": 68.2,
+        "avg_ram_used_mb": 10692.03,
+        "max_ram_used_mb": 10714.16,
+        "samples_collected": 31
+      }
+    },
+    {
+      "thread_count": 32,
+      "sleep_time_seconds": 1.6,
+      "elapsed_seconds": 16.01,
+      "total_requests": 320,
+      "requests_per_second": 19.99,
+      "accuracy": {
+        "true_positives": 287,
+        "false_positives": 56,
+        "false_negatives": 0,
+        "precision": 0.8367,
+        "recall": 1.0,
+        "f1_score": 0.9111
+      },
+      "resources": {
+        "avg_cpu_pct": 3.78,
+        "max_cpu_pct": 6.8,
+        "avg_ram_pct": 68.09,
+        "max_ram_pct": 68.2,
+        "avg_ram_used_mb": 10696.22,
+        "max_ram_used_mb": 10715.06,
+        "samples_collected": 32
+      }
+    },
+    {
+      "thread_count": 64,
+      "sleep_time_seconds": 1.5,
+      "elapsed_seconds": 16.51,
+      "total_requests": 681,
+      "requests_per_second": 41.24,
+      "accuracy": {
+        "true_positives": 609,
+        "false_positives": 121,
+        "false_negatives": 0,
+        "precision": 0.8342,
+        "recall": 1.0,
+        "f1_score": 0.9096
+      },
+      "resources": {
+        "avg_cpu_pct": 4.55,
+        "max_cpu_pct": 9.8,
+        "avg_ram_pct": 68.12,
+        "max_ram_pct": 68.3,
+        "avg_ram_used_mb": 10703.28,
+        "max_ram_used_mb": 10733.93,
+        "samples_collected": 33
+      }
+    }
+  ]
+}
