@@ -7,7 +7,8 @@ import json
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 import chromadb
-from privacy_filter import is_prompt_injection, redact_sensitive_info
+from privacy_filter import is_prompt_injection, redact_sensitive_info as redact_sensitive_info_v1
+from privacy_filter_v3 import redact_sensitive_info as redact_sensitive_info_v3
 from privacy_filter_v2 import redact_with_presidio
 
 client = chromadb.PersistentClient(path="data/chromadb")
@@ -36,6 +37,15 @@ TEST_QUERIES = [
     "what is a supply chain attack",
 ]
 
+# privacy_method -> which redaction function to call. Fixes the earlier bug
+# where "regex_v3" silently fell through to the v1 baseline in the else branch.
+REDACT_FUNCTIONS = {
+    "presidio": redact_with_presidio,
+    "regex": redact_sensitive_info_v1,      # v1 baseline — kept for comparison
+    "regex_v3": redact_sensitive_info_v3,   # hardened version, now the real path
+}
+
+
 def run_pipeline(query: str, privacy_method: str) -> float:
     """
     Runs retrieval + chosen privacy filter method.
@@ -48,11 +58,9 @@ def run_pipeline(query: str, privacy_method: str) -> float:
 
     results = collection.query(query_texts=[query], n_results=3)
 
+    redact_fn = REDACT_FUNCTIONS[privacy_method]
     for doc in results["documents"][0]:
-        if privacy_method == "presidio":
-            redact_with_presidio(doc)
-        else:
-            redact_sensitive_info(doc)
+        redact_fn(doc)
 
     return time.perf_counter() - t_start
 
@@ -106,16 +114,22 @@ if __name__ == "__main__":
     import platform
 
     presidio_result = run_benchmark("presidio", duration_seconds=30)
-    regex_result = run_benchmark("regex", duration_seconds=30)
+    regex_v1_result = run_benchmark("regex", duration_seconds=30)
+    regex_v3_result = run_benchmark("regex_v3", duration_seconds=30)
 
-    speedup = regex_result["requests_per_second"] / presidio_result["requests_per_second"]
+    speedup_v1_vs_presidio = regex_v1_result["requests_per_second"] / presidio_result["requests_per_second"]
+    speedup_v3_vs_presidio = regex_v3_result["requests_per_second"] / presidio_result["requests_per_second"]
+    v3_vs_v1_ratio = regex_v3_result["requests_per_second"] / regex_v1_result["requests_per_second"]
 
     print("=" * 60)
     print("COMPARISON SUMMARY")
     print("=" * 60)
-    print(f"Presidio (NER):  {presidio_result['requests_per_second']} req/sec, {presidio_result['median_latency_ms']}ms median")
-    print(f"Regex:           {regex_result['requests_per_second']} req/sec, {regex_result['median_latency_ms']}ms median")
-    print(f"Regex is {speedup:.1f}x faster than Presidio")
+    print(f"Presidio (NER):   {presidio_result['requests_per_second']} req/sec, {presidio_result['median_latency_ms']}ms median")
+    print(f"Regex v1:         {regex_v1_result['requests_per_second']} req/sec, {regex_v1_result['median_latency_ms']}ms median")
+    print(f"Regex v3:         {regex_v3_result['requests_per_second']} req/sec, {regex_v3_result['median_latency_ms']}ms median")
+    print(f"Regex v1 is {speedup_v1_vs_presidio:.1f}x faster than Presidio")
+    print(f"Regex v3 is {speedup_v3_vs_presidio:.1f}x faster than Presidio")
+    print(f"Regex v3 vs v1 speed ratio: {v3_vs_v1_ratio:.2f}x (checking hardening didn't cost noticeable speed)")
     print("=" * 60)
 
     hardware = {
@@ -130,8 +144,11 @@ if __name__ == "__main__":
         "test_date": time.strftime("%Y-%m-%d"),
         "hardware": hardware,
         "presidio": presidio_result,
-        "regex": regex_result,
-        "regex_speedup_factor": round(speedup, 2)
+        "regex_v1_baseline": regex_v1_result,
+        "regex_v3_hardened": regex_v3_result,
+        "regex_v1_speedup_vs_presidio": round(speedup_v1_vs_presidio, 2),
+        "regex_v3_speedup_vs_presidio": round(speedup_v3_vs_presidio, 2),
+        "regex_v3_vs_v1_speed_ratio": round(v3_vs_v1_ratio, 2),
     }
 
     os.makedirs("experiments/results", exist_ok=True)
