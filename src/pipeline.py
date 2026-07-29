@@ -1,6 +1,7 @@
 import chromadb # type: ignore
-from privacy_filter import redact_sensitive_info, is_prompt_injection
+from privacy_filter import is_prompt_injection
 from privacy_filter_v2 import redact_with_presidio
+from privacy_filter_v3 import redact_sensitive_info
 
 client = chromadb.PersistentClient(path="data/chromadb")
 collection = client.get_or_create_collection("mitre_attack")
