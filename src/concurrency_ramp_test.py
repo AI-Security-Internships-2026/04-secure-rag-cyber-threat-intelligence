@@ -35,9 +35,8 @@ from resource_monitor import ResourceMonitor
  
 # --- Configuration ---
 THREAD_LEVELS = [2, 4, 8, 16, 32, 64]
-DURATION_PER_LEVEL_SECONDS = 15   # how long each thread level runs for
-SLEEP_START = 2.0
-SLEEP_STEP = 0.1                  # decreases by this much each level
+SLEEP_SCHEDULE = [2.0, 1.5, 1.0, 0.5, 0.2, 0.05]
+DURATION_PER_LEVEL_SECONDS = 15
  
  
 def worker(stop_event, sleep_time, shared_counters, lock, case_cycle):
@@ -131,14 +130,13 @@ def run_level(thread_count: int, sleep_time: float, duration: float) -> dict:
 def main():
     print("CONCURRENCY RAMP TEST — regex privacy filter under parallel load")
     print(f"Thread levels: {THREAD_LEVELS}")
-    print(f"Sleep ramps from {SLEEP_START}s, decreasing {SLEEP_STEP}s per level")
+    print(f"Sleep schedule: {SLEEP_SCHEDULE}")
  
     results = []
-    for i, thread_count in enumerate(THREAD_LEVELS):
-        sleep_time = round(SLEEP_START - (i * SLEEP_STEP), 2)
+    for thread_count, sleep_time in zip(THREAD_LEVELS, SLEEP_SCHEDULE):
         result = run_level(thread_count, sleep_time, DURATION_PER_LEVEL_SECONDS)
         results.append(result)
-        time.sleep(3)  # brief cooldown between levels so one level doesn't bleed into the next
+        time.sleep(3)
  
     output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "experiments", "results")
     os.makedirs(output_dir, exist_ok=True)
@@ -147,11 +145,10 @@ def main():
         json.dump({
             "test_date": time.strftime("%Y-%m-%d"),
             "config": {
-                "thread_levels": THREAD_LEVELS,
-                "duration_per_level_seconds": DURATION_PER_LEVEL_SECONDS,
-                "sleep_start": SLEEP_START,
-                "sleep_step": SLEEP_STEP,
-            },
+                            "thread_levels": THREAD_LEVELS,
+                            "duration_per_level_seconds": DURATION_PER_LEVEL_SECONDS,
+                            "sleep_schedule": SLEEP_SCHEDULE,
+                        },
             "results": results,
         }, f, indent=2)
  
