@@ -156,7 +156,7 @@ def save_summary_table(results, dataset, results_dir):
             f"{pb['avg_latency_ms']:.4f}ms |"
         )
 
-    out = os.path.join(results_dir, "guardrail_results_table.md")
+    out = os.path.join(results_dir, "guardrail_comparison_diagnostic_analysis.md")
     with open(out, "w") as f:
         f.write("\n".join(lines))
     return out
