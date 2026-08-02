@@ -274,7 +274,7 @@ A known limitation that regex can't tell a real IP apart from a version number w
 ## Week 8
 
 **Branch:** `maria-week-08`  
-**PR link:** _(add after opening PR)_
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/10
 
 ### Completed this week
 
