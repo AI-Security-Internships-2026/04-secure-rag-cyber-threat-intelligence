@@ -1,0 +1,168 @@
+{
+  "test_date": "2026-08-01",
+  "config": {
+    "thread_levels": [
+      2,
+      4,
+      8,
+      16,
+      32,
+      64
+    ],
+    "duration_per_level_seconds": 15,
+    "sleep_schedule": [
+      2.0,
+      1.5,
+      1.0,
+      0.5,
+      0.2,
+      0.05
+    ]
+  },
+  "results": [
+    {
+      "thread_count": 2,
+      "sleep_time_seconds": 2.0,
+      "elapsed_seconds": 16.01,
+      "total_requests": 16,
+      "requests_per_second": 1.0,
+      "accuracy": {
+        "true_positives": 12,
+        "false_positives": 1,
+        "false_negatives": 0,
+        "precision": 0.9231,
+        "recall": 1.0,
+        "f1_score": 0.96
+      },
+      "resources": {
+        "avg_cpu_pct": 4.76,
+        "max_cpu_pct": 11.6,
+        "avg_ram_pct": 79.73,
+        "max_ram_pct": 80.1,
+        "avg_ram_used_mb": 12529.05,
+        "max_ram_used_mb": 12592.65,
+        "samples_collected": 32
+      }
+    },
+    {
+      "thread_count": 4,
+      "sleep_time_seconds": 1.5,
+      "elapsed_seconds": 15.01,
+      "total_requests": 40,
+      "requests_per_second": 2.66,
+      "accuracy": {
+        "true_positives": 37,
+        "false_positives": 6,
+        "false_negatives": 0,
+        "precision": 0.8605,
+        "recall": 1.0,
+        "f1_score": 0.925
+      },
+      "resources": {
+        "avg_cpu_pct": 2.97,
+        "max_cpu_pct": 6.5,
+        "avg_ram_pct": 78.66,
+        "max_ram_pct": 79.5,
+        "avg_ram_used_mb": 12363.95,
+        "max_ram_used_mb": 12491.04,
+        "samples_collected": 30
+      }
+    },
+    {
+      "thread_count": 8,
+      "sleep_time_seconds": 1.0,
+      "elapsed_seconds": 15.01,
+      "total_requests": 120,
+      "requests_per_second": 7.99,
+      "accuracy": {
+        "true_positives": 108,
+        "false_positives": 21,
+        "false_negatives": 0,
+        "precision": 0.8372,
+        "recall": 1.0,
+        "f1_score": 0.9114
+      },
+      "resources": {
+        "avg_cpu_pct": 4.21,
+        "max_cpu_pct": 14.0,
+        "avg_ram_pct": 78.36,
+        "max_ram_pct": 78.9,
+        "avg_ram_used_mb": 12311.9,
+        "max_ram_used_mb": 12401.34,
+        "samples_collected": 30
+      }
+    },
+    {
+      "thread_count": 16,
+      "sleep_time_seconds": 0.5,
+      "elapsed_seconds": 15.02,
+      "total_requests": 480,
+      "requests_per_second": 31.95,
+      "accuracy": {
+        "true_positives": 429,
+        "false_positives": 85,
+        "false_negatives": 0,
+        "precision": 0.8346,
+        "recall": 1.0,
+        "f1_score": 0.9099
+      },
+      "resources": {
+        "avg_cpu_pct": 3.03,
+        "max_cpu_pct": 5.6,
+        "avg_ram_pct": 78.82,
+        "max_ram_pct": 78.9,
+        "avg_ram_used_mb": 12387.41,
+        "max_ram_used_mb": 12396.2,
+        "samples_collected": 30
+      }
+    },
+    {
+      "thread_count": 32,
+      "sleep_time_seconds": 0.2,
+      "elapsed_seconds": 15.05,
+      "total_requests": 2400,
+      "requests_per_second": 159.47,
+      "accuracy": {
+        "true_positives": 2137,
+        "false_positives": 427,
+        "false_negatives": 0,
+        "precision": 0.8335,
+        "recall": 1.0,
+        "f1_score": 0.9092
+      },
+      "resources": {
+        "avg_cpu_pct": 4.86,
+        "max_cpu_pct": 15.4,
+        "avg_ram_pct": 78.29,
+        "max_ram_pct": 78.8,
+        "avg_ram_used_mb": 12303.24,
+        "max_ram_used_mb": 12386.45,
+        "samples_collected": 31
+      }
+    },
+    {
+      "thread_count": 64,
+      "sleep_time_seconds": 0.05,
+      "elapsed_seconds": 15.03,
+      "total_requests": 19008,
+      "requests_per_second": 1264.52,
+      "accuracy": {
+        "true_positives": 16967,
+        "false_positives": 3393,
+        "false_negatives": 0,
+        "precision": 0.8333,
+        "recall": 1.0,
+        "f1_score": 0.9091
+      },
+      "resources": {
+        "avg_cpu_pct": 5.64,
+        "max_cpu_pct": 11.8,
+        "avg_ram_pct": 77.79,
+        "max_ram_pct": 77.9,
+        "avg_ram_used_mb": 12226.44,
+        "max_ram_used_mb": 12233.73,
+        "samples_collected": 31
+      }
+    }
+  ]
+}

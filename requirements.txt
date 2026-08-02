@@ -16,3 +16,8 @@ groq
 python-dotenv
 psutil
 locust
+llm-guard
+nemoguardrails
+torch
+transformers
+datasets

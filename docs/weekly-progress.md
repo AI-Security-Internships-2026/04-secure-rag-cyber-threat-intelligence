@@ -271,4 +271,52 @@ A known limitation that regex can't tell a real IP apart from a version number w
 
 ---
 
+## Week 8
+
+**Branch:** `maria-week-08`  
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/10
+
+### Completed this week
+
+- [x] Integrated the hardened regex filter (v3) into the live RAG pipeline (`main.py`, `pipeline.py`), replacing the previous implementation.
+- [x] Refactored `output_scanner.py` to reuse the hardened regex (v3) patterns, removing duplicate legacy redaction rules and ensuring consistency across the pipeline.
+- [x] Developed CPU/RAM resource monitoring and a concurrency benchmark (2, 4, 8, 16, 32, and 64 threads) to evaluate runtime resource usage.
+- [x] Reimplemented `cpu_benchmark.py` to isolate regex execution time from document retrieval overhead. Documents were pre-fetched once, and only the redaction stage was benchmarked over 10 shuffled evaluation rounds.
+- [x] Completed Issue #6 by integrating and evaluating LLM Guard and NeMo Guardrails within the comparison framework.
+- [x] Added the **deepset/prompt-injections** public benchmark (116 test examples) alongside the CTI pilot dataset, with results reported separately for each dataset.
+- [x] Generated benchmark visualizations for concurrency, regex vs. Presidio performance, guardrail comparison, and an accuracy-versus-latency scatter plot.
+- [x] Investigated and documented the guardrail evaluation results, including a diagnostic analysis of NeMo Guardrails' zero-recall behaviour and LLM Guard's CTI-domain false positive.
+
+### Key Results
+
+
+**Regex filter performance comparison v1 vs. v3 vs. Presidio - Redaction performance (isolated timing, 10 evaluation rounds)**
+
+| Method | Avg req/sec | Relative to Presidio |
+|---|---:|---:|
+| Presidio | 17.8 | — |
+| Regex v1 | 6,748 | 378× faster |
+| Regex v3 | 4,345 | 244× faster |
+
+Regex v3 is 0.644 times slower than v1 filter.
+
+**Guardrail comparison**
+
+| Method | CTI F1 | Public F1 | Avg Latency | Observation |
+|---|---:|---:|---:|---|
+| Baseline (keyword) | 0.800 | 0.235 | 0.012 ms | Highest CTI F1-score and lowest latency, but substantially lower recall on the public benchmark. |
+| LLM Guard | 0.600 | 0.481 | 279.8 ms | Improved recall on the public benchmark compared with the keyword baseline, but produced one false positive on the legitimate CTI query *"password dumping from memory"*. |
+| NeMo Guardrails | 0.000 | 0.000 | 1,470.5 ms (max 16.3 s) | Classified every query as benign. Diagnostic analysis indicates that the evaluated heuristic is designed for long, low-perplexity jailbreak prompts and was therefore unsuitable for the short-form prompt injection attacks evaluated in this study. |
+
+### Problems / Blockers
+
+- The evaluated NeMo Guardrails jailbreak heuristic was ineffective for the project's threat model when used with its default configuration. Diagnostic analysis showed that the observed behaviour resulted from the heuristic's design rather than an implementation error. Detailed findings are documented in `docs/nemo-guardrails-diagnostic.md`.
+- The query cache currently uses an unbounded dictionary without an eviction policy. This improvement has been deferred to the following week.
+
+### Next Week Plan
+
+- Implement a bounded LRU/TTL cache using `cachetools.TTLCache`.
+- Implement an input guardrail (prompt-injection/malicious query filtering) on the RAG endpoint.
+
+---
 _(Add a new section each week)_

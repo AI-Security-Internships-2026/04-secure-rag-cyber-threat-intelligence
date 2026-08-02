@@ -11,8 +11,9 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 load_dotenv()
 
-from privacy_filter import redact_sensitive_info, is_prompt_injection
+from privacy_filter import is_prompt_injection
 from privacy_filter_v2 import redact_with_presidio
+from privacy_filter_v3 import redact_sensitive_info 
 from llm import generate_response, close_client
 from cache import get_cached, set_cache, get_cache_stats
 from output_scanner import scan_output
