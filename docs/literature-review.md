@@ -268,6 +268,26 @@ Use Google Scholar, IEEE Xplore, ACM DL, arXiv, or USENIX Security.
 
 ---
 
+### Resource 11 — PIGuard (Prompt Injection Guardrail, Over-defense Focus)
+
+| Field | Content |
+|---|---|
+| **Full title** | PIGuard: Prompt Injection Guardrail via Mitigating Overdefense for Free |
+| **Authors** | Hao Li, Xiaogeng Liu, Ning Zhang, Chaowei Xiao |
+| **Year** | 2025 |
+| **Venue** | ACL (Association for Computational Linguistics) |
+| **URL / DOI** | https://doi.org/10.18653/v1/2025.acl-long.1468 |
+| **Method** | The paper introduces PIGuard, a prompt injection defense model that detects malicious and benign instructions while reducing over-defensive behaviour (the tendency to predict malicious labels when benign sentences contain certain trigger words commonly used in prompt injection attacks; the false positives) and a dataset NotInject for evaluating the model over-defense accuracy. |
+| **Dataset** | NotInject (339 samples, 1/2/3 trigger words per sentence) |
+| **Key result** | Existing state-of-the-art prompt guard models drop to near-random accuracy (~60%) on NotInject; PIGuard improves over the prior best model by 30.4% on this benchmark. |
+| **Limitation** | Focused on general-purpose chat/assistant contexts, not CTI-specific. |
+| **Relevance to our project** | Directly validates a methodology choice already made in this project: our own guardrail comparison used CTI benign queries (e.g. "password dumping from memory") as a proxy over-defense test, since we didn't have a dedicated dataset for it — this paper shows that's a real, recognized failure mode with its own name and published benchmark (NotInject), and confirms LLM Guard's false positive on our CTI query fits an established pattern, not a fluke. |
+
+**Notes / Quotes:**
+> The paper's own finding — that state-of-the-art prompt guard models drop to near-random accuracy on trigger-word-heavy benign text — directly explains the false positive LLM Guard produced on our own CTI pilot set ("password dumping from memory" flagged as an attack).
+
+---
+
 ## Reference Table (Quick Overview)
 
 | # | Title (short) | Authors | Year | Method | Dataset | Relevance |
@@ -283,6 +303,7 @@ Use Google Scholar, IEEE Xplore, ACM DL, arXiv, or USENIX Security.
 | 8 | MITRE CTI Repository | MITRE | Ongoing | STIX Repository | ATT&CK & CAPEC STIX | STIX ingestion source |
 | 9 | OpenAI RAG Cookbook | OpenAI | Ongoing | RAG Implementation | User documents | Baseline RAG design |
 | 10 | TrustShare | Trivellato et al. | 2025 | Privacy-preserving CTI sharing | CTI sharing scenarios | Access control & privacy |
+| 11 | PIGuard | Li et al. | 2025 | Overdefense-aware guard model | NotInject (339 samples) | Validates our over-defense testing approach |
 
 ---
 
@@ -302,6 +323,7 @@ Use Google Scholar, IEEE Xplore, ACM DL, arXiv, or USENIX Security.
 | TrustShare | Research Framework | https://doi.org/10.3390/fi17070289 | Privacy-preserving CTI sharing architecture |
 | TAXII 2.1 | Standard | https://oasis-open.github.io/cti-documentation/ | CTI exchange protocol |
 | FastAPI | Framework | https://fastapi.tiangolo.com | API layer for prototype deployment |
+| NotInject | Dataset | https://github.com/leolee99/PIGuard | Purpose-built over-defense benchmark — could replace our CTI-benign-query proxy in a future pass |
 
 ---
 
