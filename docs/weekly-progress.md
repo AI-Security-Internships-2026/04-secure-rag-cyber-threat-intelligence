@@ -319,4 +319,28 @@ Regex v3 is 0.644 times slower than v1 filter.
 - Implement an input guardrail (prompt-injection/malicious query filtering) on the RAG endpoint.
 
 ---
+
+## Week 9
+
+**Branch:** `maria-week-09`
+**PR link:** _(add after opening PR)_
+
+### Completed this week
+
+- [x] Tested whether the existing guardrail is still the right choice, using the LLM Guard/NeMo comparison work already done
+- [x] Kept the existing keyword baseline as the live input guardrail. LLM Guard showed better recall on novel phrasing but cost ~280ms per query and produced a false positive on a legitimate CTI query ("password dumping from memory")
+- [x] Read PIGuard (Li et al., ACL 2025) for the literature review and found it directly validates a methodology choice already made in this project: the paper's NotInject dataset formalizes exactly the "over-defense" concept (benign text with trigger words like "exploit," "bypass" wrongly flagged) that was approximated with our own CTI benign queries in this week's guardrail comparison. Added as Resource 11 in `docs/literature-review.md` which wuld help in the draft paper.
+- [x] Recorded a short screen demo (46s) of the live endpoint end to end: server startup, a normal query through retrieval → privacy filtering → LLM generation → output scanning, and a blocked prompt-injection attempt, which is attached to this week's PR
+
+### Problems / Blockers
+
+No major blockers — this week was mostly about closing the gap between "what was tested in scripts" and "what's confirmed as the deliberate, evaluated choice running live," plus catching up on documentation and the literature review entry.
+
+### Next week plan (Aug 16 milestone)
+
+- Implement an **output grounding-check**: verify that MITRE ATT&CK technique IDs the LLM cites in its generated answers actually exist in the real ATT&CK dataset, and are genuinely relevant to (i.e. actually present in) the retrieved context — flagging any fabricated or ungrounded citations before the answer reaches the user
+- Rough plan: extract technique ID mentions from the LLM's answer (pattern like `T\d{4}`), cross-check each one against the local `mitre_attack.json` knowledge base to confirm it's real, and cross-check it appears in the retrieved documents actually used for that answer (not just real, but relevant to this specific query)
+- Will need a small labeled test set of real vs. deliberately fabricated citations to measure the grounding-check's own false-positive/negative rate.
+
+---
 _(Add a new section each week)_
