@@ -323,7 +323,7 @@ Regex v3 is 0.644 times slower than v1 filter.
 ## Week 9
 
 **Branch:** `maria-week-09`
-**PR link:** _(add after opening PR)_
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/12
 
 ### Completed this week
 
