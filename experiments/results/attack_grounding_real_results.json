@@ -1,0 +1,102 @@
+{
+  "timestamp": "2026-08-11T20:40:34.140404+00:00",
+  "snapshot_path": "data\\mitre_attack\\enterprise_attack_techniques.json",
+  "overlap_threshold": 0.15,
+  "snapshot_technique_count": 858,
+  "checks": [
+    {
+      "test": "real_technique_is_not_fabricated",
+      "technique_id": "T1055",
+      "classification": "REAL_BUT_IRRELEVANT",
+      "name": "Process Injection",
+      "topical_overlap": 0.043
+    },
+    {
+      "test": "completely_fake_id_is_fabricated",
+      "technique_id": "T9999",
+      "classification": "FABRICATED",
+      "name": null,
+      "topical_overlap": null
+    },
+    {
+      "test": "another_fake_id",
+      "technique_id": "T1234.999",
+      "classification": "FABRICATED"
+    },
+    {
+      "test": "t1055_with_matching_context",
+      "technique_id": "T1055",
+      "context_type": "matching",
+      "classification": "REAL_AND_PLAUSIBLE",
+      "topical_overlap": 0.157,
+      "name": "Process Injection"
+    },
+    {
+      "test": "t1055_with_unrelated_context",
+      "technique_id": "T1055",
+      "context_type": "unrelated",
+      "classification": "REAL_BUT_IRRELEVANT",
+      "topical_overlap": 0.043,
+      "name": "Process Injection"
+    },
+    {
+      "test": "end_to_end_mixed_real_and_fake",
+      "technique_ids": [
+        "T1055",
+        "T1086",
+        "T9999"
+      ],
+      "verifications": [
+        {
+          "technique_id": "T1055",
+          "classification": "REAL_BUT_IRRELEVANT",
+          "name": "Process Injection",
+          "topical_overlap": 0.129,
+          "url": "https://attack.mitre.org/techniques/T1055"
+        },
+        {
+          "technique_id": "T1086",
+          "classification": "REVOKED",
+          "name": "PowerShell",
+          "topical_overlap": null,
+          "url": "https://attack.mitre.org/techniques/T1086"
+        },
+        {
+          "technique_id": "T9999",
+          "classification": "FABRICATED",
+          "name": null,
+          "topical_overlap": null,
+          "url": null
+        }
+      ],
+      "ungrounded": [
+        "T1055",
+        "T1086",
+        "T9999"
+      ],
+      "flagged": true,
+      "requires_review": true
+    },
+    {
+      "test": "annotation_with_real_result",
+      "original_answer": "Activity maps to T1055 and the fake T9999.",
+      "annotated_answer": "Activity maps to T1055 [⚠ REAL_BUT_IRRELEVANT] and the fake T9999 [⚠ FABRICATED].",
+      "verifications": [
+        {
+          "technique_id": "T1055",
+          "classification": "REAL_BUT_IRRELEVANT",
+          "name": "Process Injection",
+          "topical_overlap": 0.071,
+          "url": "https://attack.mitre.org/techniques/T1055"
+        },
+        {
+          "technique_id": "T9999",
+          "classification": "FABRICATED",
+          "name": null,
+          "topical_overlap": null,
+          "url": null
+        }
+      ]
+    }
+  ]
+}
