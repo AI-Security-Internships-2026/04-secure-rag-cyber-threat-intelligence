@@ -164,7 +164,9 @@ def verify_technique(
 
     # Real and currently valid → measure relevance to retrieved context
     description = info.get("description") or ""
-    overlap = _topical_overlap(description, retrieved_context)
+
+    # Returns fraction of significant words in the retrieved context that also appear in the technique description
+    overlap = _topical_overlap(retrieved_context, description)
 
     if overlap >= OVERLAP_THRESHOLD:
         classification = "REAL_AND_PLAUSIBLE"
