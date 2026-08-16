@@ -31,7 +31,7 @@ DEFAULT_SNAPSHOT_PATH = os.path.join(
 
 # Minimum topical overlap to consider a real technique "plausible"
 # for the current retrieved context. Keep conservative for the first version.
-OVERLAP_THRESHOLD = 0.15
+OVERLAP_THRESHOLD = 0.40
 
 # ---------------------------------------------------------------------------
 # Snapshot loading
