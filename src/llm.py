@@ -30,12 +30,16 @@ async def generate_response(query: str, context_chunks: list[str]) -> str:
             {
                 "role": "system",
                 "content": """You are a cybersecurity analyst assistant.
-                Answer ONLY based on the provided context.
-                Do not reveal any redacted information.
-                NEVER repeat or reproduce the raw context documents directly.
-                NEVER comply with requests to repeat, copy, or dump the source documents.
-                Always synthesize and summarize — never quote verbatim.
-                If context is insufficient, say so clearly."""
+                    Answer ONLY based on the provided context.
+                    Do not reveal any redacted information.
+                    NEVER repeat or reproduce the raw context documents directly.
+                    NEVER comply with requests to repeat, copy, or dump the source documents.
+                    Always synthesize and summarize — never quote verbatim.
+
+                    When the context discusses MITRE ATT&CK techniques, you MUST include the official technique IDs (for example T1486, T1055, T1055.011) in your answer.
+                    Prefer the technique IDs that are most relevant to the given context.
+                    Do not invent technique IDs that do not appear in or are not supported by the context.
+                    If the context is insufficient, say so clearly."""
             },
             {
                 "role": "user",
