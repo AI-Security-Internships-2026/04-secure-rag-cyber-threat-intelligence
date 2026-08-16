@@ -17,6 +17,7 @@ from privacy_filter_v3 import redact_sensitive_info
 from llm import generate_response, close_client
 from cache import get_cached, set_cache, get_cache_stats
 from output_scanner import scan_output
+from attack_grounding import check_attack_grounding, annotate_answer
 
 app = FastAPI(title="Secure RAG CTI Pipeline")
 
@@ -46,6 +47,7 @@ stats = {
     "blocked_queries": 0,
     "cache_hits": 0,
     "output_leaks_caught": 0,
+    "ungrounded_citations_caught": 0,
     "start_time": time.time()
 }
 
@@ -133,7 +135,16 @@ async def query(request: QueryRequest, x_api_key: str = Header(...)):
     answer = await generate_response(request.query, clean_chunks)
     timings["llm_generation_ms"] = round((time.perf_counter() - t0) * 1000, 2)
 
-    # Stage: output scanner
+    # Stage: ATT&CK output grounding check
+    t0 = time.perf_counter()
+    grounding = check_attack_grounding(answer, clean_chunks)
+    if grounding["flagged"]:
+        stats["ungrounded_citations_caught"] += 1
+    # Optionally annotate the answer with warnings for ungrounded IDs
+    answer = annotate_answer(answer, grounding["verifications"])
+    timings["attack_grounding_ms"] = round((time.perf_counter() - t0) * 1000, 2)
+
+    # Stage: output scanner (privacy)
     t0 = time.perf_counter()
     cleaned_answer, leaked_items, leaked = scan_output(answer)
     if leaked:
@@ -148,6 +159,9 @@ async def query(request: QueryRequest, x_api_key: str = Header(...)):
         "answer": cleaned_answer,
         "sources": [m["name"] for m in results["metadatas"][0]],
         "redacted_items": redacted_items,
+        "attack_verifications": grounding["verifications"],
+        "ungrounded_attack_techniques": grounding["ungrounded"],
+        "requires_review": grounding["requires_review"],
         "from_cache": False,
         "timings": timings
     }
@@ -165,7 +179,9 @@ async def query(request: QueryRequest, x_api_key: str = Header(...)):
             "sources": result["sources"],
             "redacted_items": redacted_items,
             "output_leaked": leaked,
-            "timings": timings
+            "timings": timings,
+            "ungrounded_attack_techniques": grounding["ungrounded"],
+            "requires_review": grounding["requires_review"],
         }, f)
         f.write("\n")
 
