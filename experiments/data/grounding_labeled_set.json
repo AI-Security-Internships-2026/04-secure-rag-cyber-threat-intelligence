@@ -1,0 +1,141 @@
+{
+  "description": "Labeled citations for ATT&CK output grounding benchmark. Each case has an answer fragment, retrieved context, and gold labels per technique ID.",
+  "label_schema": {
+    "REAL_AND_PLAUSIBLE": "Real technique and relevant to retrieved context (should NOT be treated as an error)",
+    "REAL_BUT_IRRELEVANT": "Real technique but not supported by retrieved context (should be flagged)",
+    "FABRICATED": "Technique ID does not exist in ATT&CK (should be flagged)",
+    "REVOKED": "Technique exists but is revoked/deprecated (should be flagged)"
+  },
+  "cases": [
+    {
+      "id": "match-ransomware-t1486",
+      "answer": "Ransomware often uses T1486 Data Encrypted for Impact to encrypt files and block recovery.",
+      "retrieved_context": "Adversaries may encrypt data on target systems to interrupt availability of system and network resources. They may encrypt data on a large scale to prevent recovery without a decryption key. This is Data Encrypted for Impact.",
+      "gold": { "T1486": "REAL_AND_PLAUSIBLE" }
+    },
+    {
+      "id": "match-injection-t1055",
+      "answer": "The malware performs process injection consistent with T1055.",
+      "retrieved_context": "Adversaries may inject code into processes in order to evade process-based defenses and potentially elevate privileges. Process injection is a method of executing arbitrary code in the address space of a separate live process.",
+      "gold": { "T1055": "REAL_AND_PLAUSIBLE" }
+    },
+    {
+      "id": "match-cred-t1003",
+      "answer": "Attackers dumped credentials from LSASS using T1003 OS Credential Dumping.",
+      "retrieved_context": "Adversaries may attempt to dump credentials to obtain account login and credential material, normally in the form of a hash or clear text password, from the operating system and software. Credential dumping techniques include accessing LSASS memory.",
+      "gold": { "T1003": "REAL_AND_PLAUSIBLE" }
+    },
+    {
+      "id": "match-powershell-t1059-001",
+      "answer": "Execution was performed via T1059.001 PowerShell.",
+      "retrieved_context": "Adversaries may abuse PowerShell commands and scripts for execution. PowerShell is a powerful interactive command-line interface and scripting environment included in the Windows operating system.",
+      "gold": { "T1059.001": "REAL_AND_PLAUSIBLE" }
+    },
+    {
+      "id": "match-scheduled-t1053-005",
+      "answer": "Persistence was established with T1053.005 Scheduled Task.",
+      "retrieved_context": "Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious code. Scheduled tasks can be used for persistence.",
+      "gold": { "T1053.005": "REAL_AND_PLAUSIBLE" }
+    },
+    {
+      "id": "irrelevant-t1055-on-scanning",
+      "answer": "The activity is consistent with T1055 process injection.",
+      "retrieved_context": "Sequential port scanning was observed across multiple internal hosts. No process memory or injection activity was recorded. Network reconnaissance only.",
+      "gold": { "T1055": "REAL_BUT_IRRELEVANT" }
+    },
+    {
+      "id": "irrelevant-t1486-on-phishing",
+      "answer": "This maps to T1486 Data Encrypted for Impact.",
+      "retrieved_context": "Spearphishing emails with malicious attachments were delivered to finance staff. The campaign focused on credential theft via fake login pages. No file encryption was observed.",
+      "gold": { "T1486": "REAL_BUT_IRRELEVANT" }
+    },
+    {
+      "id": "irrelevant-t1003-on-exfil",
+      "answer": "The adversary used T1003 to access credentials.",
+      "retrieved_context": "Large volumes of data were transferred to an external IP over HTTPS. Exfiltration over web service channels was the primary observed behavior. No credential dumping tools were present.",
+      "gold": { "T1003": "REAL_BUT_IRRELEVANT" }
+    },
+    {
+      "id": "irrelevant-t1021-on-encryption",
+      "answer": "Lateral movement used T1021.002 SMB/Windows Admin Shares.",
+      "retrieved_context": "Files on the desktop were encrypted with a custom algorithm and renamed with a ransom extension. Shadow copies were deleted. No SMB authentication or share enumeration was logged.",
+      "gold": { "T1021.002": "REAL_BUT_IRRELEVANT" }
+    },
+    {
+      "id": "irrelevant-t1041-on-injection",
+      "answer": "Data left the network via T1041 Exfiltration Over C2 Channel.",
+      "retrieved_context": "Code was injected into explorer.exe to evade process-based defenses. The injection used process hollowing. No outbound C2 exfiltration was described in the evidence.",
+      "gold": { "T1041": "REAL_BUT_IRRELEVANT" }
+    },
+    {
+      "id": "fabricated-t9999",
+      "answer": "The novel stealth module maps to T9999 Super Stealth Encryption.",
+      "retrieved_context": "Adversaries may encrypt data on target systems to interrupt availability and demand ransom payment.",
+      "gold": { "T9999": "FABRICATED" }
+    },
+    {
+      "id": "fabricated-t1234-999",
+      "answer": "Behavior matches T1234.999 Custom Kernel Hook.",
+      "retrieved_context": "Process injection into running processes was detected on several endpoints.",
+      "gold": { "T1234.999": "FABRICATED" }
+    },
+    {
+      "id": "fabricated-t0000",
+      "answer": "This is associated with T0000 Baseline Bypass.",
+      "retrieved_context": "Credential dumping from memory was observed using a Mimikatz-like tool.",
+      "gold": { "T0000": "FABRICATED" }
+    },
+    {
+      "id": "fabricated-t8888",
+      "answer": "Operators relied on T8888 Ghost Protocol for C2.",
+      "retrieved_context": "Outbound traffic over HTTPS to a suspicious domain was used for command and control.",
+      "gold": { "T8888": "FABRICATED" }
+    },
+    {
+      "id": "fabricated-t7777-001",
+      "answer": "The loader uses T7777.001 Memory-Only Implant.",
+      "retrieved_context": "A fileless implant resided only in memory and executed via PowerShell.",
+      "gold": { "T7777.001": "FABRICATED" }
+    },
+    {
+      "id": "revoked-t1086",
+      "answer": "Scripts were run with T1086 PowerShell.",
+      "retrieved_context": "PowerShell was used to download and execute a remote payload interactively.",
+      "gold": { "T1086": "REVOKED" }
+    },
+    {
+      "id": "mixed-good-and-fake",
+      "answer": "Encryption used T1486; a secondary module claimed T9999 for evasion.",
+      "retrieved_context": "Adversaries may encrypt data on target systems to interrupt availability of resources and demand ransom. Data Encrypted for Impact prevents recovery without a key.",
+      "gold": {
+        "T1486": "REAL_AND_PLAUSIBLE",
+        "T9999": "FABRICATED"
+      }
+    },
+    {
+      "id": "mixed-good-and-irrelevant",
+      "answer": "Primary impact was T1486; analysts also noted T1055 without evidence of injection.",
+      "retrieved_context": "Widespread file encryption occurred across user directories. Ransom notes demanded payment for decryption keys. No process injection telemetry was present.",
+      "gold": {
+        "T1486": "REAL_AND_PLAUSIBLE",
+        "T1055": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "mixed-three-way",
+      "answer": "Activity involved T1003 for credentials, unsupported T1048 for exfil claims, and invented T9999.",
+      "retrieved_context": "LSASS memory was accessed to recover passwords and hashes. OS Credential Dumping was confirmed by EDR. No exfiltration channel was documented in the retrieved evidence.",
+      "gold": {
+        "T1003": "REAL_AND_PLAUSIBLE",
+        "T1048": "REAL_BUT_IRRELEVANT",
+        "T9999": "FABRICATED"
+      }
+    },
+    {
+      "id": "match-defense-evasion-t1027",
+      "answer": "The binary used T1027 Obfuscated Files or Information.",
+      "retrieved_context": "Adversaries may attempt to make an executable or file difficult to discover or analyze by encrypting, encoding, or otherwise obfuscating its contents on the system or in transit.",
+      "gold": { "T1027": "REAL_AND_PLAUSIBLE" }
+    }
+  ]
+}
