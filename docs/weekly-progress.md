@@ -343,4 +343,43 @@ No major blockers — this week was mostly about closing the gap between "what w
 - Will need a small labeled test set of real vs. deliberately fabricated citations to measure the grounding-check's own false-positive/negative rate.
 
 ---
+
+## Week 10
+
+**Branch:** `maria-week-10`
+**PR link:** *(add after opening)*
+
+### Completed this week
+
+- [x] Built slim MITRE ATT&CK technique snapshot script (`src/data/create_attack_snapshot.py`)  
+      → `data/mitre_attack/enterprise_attack_techniques.json` (858 techniques; not committed)
+- [x] Implemented output grounding checker (`src/attack_grounding.py`)
+  - Extract `Txxxx` / `Txxxx.xxx` from LLM answers
+  - Existence + revoked/deprecated check against local snapshot
+  - Relevance scoring vs retrieved context (deterministic topical overlap)
+  - Classifications: `FABRICATED`, `REVOKED`, `REAL_BUT_IRRELEVANT`, `REAL_AND_PLAUSIBLE`, `UNVERIFIED`
+- [x] Fixed topical-overlap argument order to match repo-13 convention (short context first)
+- [x] Raised overlap threshold from 0.15 → 0.40 after the direction fix
+- [x] Added unit tests (`tests/test_attack_grounding.py`) and real-snapshot tests (`tests/test_attack_grounding_real.py`)
+- [x] Saved real-data results (`experiments/results/attack_grounding_real_results.json`)
+- [x] Integrated checker into live FastAPI pipeline (`src/main.py`)
+  - Runs after LLM generation
+  - Returns `attack_verifications`, `ungrounded_attack_techniques`, `requires_review`
+  - Tracks `ungrounded_citations_caught` in stats
+- [x] Updated UI to show grounding results in a separate section (answer text kept clean)
+- [x] Strengthened LLM system prompt to require relevant ATT&CK technique IDs when context supports them
+
+### Problems / Blockers
+
+- Groq model access changed: `llama-3.1-8b-instant` / `llama-3.3-70b-versatile` returned `model_not_found` for the current API key. Switched to an available model from the account model list (e.g. `openai/gpt-oss-20b`).
+- Early demo answers sometimes cited real but weakly related technique IDs, grounding correctly marked them `REAL_BUT_IRRELEVANT` relative to retrieved context (expected behaviour for evidence-grounding, not a checker bug).
+- Inline answer annotations were hard to read, moved warnings to a dedicated UI section below the answer.
+
+### Next week plan
+
+- Benchmark the grounding-check's false-positive/negative rate on a labeled set of real vs. fabricated citations
+- Build a small labeled evaluation set (grounded / fabricated / real-but-irrelevant citations)
+- Report precision, recall, FP rate, and FN rate for the checker
+
+---
 _(Add a new section each week)_
