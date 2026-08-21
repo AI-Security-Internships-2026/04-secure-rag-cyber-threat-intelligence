@@ -382,4 +382,38 @@ No major blockers — this week was mostly about closing the gap between "what w
 - Report precision, recall, FP rate, and FN rate for the checker
 
 ---
+
+## Week 11
+
+**Branch:** `maria-week-11`
+**PR link:** *(add after opening)*
+
+### Completed this week
+
+- [x] Built labeled citation set for grounding evaluation  
+      (`experiments/data/grounding_labeled_set.json` — 20 cases, 24 citations)
+- [x] Implemented benchmark script (`src/benchmark_attack_grounding.py`)
+  - Binary detection metrics (precision, recall, F1, FPR, FNR)
+  - Exact 4-class classification agreement
+- [x] Ran benchmark at overlap threshold 0.40 and saved results  
+      (`experiments/results/attack_grounding_benchmark.json`)
+- [x] Key results:
+  - Accuracy 95.83%, Precision 93.75%, Recall **100%**, F1 96.77%
+  - False negative rate **0%** (no bad citation missed)
+  - False positive rate 11.11% (1 over-flagged plausible citation)
+  - Perfect exact match on FABRICATED, REVOKED, REAL_BUT_IRRELEVANT
+
+### Problems / Blockers
+
+- One `REAL_AND_PLAUSIBLE` citation was scored `REAL_BUT_IRRELEVANT` (single FP). Acceptable for a conservative safety threshold, but can be revisited if the labeled set is expanded.
+- Labeled set is pilot-sized (24 citations). Sufficient for the milestone, a larger set would strengthen a journal-style claim later.
+
+### Next week plan
+
+- Full guardrail-comparison write-up (issue #6), integrated into the pipeline
+- Start structuring the paper/report draft
+
+---
+
+
 _(Add a new section each week)_
