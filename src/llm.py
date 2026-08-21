@@ -25,7 +25,7 @@ async def generate_response(query: str, context_chunks: list[str]) -> str:
     context = "\n\n".join(context_chunks)
 
     response = await client.chat.completions.create(
-        model="llama-3.1-8b-instant",
+        model="openai/gpt-oss-120b",
         messages=[
             {
                 "role": "system",
