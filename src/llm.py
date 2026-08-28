@@ -21,11 +21,15 @@ client = AsyncGroq(
     http_client=http_client
 )
 
+# Switch models without code edits when usage limits hit.
+# Examples: llama-3.1-8b-instant | openai/gpt-oss-20b | openai/gpt-oss-120b
+MODEL_NAME = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
+
 async def generate_response(query: str, context_chunks: list[str]) -> str:
     context = "\n\n".join(context_chunks)
 
     response = await client.chat.completions.create(
-        model="openai/gpt-oss-120b",
+        model=MODEL_NAME,
         messages=[
             {
                 "role": "system",
