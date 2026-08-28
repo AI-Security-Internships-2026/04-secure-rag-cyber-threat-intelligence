@@ -184,8 +184,8 @@ def test_all_plausible(mock_snapshot):
     result = check_attack_grounding(answer, retrieved)
     assert result["ungrounded"] == []
     assert result["flagged"] is False
-    # requires_review is deliberately conservative in the first version
-    assert result["requires_review"] is True
+    # requires_review only when something is ungrounded
+    assert result["requires_review"] is False
 
 
 # ---------------------------------------------------------------------------
@@ -208,6 +208,19 @@ def test_annotate_does_not_mutate_original():
     verifications = [{"technique_id": "T9999", "classification": "FABRICATED"}]
     annotate_answer(original, verifications)
     assert original == "Consistent with T9999."
+    
+def test_annotate_does_not_corrupt_subtechnique():
+    from attack_grounding import annotate_answer
+
+    text = "Activity involves T1055 and T1055.011."
+    verifications = [
+        {"technique_id": "T1055", "classification": "REAL_BUT_IRRELEVANT"},
+        {"technique_id": "T1055.011", "classification": "FABRICATED"},
+    ]
+    out = annotate_answer(text, verifications)
+    assert "T1055.011 [⚠ FABRICATED]" in out
+    assert "T1055 [⚠ REAL_BUT_IRRELEVANT]" in out
+    assert "T1055 [⚠ REAL_BUT_IRRELEVANT].011" not in out
 
 
 # ---------------------------------------------------------------------------

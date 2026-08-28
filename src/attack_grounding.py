@@ -253,21 +253,34 @@ def check_attack_grounding(
 
 def annotate_answer(answer: str, verifications: list[dict]) -> str:
     """
-    Return a copy of the answer where ungrounded technique IDs are
-    tagged inline, e.g. T9999 [⚠ FABRICATED].
-    Does not mutate the original string.
+    Tag ungrounded technique IDs in answer text.
+
+    Longer IDs are applied first. A shorter ID (T1055) must not match as a
+    prefix of a sub-technique (T1055.011).
     """
-    if not verifications:
+    if not answer or not verifications:
+        return answer
+
+    tags = {
+        v["technique_id"]: v["classification"]
+        for v in verifications
+        if v.get("classification") and v["classification"] != "REAL_AND_PLAUSIBLE"
+    }
+    if not tags:
         return answer
 
     annotated = answer
-    for v in verifications:
-        if v["classification"] == "REAL_AND_PLAUSIBLE":
-            continue
-        tid = v["technique_id"]
-        tag = f"{tid} [⚠ {v['classification']}]"
-        # Case-insensitive replacement while preserving original case where possible
-        pattern = re.compile(re.escape(tid), re.IGNORECASE)
-        annotated = pattern.sub(tag, annotated)
+
+    for tid in sorted(tags.keys(), key=len, reverse=True):
+        classification = tags[tid]
+        # Do not match inside a longer ID: T1055 must not match T1055.011
+        pattern = re.compile(
+            rf"(?<![A-Za-z0-9.]){re.escape(tid)}(?!\.\d)(?![A-Za-z0-9])",
+            re.IGNORECASE,
+        )
+        annotated = pattern.sub(
+            f"{tid} [⚠ {classification}]",
+            annotated,
+        )
 
     return annotated
