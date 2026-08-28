@@ -37,20 +37,25 @@ OVERLAP_THRESHOLD = 0.40
 # Snapshot loading
 # ---------------------------------------------------------------------------
 
+import logging
+logger = logging.getLogger(__name__)
+
 @lru_cache(maxsize=1)
 def _load_attack_techniques(snapshot_path: str = DEFAULT_SNAPSHOT_PATH) -> dict:
-    """
-    Load the slim technique snapshot once and cache it in memory.
-    Returns a dict: technique_id -> {name, description, revoked, url}
-    """
     if not os.path.exists(snapshot_path):
-        # Caller can decide how to handle a missing snapshot
+        logger.warning(
+            "MITRE ATT&CK snapshot missing at %s — all checks will be UNVERIFIED. "
+            "Run src/data/create_attack_snapshot.py and restart (or clear cache).",
+            snapshot_path,
+        )
         return {}
-
     with open(snapshot_path, "r", encoding="utf-8") as f:
         data = json.load(f)
-
     return data.get("techniques", {})
+
+def clear_attack_snapshot_cache() -> None:
+    """Call after creating/updating the snapshot (tests / admin)."""
+    _load_attack_techniques.cache_clear()
 
 
 # ---------------------------------------------------------------------------

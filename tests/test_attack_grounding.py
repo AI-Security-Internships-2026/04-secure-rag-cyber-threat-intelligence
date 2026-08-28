@@ -239,3 +239,59 @@ def test_missing_snapshot_returns_unverified(monkeypatch):
     )
     result = verify_technique("T1055", "any context")
     assert result["classification"] == "UNVERIFIED"
+    
+def test_missing_snapshot_logs_warning_and_returns_empty(tmp_path, caplog, monkeypatch):
+    import logging
+    from attack_grounding import _load_attack_techniques, clear_attack_snapshot_cache
+
+    missing = tmp_path / "does_not_exist.json"
+    clear_attack_snapshot_cache()  # start clean
+
+    with caplog.at_level(logging.WARNING, logger="attack_grounding"):
+        data = _load_attack_techniques(str(missing))
+
+    assert data == {}
+    assert any("snapshot missing" in r.message.lower() for r in caplog.records)
+
+    result = verify_technique("T1055", "any context", snapshot_path=str(missing))
+    assert result["classification"] == "UNVERIFIED"
+    
+def test_clear_cache_reloads_after_snapshot_created(tmp_path, monkeypatch):
+    from attack_grounding import (
+        _load_attack_techniques,
+        clear_attack_snapshot_cache,
+        verify_technique,
+    )
+
+    path = tmp_path / "enterprise_attack_techniques.json"
+    clear_attack_snapshot_cache()
+
+    # First load: file missing → cached empty
+    assert _load_attack_techniques(str(path)) == {}
+    assert verify_technique("T1055", "ctx", snapshot_path=str(path))["classification"] == "UNVERIFIED"
+
+    # Create snapshot on disk
+    path.write_text(
+        json.dumps({
+            "techniques": {
+                "T1055": {
+                    "name": "Process Injection",
+                    "description": "Adversaries may inject code into processes.",
+                    "revoked": False,
+                    "url": "https://attack.mitre.org/techniques/T1055",
+                }
+            }
+        }),
+        encoding="utf-8",
+    )
+
+    # Without clear: still empty (this is the bug we fixed)
+    assert _load_attack_techniques(str(path)) == {}
+
+    # After clear: reloads from disk
+    clear_attack_snapshot_cache()
+    data = _load_attack_techniques(str(path))
+    assert "T1055" in data
+    assert verify_technique("T1055", "process injection context", snapshot_path=str(path))[
+        "classification"
+    ] != "UNVERIFIED"
