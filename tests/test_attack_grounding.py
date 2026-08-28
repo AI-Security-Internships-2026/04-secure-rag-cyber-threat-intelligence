@@ -186,6 +186,11 @@ def test_all_plausible(mock_snapshot):
     assert result["flagged"] is False
     # requires_review only when something is ungrounded
     assert result["requires_review"] is False
+    
+def test_verify_technique_normalizes_case(mock_snapshot):
+    result = verify_technique("t1055", "process injection into a running process")
+    assert result["technique_id"] == "T1055"
+    assert result["classification"] != "FABRICATED"
 
 
 # ---------------------------------------------------------------------------

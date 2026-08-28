@@ -131,6 +131,7 @@ def verify_technique(
     Returns a dict with:
         technique_id, classification, name, topical_overlap, url
     """
+    technique_id = (technique_id or "").upper()
     techniques = _load_attack_techniques(snapshot_path)
 
     if not techniques:
