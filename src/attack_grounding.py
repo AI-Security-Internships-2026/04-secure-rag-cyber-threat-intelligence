@@ -234,11 +234,9 @@ def check_attack_grounding(
         if v["classification"] != "REAL_AND_PLAUSIBLE"
     ]
 
-    # Policy decision (same spirit as repo 13):
-    # even REAL_AND_PLAUSIBLE can be worth reviewing in a high-stakes setting.
-    # For the first version we flag everything that is not perfectly clean.
-    requires_review = len(verifications) > 0
+    # Only require review when something is actually ungrounded
     flagged = len(ungrounded) > 0
+    requires_review = flagged
 
     return {
         "technique_ids": sorted(technique_ids),
