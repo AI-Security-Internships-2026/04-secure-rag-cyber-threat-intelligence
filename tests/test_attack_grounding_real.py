@@ -4,6 +4,11 @@ Real-data tests for the ATT&CK grounding checker.
 Loads the actual slim snapshot and verifies behaviour against real technique IDs.
 Also writes a summary of the results to:
     experiments/results/attack_grounding_real_results.json
+    
+Full-snapshot / larger evaluation tests.
+Skipped when the local slim snapshot is absent (not committed).
+Always-on logic tests live in test_attack_grounding_fixture.py.
+Expand labeled eval toward ~100 samples under experiments/data/.
 
 Run:
     pytest tests/test_attack_grounding_real.py -v -s
