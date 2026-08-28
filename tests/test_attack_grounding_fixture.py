@@ -2,7 +2,7 @@
 Fixture-based ATT&CK grounding tests (always-on).
 
 Uses a small committed snapshot so CI/fresh clones do not skip.
-Empirical FP/FN on 20→100 labeled samples lives under experiments/, not here.
+Empirical FP/FN on labeled samples lives under experiments/, not here.
 
 Run: pytest tests/test_attack_grounding_fixture.py -v
 """
