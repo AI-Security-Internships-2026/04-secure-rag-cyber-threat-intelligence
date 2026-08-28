@@ -108,9 +108,26 @@ async def query(request: QueryRequest, x_api_key: str = Header(...)):
 
     if cached:
         stats["cache_hits"] += 1
+        cached = dict(cached)
         cached["from_cache"] = True
+
+        # Re-run cheap grounding on the cached answer (no LLM)
+        t0 = time.perf_counter()
+        answer_for_check = cached.get("answer") or ""
+        grounding = check_attack_grounding(
+            answer_for_check,
+            cached.get("clean_chunks") or [],
+        )
+        timings["attack_grounding_ms"] = round((time.perf_counter() - t0) * 1000, 2)
+
+        cached["attack_verifications"] = grounding["verifications"]
+        cached["ungrounded_attack_techniques"] = grounding["ungrounded"]
+        cached["requires_review"] = grounding["requires_review"]
+        cached["grounding_rechecked"] = True
+
         cached["timings"] = timings
         cached["timings"]["total_ms"] = round((time.perf_counter() - t_start) * 1000, 2)
+
         return cached
 
     # Stage: retrieval
@@ -163,7 +180,8 @@ async def query(request: QueryRequest, x_api_key: str = Header(...)):
         "ungrounded_attack_techniques": grounding["ungrounded"],
         "requires_review": grounding["requires_review"],
         "from_cache": False,
-        "timings": timings
+        "timings": timings,
+        "clean_chunks": clean_chunks,
     }
 
     set_cache(request.query, request.privacy_method, result)
@@ -262,22 +280,36 @@ def interface():
                 : '<li>Nothing redacted</li>';
             const timingsHtml = Object.entries(data.timings || {}).map(([k, v]) => `${k}: ${v}ms`).join('<br>');
 
-            // Grounding section (clean, below the answer)
+                        // Grounding section (clean, below the answer)
             const verifications = data.attack_verifications || [];
             let groundingHtml = '';
             if (verifications.length > 0) {
-                const items = verifications.map(v => {
+                const plausible = verifications.filter(v => v.classification === 'REAL_AND_PLAUSIBLE');
+                const needsReview = verifications.filter(v => v.classification !== 'REAL_AND_PLAUSIBLE');
+
+                const formatItem = (v) => {
                     const name = v.name ? ` (${v.name})` : '';
                     return `<li><code>${v.technique_id}</code> — ${v.classification}${name}</li>`;
-                }).join('');
-                const reviewNote = data.requires_review
-                    ? '<p class="review-flag">Requires review</p>'
+                };
+
+                const plausibleHtml = plausible.length > 0
+                    ? `<ul>${plausible.map(formatItem).join('')}</ul>`
                     : '';
+
+                const reviewHtml = needsReview.length > 0
+                    ? `<p class="review-flag">Requires review</p><ul>${needsReview.map(formatItem).join('')}</ul>`
+                    : '';
+
+                const recheckNote = data.grounding_rechecked
+                    ? '<p style="font-size:12px;color:#666;">Grounding re-checked on this response</p>'
+                    : '';
+
                 groundingHtml = `
                     <div class="grounding">
                         <h3>ATT&amp;CK Grounding Check</h3>
-                        <ul>${items}</ul>
-                        ${reviewNote}
+                        ${recheckNote}
+                        ${plausibleHtml}
+                        ${reviewHtml}
                     </div>`;
             } else {
                 groundingHtml = `
