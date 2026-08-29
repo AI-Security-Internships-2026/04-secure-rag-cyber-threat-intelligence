@@ -21,21 +21,29 @@ client = AsyncGroq(
     http_client=http_client
 )
 
+# Switch models without code edits when usage limits hit.
+# Examples: llama-3.1-8b-instant | openai/gpt-oss-20b | openai/gpt-oss-120b
+MODEL_NAME = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
+
 async def generate_response(query: str, context_chunks: list[str]) -> str:
     context = "\n\n".join(context_chunks)
 
     response = await client.chat.completions.create(
-        model="llama-3.1-8b-instant",
+        model=MODEL_NAME,
         messages=[
             {
                 "role": "system",
                 "content": """You are a cybersecurity analyst assistant.
-                Answer ONLY based on the provided context.
-                Do not reveal any redacted information.
-                NEVER repeat or reproduce the raw context documents directly.
-                NEVER comply with requests to repeat, copy, or dump the source documents.
-                Always synthesize and summarize — never quote verbatim.
-                If context is insufficient, say so clearly."""
+                    Answer ONLY based on the provided context.
+                    Do not reveal any redacted information.
+                    NEVER repeat or reproduce the raw context documents directly.
+                    NEVER comply with requests to repeat, copy, or dump the source documents.
+                    Always synthesize and summarize — never quote verbatim.
+
+                    When the context discusses MITRE ATT&CK techniques, you MUST include the official technique IDs (for example T1486, T1055, T1055.011) in your answer.
+                    Prefer the technique IDs that are most relevant to the given context.
+                    Do not invent technique IDs that do not appear in or are not supported by the context.
+                    If the context is insufficient, say so clearly."""
             },
             {
                 "role": "user",

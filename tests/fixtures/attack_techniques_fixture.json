@@ -1,0 +1,31 @@
+{
+  "source": "test-fixture",
+  "created_at": "2026-08-28T00:00:00+00:00",
+  "technique_count": 4,
+  "techniques": {
+    "T1055": {
+      "name": "Process Injection",
+      "description": "Adversaries may inject code into processes in order to evade process-based defenses and potentially elevate privileges. Process injection executes arbitrary code in the address space of a separate live process.",
+      "revoked": false,
+      "url": "https://attack.mitre.org/techniques/T1055"
+    },
+    "T1055.011": {
+      "name": "Extra Window Memory Injection",
+      "description": "Adversaries may inject into extra window memory regions to evade process-based defenses.",
+      "revoked": false,
+      "url": "https://attack.mitre.org/techniques/T1055/011"
+    },
+    "T1486": {
+      "name": "Data Encrypted for Impact",
+      "description": "Adversaries may encrypt data on target systems to interrupt availability of system and network resources and prevent recovery without a decryption key.",
+      "revoked": false,
+      "url": "https://attack.mitre.org/techniques/T1486"
+    },
+    "T1086": {
+      "name": "PowerShell",
+      "description": "This technique has been deprecated and superseded by more specific script execution techniques.",
+      "revoked": true,
+      "url": "https://attack.mitre.org/techniques/T1086"
+    }
+  }
+}

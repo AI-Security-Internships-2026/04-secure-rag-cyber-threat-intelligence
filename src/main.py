@@ -17,6 +17,7 @@ from privacy_filter_v3 import redact_sensitive_info
 from llm import generate_response, close_client
 from cache import get_cached, set_cache, get_cache_stats
 from output_scanner import scan_output
+from attack_grounding import check_attack_grounding
 
 app = FastAPI(title="Secure RAG CTI Pipeline")
 
@@ -46,6 +47,7 @@ stats = {
     "blocked_queries": 0,
     "cache_hits": 0,
     "output_leaks_caught": 0,
+    "ungrounded_citations_caught": 0,
     "start_time": time.time()
 }
 
@@ -72,6 +74,7 @@ def get_stats(x_api_key: str = Header(...)):
         "blocked_queries": stats["blocked_queries"],
         "cache_hits": stats["cache_hits"],
         "output_leaks_caught": stats["output_leaks_caught"],
+        "ungrounded_citations_caught": stats["ungrounded_citations_caught"],
         "uptime_seconds": int(time.time() - stats["start_time"]),
         "cache": get_cache_stats()
     }
@@ -105,9 +108,26 @@ async def query(request: QueryRequest, x_api_key: str = Header(...)):
 
     if cached:
         stats["cache_hits"] += 1
+        cached = dict(cached)
         cached["from_cache"] = True
+
+        # Re-run cheap grounding on the cached answer (no LLM)
+        t0 = time.perf_counter()
+        answer_for_check = cached.get("answer") or ""
+        grounding = check_attack_grounding(
+            answer_for_check,
+            cached.get("clean_chunks") or [],
+        )
+        timings["attack_grounding_ms"] = round((time.perf_counter() - t0) * 1000, 2)
+
+        cached["attack_verifications"] = grounding["verifications"]
+        cached["ungrounded_attack_techniques"] = grounding["ungrounded"]
+        cached["requires_review"] = grounding["requires_review"]
+        cached["grounding_rechecked"] = True
+
         cached["timings"] = timings
         cached["timings"]["total_ms"] = round((time.perf_counter() - t_start) * 1000, 2)
+
         return cached
 
     # Stage: retrieval
@@ -133,7 +153,15 @@ async def query(request: QueryRequest, x_api_key: str = Header(...)):
     answer = await generate_response(request.query, clean_chunks)
     timings["llm_generation_ms"] = round((time.perf_counter() - t0) * 1000, 2)
 
-    # Stage: output scanner
+    # Stage: ATT&CK output grounding check
+    t0 = time.perf_counter()
+    grounding = check_attack_grounding(answer, clean_chunks)
+    if grounding["flagged"]:
+        stats["ungrounded_citations_caught"] += 1
+    # Keep the answer clean — show grounding results separately below
+    timings["attack_grounding_ms"] = round((time.perf_counter() - t0) * 1000, 2)
+
+    # Stage: output scanner (privacy)
     t0 = time.perf_counter()
     cleaned_answer, leaked_items, leaked = scan_output(answer)
     if leaked:
@@ -148,8 +176,12 @@ async def query(request: QueryRequest, x_api_key: str = Header(...)):
         "answer": cleaned_answer,
         "sources": [m["name"] for m in results["metadatas"][0]],
         "redacted_items": redacted_items,
+        "attack_verifications": grounding["verifications"],
+        "ungrounded_attack_techniques": grounding["ungrounded"],
+        "requires_review": grounding["requires_review"],
         "from_cache": False,
-        "timings": timings
+        "timings": timings,
+        "clean_chunks": clean_chunks,
     }
 
     set_cache(request.query, request.privacy_method, result)
@@ -165,7 +197,9 @@ async def query(request: QueryRequest, x_api_key: str = Header(...)):
             "sources": result["sources"],
             "redacted_items": redacted_items,
             "output_leaked": leaked,
-            "timings": timings
+            "timings": timings,
+            "ungrounded_attack_techniques": grounding["ungrounded"],
+            "requires_review": grounding["requires_review"],
         }, f)
         f.write("\n")
 
@@ -193,11 +227,14 @@ def interface():
             .result { margin-top: 20px; background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #2c3e50; }
             .answer { background: #eafaf1; padding: 15px; border-radius: 4px; margin: 10px 0; }
             .sources { background: #ebf5fb; padding: 15px; border-radius: 4px; margin: 10px 0; }
+            .grounding { background: #f5eef8; padding: 15px; border-radius: 4px; margin: 10px 0; }
             .redacted { background: #fdedec; padding: 15px; border-radius: 4px; margin: 10px 0; }
             .timings { background: #fff3cd; padding: 15px; border-radius: 4px; margin: 10px 0; font-family: monospace; }
             .cache-badge { background: #f39c12; color: white; padding: 3px 8px; border-radius: 4px; font-size: 12px; }
             .blocked { background: #fdedec; padding: 15px; border-radius: 4px; color: #c0392b; }
+            .review-flag { color: #c0392b; font-weight: bold; }
             h3 { margin-top: 0; color: #2c3e50; }
+            code { background: #eee; padding: 1px 4px; border-radius: 3px; }
         </style>
     </head>
     <body>
@@ -238,15 +275,56 @@ def interface():
                 return;
             }
             const cacheTag = data.from_cache ? '<span class="cache-badge">FROM CACHE</span>' : '';
-            const redactedList = data.redacted_items.length > 0
+            const redactedList = (data.redacted_items && data.redacted_items.length > 0)
                 ? data.redacted_items.map(r => `<li>${r}</li>`).join('')
                 : '<li>Nothing redacted</li>';
             const timingsHtml = Object.entries(data.timings || {}).map(([k, v]) => `${k}: ${v}ms`).join('<br>');
+
+                        // Grounding section (clean, below the answer)
+            const verifications = data.attack_verifications || [];
+            let groundingHtml = '';
+            if (verifications.length > 0) {
+                const plausible = verifications.filter(v => v.classification === 'REAL_AND_PLAUSIBLE');
+                const needsReview = verifications.filter(v => v.classification !== 'REAL_AND_PLAUSIBLE');
+
+                const formatItem = (v) => {
+                    const name = v.name ? ` (${v.name})` : '';
+                    return `<li><code>${v.technique_id}</code> — ${v.classification}${name}</li>`;
+                };
+
+                const plausibleHtml = plausible.length > 0
+                    ? `<ul>${plausible.map(formatItem).join('')}</ul>`
+                    : '';
+
+                const reviewHtml = needsReview.length > 0
+                    ? `<p class="review-flag">Requires review</p><ul>${needsReview.map(formatItem).join('')}</ul>`
+                    : '';
+
+                const recheckNote = data.grounding_rechecked
+                    ? '<p style="font-size:12px;color:#666;">Grounding re-checked on this response</p>'
+                    : '';
+
+                groundingHtml = `
+                    <div class="grounding">
+                        <h3>ATT&amp;CK Grounding Check</h3>
+                        ${recheckNote}
+                        ${plausibleHtml}
+                        ${reviewHtml}
+                    </div>`;
+            } else {
+                groundingHtml = `
+                    <div class="grounding">
+                        <h3>ATT&amp;CK Grounding Check</h3>
+                        <p>No technique IDs found in the answer.</p>
+                    </div>`;
+            }
+
             document.getElementById('result').innerHTML = `
                 <div class="result">
                     <h3>Results ${cacheTag}</h3>
-                    <div class="answer"><h3>Answer</h3><p>${data.answer.split('\\n').join('<br>')}</p></div>
-                    <div class="sources"><h3>Sources</h3><ul>${data.sources.map(s => `<li>${s}</li>`).join('')}</ul></div>
+                    <div class="answer"><h3>Answer</h3><p>${(data.answer || '').split('\\n').join('<br>')}</p></div>
+                    ${groundingHtml}
+                    <div class="sources"><h3>Sources</h3><ul>${(data.sources || []).map(s => `<li>${s}</li>`).join('')}</ul></div>
                     <div class="redacted"><h3>Redacted Items</h3><ul>${redactedList}</ul></div>
                     <div class="timings"><h3>Timing Breakdown</h3>${timingsHtml}</div>
                 </div>`;
