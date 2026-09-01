@@ -73,17 +73,20 @@ def evaluate_case(case: dict, threshold: float) -> list[dict]:
     for tid, gold in gold_map.items():
         pred_info = pred_by_id.get(tid)
         if pred_info is None:
-            # Checker missed extracting an ID that gold expects
             pred_cls = "MISSING"
             overlap = None
+            pred_flag = False   # checker did NOT fire
         else:
             pred_cls = pred_info["classification"]
             overlap = pred_info.get("topical_overlap")
+            pred_flag = pred_cls != "REAL_AND_PLAUSIBLE"
 
-        gold_flag = gold in SHOULD_FLAG
-        pred_flag = pred_cls != "REAL_AND_PLAUSIBLE"
+        gold_flag = gold in SHOULD_FLAG  # FABRICATED / REVOKED / REAL_BUT_IRRELEVANT
 
-        if gold_flag and pred_flag:
+        if pred_cls == "MISSING":
+            # Missed extraction of a gold ID: FN if it should have been flagged
+            binary = "FN" if gold_flag else "TN"
+        elif gold_flag and pred_flag:
             binary = "TP"
         elif (not gold_flag) and pred_flag:
             binary = "FP"
