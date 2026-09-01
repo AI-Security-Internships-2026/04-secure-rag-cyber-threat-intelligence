@@ -386,7 +386,7 @@ No major blockers — this week was mostly about closing the gap between "what w
 ## Week 11
 
 **Branch:** `maria-week-11`
-**PR link:** *(add after opening)*
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/14
 
 ### Completed this week
 
