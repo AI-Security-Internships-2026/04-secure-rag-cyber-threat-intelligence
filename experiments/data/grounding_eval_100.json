@@ -1,0 +1,818 @@
+{
+  "description": "Held-out ATT&CK grounding evaluation set (100 cases). Separate from tests/fixtures and from the pilot grounding_labeled_set.json. Threshold 0.40 was not tuned on this set.",
+  "provenance": {
+    "created": "2026-09-05",
+    "author": "Maria Mahmood",
+    "gold_labels": "Assigned by construction rules: REAL_AND_PLAUSIBLE = real active ID with matching context; REAL_BUT_IRRELEVANT = real active ID with mismatched context; FABRICATED = ID absent from ATT&CK; REVOKED = T1086 (revoked PowerShell technique) with PowerShell-related context.",
+    "text_generation": "Case answer/context strings were drafted programmatically from ATT&CK technique themes and CTI-style short paragraphs; gold labels assigned by the fixed rules above, not by an LLM classifier. See grounding_eval_100_PROVENANCE.md.",
+    "threshold": "0.40 fixed from earlier fixture/pilot direction fix; not re-tuned on this 100-set."
+  },
+  "label_schema": {
+    "REAL_AND_PLAUSIBLE": "Real technique and relevant to retrieved context (should NOT be flagged)",
+    "REAL_BUT_IRRELEVANT": "Real technique but not supported by retrieved context (should be flagged)",
+    "FABRICATED": "Technique ID does not exist in ATT&CK (should be flagged)",
+    "REVOKED": "Technique exists but is revoked/deprecated (should be flagged)"
+  },
+  "cases": [
+    {
+      "id": "eval-001-plausible-t1486",
+      "answer": "Ransomware often uses T1486 Data Encrypted for Impact to encrypt user files and block recovery.",
+      "retrieved_context": "Adversaries may encrypt data on target systems to interrupt availability of system and network resources. They may attempt to render stored data inaccessible by encrypting files and demanding payment for a decryption key. This is Data Encrypted for Impact.",
+      "gold": {
+        "T1486": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-002-plausible-t1055",
+      "answer": "The malware performs process injection consistent with T1055.",
+      "retrieved_context": "Adversaries may inject code into processes in order to evade process-based defenses as well as possibly elevate privileges. Process injection is a method of executing arbitrary code in the address space of a separate live process.",
+      "gold": {
+        "T1055": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-003-plausible-t1003",
+      "answer": "Attackers dumped credentials from LSASS memory using T1003 OS Credential Dumping.",
+      "retrieved_context": "Adversaries may attempt to dump credentials to obtain account login and credential material, normally in the form of a hash or clear text password, from the operating system and software. Techniques include accessing LSASS memory.",
+      "gold": {
+        "T1003": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-004-plausible-t1059-001",
+      "answer": "Execution was performed via T1059.001 PowerShell.",
+      "retrieved_context": "Adversaries may abuse PowerShell commands and scripts for execution. PowerShell is a powerful interactive command-line interface and scripting environment included in the Windows operating system.",
+      "gold": {
+        "T1059.001": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-005-plausible-t1053-005",
+      "answer": "Persistence was established with T1053.005 Scheduled Task.",
+      "retrieved_context": "Adversaries may abuse the Windows Task Scheduler to perform task scheduling for initial or recurring execution of malicious code. Scheduled tasks can be used for persistence.",
+      "gold": {
+        "T1053.005": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-006-plausible-t1021-002",
+      "answer": "Lateral movement used T1021.002 SMB/Windows Admin Shares.",
+      "retrieved_context": "Adversaries may use Valid Accounts to interact with a remote network share using Server Message Block (SMB). The adversary may then perform actions as the logged-on user.",
+      "gold": {
+        "T1021.002": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-007-plausible-t1041",
+      "answer": "Sensitive data left the network via T1041 Exfiltration Over C2 Channel.",
+      "retrieved_context": "Adversaries may steal data by exfiltrating it over an existing command and control channel. Stolen data is encoded into the normal communications stream.",
+      "gold": {
+        "T1041": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-008-plausible-t1566",
+      "answer": "Initial access was gained through T1566 Phishing.",
+      "retrieved_context": "Adversaries may send phishing messages to gain access to victim systems. Phishing may be done by sending spearphishing emails with malicious attachments or links.",
+      "gold": {
+        "T1566": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-009-plausible-t1078",
+      "answer": "The actor relied on T1078 Valid Accounts for access.",
+      "retrieved_context": "Adversaries may obtain and abuse credentials of existing accounts as a means of gaining Initial Access, Persistence, Privilege Escalation, or Defense Evasion.",
+      "gold": {
+        "T1078": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-010-plausible-t1105",
+      "answer": "Tools were copied onto the host using T1105 Ingress Tool Transfer.",
+      "retrieved_context": "Adversaries may transfer tools or other files from an external system into a compromised environment. Files may be copied over command and control channels or alternative protocols.",
+      "gold": {
+        "T1105": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-011-plausible-t1547-001",
+      "answer": "Persistence used T1547.001 Registry Run Keys / Startup Folder.",
+      "retrieved_context": "Adversaries may achieve persistence by adding a program to a startup folder or referencing it with a Registry run key so it executes when a user logs on.",
+      "gold": {
+        "T1547.001": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-012-plausible-t1027",
+      "answer": "Payloads were obscured using T1027 Obfuscated Files or Information.",
+      "retrieved_context": "Adversaries may attempt to make an executable or file difficult to discover or analyze by encrypting, encoding, or otherwise obfuscating its contents.",
+      "gold": {
+        "T1027": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-013-plausible-t1490",
+      "answer": "Recovery was blocked via T1490 Inhibit System Recovery.",
+      "retrieved_context": "Adversaries may delete or remove built-in data and turn off services designed to aid in the recovery of a corrupted system to prevent recovery, such as backup catalog and volume shadow copies.",
+      "gold": {
+        "T1490": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-014-plausible-t1082",
+      "answer": "Recon included T1082 System Information Discovery.",
+      "retrieved_context": "An adversary may attempt to get detailed information about the operating system and hardware, including version, patches, hotfixes, architecture, and other system data.",
+      "gold": {
+        "T1082": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-015-plausible-t1018",
+      "answer": "Hosts were enumerated with T1018 Remote System Discovery.",
+      "retrieved_context": "Adversaries may attempt to get a listing of other systems by IP address, hostname, or other logical identifier on a network that may be used for Lateral Movement.",
+      "gold": {
+        "T1018": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-016-plausible-t1057",
+      "answer": "Running processes were listed using T1057 Process Discovery.",
+      "retrieved_context": "Adversaries may attempt to get information about running processes on a system. Information obtained could be used to gain understanding of common software or security tools.",
+      "gold": {
+        "T1057": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-017-plausible-t1083",
+      "answer": "File system layout was mapped with T1083 File and Directory Discovery.",
+      "retrieved_context": "Adversaries may enumerate files and directories or search in specific locations of a host or network share for desired information within a file system.",
+      "gold": {
+        "T1083": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-018-plausible-t1071-001",
+      "answer": "C2 used T1071.001 application layer protocol over web traffic.",
+      "retrieved_context": "Adversaries may communicate using application layer protocols associated with web traffic to avoid detection or network filtering by blending with existing traffic.",
+      "gold": {
+        "T1071.001": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-019-plausible-t1562-001",
+      "answer": "Defenders were hindered by T1562.001 Disable or Modify Tools.",
+      "retrieved_context": "Adversaries may modify or disable security tools to avoid possible detection of their tools and activities, for example by stopping antivirus or monitoring agents.",
+      "gold": {
+        "T1562.001": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-020-plausible-t1036",
+      "answer": "The binary used T1036 Masquerading to look legitimate.",
+      "retrieved_context": "Adversaries may attempt to manipulate features of their artifacts to make them appear legitimate or benign to users and security tools, such as renaming or matching trusted locations.",
+      "gold": {
+        "T1036": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-021-plausible-t1110",
+      "answer": "Password guessing matched T1110 Brute Force.",
+      "retrieved_context": "Adversaries may use brute force techniques to gain access to accounts when passwords are unknown or when password hashes are obtained.",
+      "gold": {
+        "T1110": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-022-plausible-t1190",
+      "answer": "Initial compromise used T1190 Exploit Public-Facing Application.",
+      "retrieved_context": "Adversaries may attempt to exploit a weakness in an Internet-facing application to cause unintended behavior, often resulting in remote code execution.",
+      "gold": {
+        "T1190": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-023-plausible-t1218-011",
+      "answer": "Proxy execution used T1218.011 Rundll32.",
+      "retrieved_context": "Adversaries may abuse rundll32.exe to proxy execution of malicious code. This may avoid triggering security tools that may not monitor execution of the program.",
+      "gold": {
+        "T1218.011": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-024-plausible-t1573",
+      "answer": "C2 sessions used T1573 Encrypted Channel.",
+      "retrieved_context": "Adversaries may employ an encryption algorithm to conceal command and control traffic, making it more difficult to detect and harder to decrypt if intercepted.",
+      "gold": {
+        "T1573": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-025-plausible-t1021-001",
+      "answer": "Remote interactive login used T1021.001 Remote Desktop Protocol.",
+      "retrieved_context": "Adversaries may use Valid Accounts to log into a computer using the Remote Desktop Protocol to expand access inside an environment.",
+      "gold": {
+        "T1021.001": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-026-plausible-t1550-002",
+      "answer": "Authentication abuse matched T1550.002 Pass the Hash.",
+      "retrieved_context": "Adversaries may pass a hashed user credential to authenticate without knowing the cleartext password, enabling access with valid account material.",
+      "gold": {
+        "T1550.002": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-027-plausible-t1134",
+      "answer": "Tokens were manipulated via T1134 Access Token Manipulation.",
+      "retrieved_context": "Adversaries may modify access tokens to operate under a different user or system context to perform actions and bypass access controls.",
+      "gold": {
+        "T1134": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-028-plausible-t1070",
+      "answer": "Logs were cleaned using T1070 Indicator Removal.",
+      "retrieved_context": "Adversaries may delete or alter generated artifacts on a host system, including logs and captured files, to remove evidence of their presence.",
+      "gold": {
+        "T1070": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-029-plausible-t1048",
+      "answer": "Data was moved out with T1048 Exfiltration Over Alternative Protocol.",
+      "retrieved_context": "Adversaries may steal data by exfiltrating it over a different protocol than the existing command and control channel, such as FTP or DNS.",
+      "gold": {
+        "T1048": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-030-plausible-t1518",
+      "answer": "Installed software was listed via T1518 Software Discovery.",
+      "retrieved_context": "Adversaries may attempt to get a listing of software and applications installed on a system to identify tools of interest or security products.",
+      "gold": {
+        "T1518": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-031-plausible-t1016",
+      "answer": "Network settings were collected with T1016 System Network Configuration Discovery.",
+      "retrieved_context": "Adversaries may look for details about the network configuration and settings, such as IP addresses, networks, and interfaces of systems they access.",
+      "gold": {
+        "T1016": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-032-plausible-t1489",
+      "answer": "Critical services were stopped using T1489 Service Stop.",
+      "retrieved_context": "Adversaries may stop or disable services on a system to render those services unavailable to legitimate users and disrupt business operations.",
+      "gold": {
+        "T1489": "REAL_AND_PLAUSIBLE"
+      }
+    },
+    {
+      "id": "eval-033-irrel-t1055-scan",
+      "answer": "The activity is consistent with T1055 process injection.",
+      "retrieved_context": "Sequential port scanning was observed across multiple internal hosts. No process memory or injection activity was recorded. Network reconnaissance only.",
+      "gold": {
+        "T1055": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-034-irrel-t1486-phish",
+      "answer": "This maps to T1486 Data Encrypted for Impact.",
+      "retrieved_context": "Spearphishing emails with malicious attachments were delivered to finance staff. The campaign focused on credential theft via fake login pages. No file encryption was observed.",
+      "gold": {
+        "T1486": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-035-irrel-t1003-exfil",
+      "answer": "The adversary used T1003 to access credentials.",
+      "retrieved_context": "Large volumes of data were transferred to an external IP over HTTPS. Exfiltration over web services was the primary observed behavior. No credential dumping tools were present.",
+      "gold": {
+        "T1003": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-036-irrel-t1021-encrypt",
+      "answer": "Lateral movement used T1021.002 SMB/Windows Admin Shares.",
+      "retrieved_context": "Files on the desktop were encrypted with a custom algorithm and renamed with a ransom extension. Shadow copies were deleted. No SMB authentication or share enumeration was logged.",
+      "gold": {
+        "T1021.002": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-037-irrel-t1041-inject",
+      "answer": "Data left the network via T1041 Exfiltration Over C2 Channel.",
+      "retrieved_context": "Code was injected into explorer.exe to evade process-based defenses. The injection used process hollowing. No outbound C2 exfiltration was described in the evidence.",
+      "gold": {
+        "T1041": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-038-irrel-t1566-dump",
+      "answer": "Access began with T1566 Phishing.",
+      "retrieved_context": "Mimikatz was used to extract plaintext passwords and hashes from LSASS. No email delivery or phishing messages appear in the evidence pack.",
+      "gold": {
+        "T1566": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-039-irrel-t1078-ransom",
+      "answer": "Operators relied on T1078 Valid Accounts.",
+      "retrieved_context": "Ransomware encrypted file shares and left a ransom note. There is no indication of legitimate account reuse in the retrieved context.",
+      "gold": {
+        "T1078": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-040-irrel-t1105-phish",
+      "answer": "Stage-two tools arrived via T1105 Ingress Tool Transfer.",
+      "retrieved_context": "Users clicked a malicious link in a spearphishing email and entered credentials on a fake portal. No tool download to disk is described.",
+      "gold": {
+        "T1105": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-041-irrel-t1547-scan",
+      "answer": "Persistence used T1547.001 Registry Run Keys.",
+      "retrieved_context": "Nmap-style host discovery and service enumeration were the only behaviors listed. No registry autoruns were mentioned.",
+      "gold": {
+        "T1547.001": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-042-irrel-t1027-rdp",
+      "answer": "Payloads used T1027 Obfuscated Files or Information.",
+      "retrieved_context": "An interactive Remote Desktop session was established with a domain admin account. No packing or obfuscation of binaries is described.",
+      "gold": {
+        "T1027": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-043-irrel-t1490-phish",
+      "answer": "Recovery inhibition matched T1490.",
+      "retrieved_context": "A phishing campaign harvested O365 credentials. Backup systems and shadow copies were not discussed in the retrieved evidence.",
+      "gold": {
+        "T1490": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-044-irrel-t1082-exfil",
+      "answer": "Discovery used T1082 System Information Discovery.",
+      "retrieved_context": "Compressed archives were uploaded to a cloud storage URL. The evidence focuses on data staging and transfer, not OS fingerprinting.",
+      "gold": {
+        "T1082": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-045-irrel-t1018-encrypt",
+      "answer": "Remote hosts were found with T1018.",
+      "retrieved_context": "Local drives were encrypted and recovery keys deleted. No remote system discovery activity is present in the context.",
+      "gold": {
+        "T1018": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-046-irrel-t1057-phish",
+      "answer": "Process listing via T1057 was observed.",
+      "retrieved_context": "Malicious macro-enabled documents were emailed to HR. Process enumeration is not described in the retrieved passages.",
+      "gold": {
+        "T1057": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-047-irrel-t1083-c2",
+      "answer": "File discovery used T1083.",
+      "retrieved_context": "Beaconing to an external C2 domain over HTTPS was steady. Directory listing activity is not included in the evidence.",
+      "gold": {
+        "T1083": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-048-irrel-t1071-inject",
+      "answer": "C2 used T1071.001 web protocols.",
+      "retrieved_context": "A reflective DLL was injected into a trusted process. Network protocol details for C2 are absent from the retrieved context.",
+      "gold": {
+        "T1071.001": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-049-irrel-t1562-exfil",
+      "answer": "Security tools were disabled with T1562.001.",
+      "retrieved_context": "Bulk customer records were copied to an external SFTP server. No AV or EDR tampering is described.",
+      "gold": {
+        "T1562.001": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-050-irrel-t1036-cred",
+      "answer": "Masquerading via T1036 was used.",
+      "retrieved_context": "Credential dumping from memory produced NTLM hashes. File renaming or binary masquerading is not mentioned.",
+      "gold": {
+        "T1036": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-051-irrel-t1110-inject",
+      "answer": "Access used T1110 Brute Force.",
+      "retrieved_context": "Shellcode was injected into a running svchost instance. Password guessing activity is not in the evidence.",
+      "gold": {
+        "T1110": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-052-irrel-t1190-persist",
+      "answer": "Entry point was T1190 Exploit Public-Facing Application.",
+      "retrieved_context": "A scheduled task was created to run a payload at logon. Exploitation of a public service is not described.",
+      "gold": {
+        "T1190": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-053-irrel-t1218-exfil",
+      "answer": "Proxy execution used T1218.011 Rundll32.",
+      "retrieved_context": "Data was exfiltrated over DNS queries. Rundll32 proxy execution is not present in the retrieved context.",
+      "gold": {
+        "T1218.011": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-054-irrel-t1573-phish",
+      "answer": "Channels used T1573 Encrypted Channel.",
+      "retrieved_context": "Spearphishing with a malicious ISO attachment delivered the loader. Encrypted C2 tunnels are not discussed.",
+      "gold": {
+        "T1573": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-055-irrel-t1021-001-ransom",
+      "answer": "Movement used T1021.001 RDP.",
+      "retrieved_context": "Files were encrypted in place and volume shadow copies removed. RDP logins are not part of the evidence.",
+      "gold": {
+        "T1021.001": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-056-irrel-t1550-scan",
+      "answer": "Auth abuse matched T1550.002 Pass the Hash.",
+      "retrieved_context": "Internal port scans identified open SMB and RDP services. Pass-the-hash is not described.",
+      "gold": {
+        "T1550.002": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-057-irrel-t1134-exfil",
+      "answer": "Token theft matched T1134.",
+      "retrieved_context": "Database exports were sent to an external HTTP endpoint. Access token manipulation is not in the context.",
+      "gold": {
+        "T1134": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-058-irrel-t1070-phish",
+      "answer": "Evidence wiping used T1070 Indicator Removal.",
+      "retrieved_context": "Users submitted passwords to a cloned VPN portal from a phishing email. Log deletion is not mentioned.",
+      "gold": {
+        "T1070": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-059-irrel-t1048-inject",
+      "answer": "Exfil used T1048 Alternative Protocol.",
+      "retrieved_context": "Process hollowing loaded a remote access tool into memory. Alternative-protocol exfiltration is not described.",
+      "gold": {
+        "T1048": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-060-irrel-t1518-ransom",
+      "answer": "Software inventory used T1518.",
+      "retrieved_context": "Ransom notes were dropped after mass encryption of file servers. Software discovery is not in the evidence.",
+      "gold": {
+        "T1518": "REAL_BUT_IRRELEVANT"
+      }
+    },
+    {
+      "id": "eval-061-fab-t9999",
+      "answer": "The novel stealth module maps to T9999 Super Stealth Encryption.",
+      "retrieved_context": "Adversaries may encrypt data on target systems to interrupt availability.",
+      "gold": {
+        "T9999": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-062-fab-t1234-999",
+      "answer": "Behavior matches T1234.999 Custom Kernel Hook.",
+      "retrieved_context": "Process injection into running processes was detected on several endpoints.",
+      "gold": {
+        "T1234.999": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-063-fab-t8888",
+      "answer": "The campaign relied on T8888 Quantum Lateral Jump.",
+      "retrieved_context": "Valid accounts were used to access remote network shares over SMB.",
+      "gold": {
+        "T8888": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-064-fab-t7777-001",
+      "answer": "Loader activity maps to T7777.001 Shadow Threading.",
+      "retrieved_context": "Code was injected into a legitimate process to evade defenses.",
+      "gold": {
+        "T7777.001": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-065-fab-t6666",
+      "answer": "Persistence used T6666 Eternal Registry Warp.",
+      "retrieved_context": "A program was added to a startup folder to run at user logon.",
+      "gold": {
+        "T6666": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-066-fab-t5555-002",
+      "answer": "C2 used T5555.002 HyperDNS Tunneling.",
+      "retrieved_context": "Data was exfiltrated over an existing command and control channel.",
+      "gold": {
+        "T5555.002": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-067-fab-t4444",
+      "answer": "Initial access via T4444 Zero-Click Calendar Exploit.",
+      "retrieved_context": "Spearphishing emails with malicious links were sent to staff.",
+      "gold": {
+        "T4444": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-068-fab-t3333-003",
+      "answer": "Credential access used T3333.003 Memory Prism Dump.",
+      "retrieved_context": "Adversaries may dump credentials from operating system memory.",
+      "gold": {
+        "T3333.003": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-069-fab-t2222",
+      "answer": "Discovery used T2222 Silent Network Prism.",
+      "retrieved_context": "Remote systems were enumerated by hostname and IP address.",
+      "gold": {
+        "T2222": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-070-fab-t1111-004",
+      "answer": "Defense evasion via T1111.004 Ghost AV Mute.",
+      "retrieved_context": "Security tools may be disabled to avoid detection of malicious activity.",
+      "gold": {
+        "T1111.004": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-071-fab-t1010-999",
+      "answer": "Execution matched T1010.999 Fake Subtechnique.",
+      "retrieved_context": "PowerShell scripts were used to run follow-on payloads.",
+      "gold": {
+        "T1010.999": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-072-fab-t9998",
+      "answer": "Impact technique T9998 Disk Melt Protocol was cited.",
+      "retrieved_context": "Files were encrypted and recovery options removed from the host.",
+      "gold": {
+        "T9998": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-073-fab-t9997-001",
+      "answer": "Collection used T9997.001 Clipboard Warp.",
+      "retrieved_context": "Adversaries may collect data from local system sources before exfiltration.",
+      "gold": {
+        "T9997.001": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-074-fab-t9996",
+      "answer": "The report cites T9996 Neural Keylogger.",
+      "retrieved_context": "Keylogging can capture credentials and sensitive user input.",
+      "gold": {
+        "T9996": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-075-fab-t9995-002",
+      "answer": "Lateral movement via T9995.002 Teleport SMB.",
+      "retrieved_context": "SMB administrative shares can be used to move laterally with valid accounts.",
+      "gold": {
+        "T9995.002": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-076-fab-t9994",
+      "answer": "Persistence with T9994 Bootkit Mirage.",
+      "retrieved_context": "Firmware or boot-level persistence can survive operating system reinstalls.",
+      "gold": {
+        "T9994": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-077-fab-t9993-001",
+      "answer": "Privilege escalation used T9993.001 Token Forge.",
+      "retrieved_context": "Access tokens can be manipulated to operate under another user context.",
+      "gold": {
+        "T9993.001": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-078-fab-t9992",
+      "answer": "Recon used T9992 Cloud Tenant Peek.",
+      "retrieved_context": "Adversaries may discover cloud accounts and tenants during reconnaissance.",
+      "gold": {
+        "T9992": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-079-fab-t9991-003",
+      "answer": "Exfiltration via T9991.003 IceFTP Covert.",
+      "retrieved_context": "Stolen data may leave the network over alternative file-transfer protocols.",
+      "gold": {
+        "T9991.003": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-080-fab-t9980",
+      "answer": "The analytic maps activity to T9980 Synthetic Process Birth.",
+      "retrieved_context": "Process injection techniques execute code inside another process.",
+      "gold": {
+        "T9980": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-081-fab-t9970-001",
+      "answer": "Command scripting used T9970.001 UltraShell.",
+      "retrieved_context": "Command and scripting interpreters can execute malicious instructions.",
+      "gold": {
+        "T9970.001": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-082-fab-t9960",
+      "answer": "Supply chain claim cites T9960 Trusted Update Poison.",
+      "retrieved_context": "Supply chain compromises can deliver trojanized software to victims.",
+      "gold": {
+        "T9960": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-083-fab-t9950-002",
+      "answer": "Credential theft via T9950.002 Vault Siphon.",
+      "retrieved_context": "Password managers and OS credential stores may be targeted for secrets.",
+      "gold": {
+        "T9950.002": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-084-fab-t9940",
+      "answer": "Impact cited as T9940 Service Blackout Grid.",
+      "retrieved_context": "Adversaries may stop services to disrupt availability for users.",
+      "gold": {
+        "T9940": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-085-fab-t9930-001",
+      "answer": "Proxy execution via T9930.001 Living-Off-Trusted.",
+      "retrieved_context": "Trusted Windows utilities can be abused to proxy execution of code.",
+      "gold": {
+        "T9930.001": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-086-fab-t9920",
+      "answer": "Network evasion used T9920 Domain Front Mirage.",
+      "retrieved_context": "Encrypted or proxied channels can conceal command and control traffic.",
+      "gold": {
+        "T9920": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-087-fab-t9910-004",
+      "answer": "Scheduled execution via T9910.004 Phantom Task.",
+      "retrieved_context": "Task scheduling can provide recurring execution of malicious code.",
+      "gold": {
+        "T9910.004": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-088-fab-t9900",
+      "answer": "The summary incorrectly cites T9900 Nonexistent Technique.",
+      "retrieved_context": "Adversaries use a variety of techniques for intrusion and impact.",
+      "gold": {
+        "T9900": "FABRICATED"
+      }
+    },
+    {
+      "id": "eval-089-revoked-t1086-a",
+      "answer": "Execution relied on T1086 PowerShell.",
+      "retrieved_context": "Adversaries may abuse PowerShell commands and scripts for execution on Windows hosts.",
+      "gold": {
+        "T1086": "REVOKED"
+      }
+    },
+    {
+      "id": "eval-090-revoked-t1086-b",
+      "answer": "The loader invoked T1086 to run encoded commands.",
+      "retrieved_context": "Encoded PowerShell commands were used to download a remote payload.",
+      "gold": {
+        "T1086": "REVOKED"
+      }
+    },
+    {
+      "id": "eval-091-revoked-t1086-c",
+      "answer": "Persistence scripts used T1086.",
+      "retrieved_context": "A scheduled task launched a PowerShell script at user logon.",
+      "gold": {
+        "T1086": "REVOKED"
+      }
+    },
+    {
+      "id": "eval-092-revoked-t1086-d",
+      "answer": "Lateral scripts were based on T1086.",
+      "retrieved_context": "Remote administration used PowerShell remoting with stolen credentials.",
+      "gold": {
+        "T1086": "REVOKED"
+      }
+    },
+    {
+      "id": "eval-093-revoked-t1086-e",
+      "answer": "Defense evasion via T1086 obfuscated scripts.",
+      "retrieved_context": "Obfuscated PowerShell one-liners disabled logging where possible.",
+      "gold": {
+        "T1086": "REVOKED"
+      }
+    },
+    {
+      "id": "eval-094-revoked-t1086-f",
+      "answer": "Credential collection scripts referenced T1086.",
+      "retrieved_context": "PowerShell was used to query secrets from local configuration files.",
+      "gold": {
+        "T1086": "REVOKED"
+      }
+    },
+    {
+      "id": "eval-095-revoked-t1086-g",
+      "answer": "C2 staging used T1086 download cradles.",
+      "retrieved_context": "A PowerShell cradle retrieved the second-stage binary over HTTPS.",
+      "gold": {
+        "T1086": "REVOKED"
+      }
+    },
+    {
+      "id": "eval-096-revoked-t1086-h",
+      "answer": "Impact automation used T1086.",
+      "retrieved_context": "PowerShell deleted volume shadow copies before encryption.",
+      "gold": {
+        "T1086": "REVOKED"
+      }
+    },
+    {
+      "id": "eval-097-revoked-t1086-i",
+      "answer": "Discovery modules called T1086.",
+      "retrieved_context": "PowerShell enumerated domain trusts and local administrators.",
+      "gold": {
+        "T1086": "REVOKED"
+      }
+    },
+    {
+      "id": "eval-098-revoked-t1086-j",
+      "answer": "The report labels activity as T1086.",
+      "retrieved_context": "Interactive PowerShell sessions were observed on jump hosts.",
+      "gold": {
+        "T1086": "REVOKED"
+      }
+    },
+    {
+      "id": "eval-099-revoked-t1086-k",
+      "answer": "Malware documentation cites T1086 PowerShell.",
+      "retrieved_context": "Script-based execution on Windows often abuses PowerShell capabilities.",
+      "gold": {
+        "T1086": "REVOKED"
+      }
+    },
+    {
+      "id": "eval-100-revoked-t1086-l",
+      "answer": "Analyst notes map the script block to T1086.",
+      "retrieved_context": "Suspicious PowerShell script block logging events were recorded.",
+      "gold": {
+        "T1086": "REVOKED"
+      }
+    }
+  ]
+}

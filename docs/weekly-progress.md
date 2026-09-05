@@ -415,5 +415,48 @@ No major blockers — this week was mostly about closing the gap between "what w
 
 ---
 
+## Week 12
+
+**Branch:** `maria-week-12`
+**PR link:** https://github.com/AI-Security-Internships-2026/04-secure-rag-cyber-threat-intelligence/pull/15
+
+### Completed this week
+
+- [x] Expanded existing security evals from pilot size to held-out **n=100** (pilot data and pilot result files kept)
+  - Guardrail CTI: `experiments/data/guardrail_cti_eval_100.json` (45 injection + 55 benign)
+  - Regex/privacy: `experiments/data/regex_eval_100.json`
+  - Grounding: `experiments/data/grounding_eval_100.json`
+  - Adversarial: `experiments/data/adversarial_eval_100.json` (expanded from original 6 probes)
+- [x] Added matching `*_PROVENANCE.md` for each 100-set
+- [x] Updated eval scripts with path/mode config (`pilot` vs `eval100` / `cti100`) so new results only write under `experiments/results/eval_100/`
+- [x] Re-ran the same pipelines on the larger sets:
+  - Guardrail comparison (baseline / LLM Guard / NeMo) on CTI-100, while public deepset still separate
+  - Regex v1 vs v3 accuracy
+  - Grounding benchmark (threshold 0.40)
+  - Adversarial full-pipeline harness
+- [x] Saved results and CTI-100 guardrail plots under `experiments/results/eval_100/`
+- [x] Completed **full guardrail-comparison write-up (issue #6)**
+  - Doc: `docs/guardrail-comparison.md`
+  - Baseline vs LLM Guard vs NeMo on pilot, CTI-100, and public deepset
+  - Production decision documented: keep keyword baseline for CPU/latency, limitations and future hybrid noted
+  - Live integration already in place via `is_prompt_injection` in `main.py` / `pipeline.py`
+
+### Key n=100 numbers (brief)
+
+- Guardrail CTI: 
+    + LLM Guard F1 75.7% (recall 62.2%)
+    + baseline F1 23.5% (high precision, low recall)
+    + NeMo 0% F1 on this set
+- Regex: v3 F1-84.6% vs v1 F1-58.8% (recall 96.5% vs 52.6%)
+- Grounding: binary F1-98.5%, exact-class match 97%
+- Adversarial: 30/100 blocked, 70/100 protected, 0 potential leaks
+
+### Problems / Blockers
+
+- No major blockers. Adversarial n=100 is slower (full retrieve → redact → LLM path) and needs API quota headroom.
+- NeMo remains ineffective on short CTI-style injection probes at n=100, which is consistent with the earlier pilot diagnostic, now on a larger sample.
+
+---
+
 
 _(Add a new section each week)_

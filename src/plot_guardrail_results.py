@@ -1,20 +1,69 @@
 """
-plot_guardrail_results.py — reads experiments/results/guardrail_comparison.json
-and generates labeled charts + a summary table comparing the baseline keyword
-matcher, LLM Guard, and NeMo Guardrails — on the CTI pilot set and the public
-benchmark SEPARATELY (never blended — see guardrail_eval.py docstring for why).
+plot_guardrail_results.py — read a guardrail_comparison*.json and write charts.
 
-All output files are prefixed "guardrail_" to stay distinguishable from the
-existing regex/concurrency/cpu-benchmark plots already in experiments/results/plots/.
+Modes:
+  legacy — experiments/results/guardrail_comparison.json
+           → experiments/results/plots/  (original paper figures; do not overwrite casually)
+  cti100 — experiments/results/eval_100/guardrail/guardrail_comparison_cti_100.json
+           → experiments/results/eval_100/plots/  (n=100 run; safe for new work)
 
-Run this AFTER guardrail_eval.py has produced a results file.
-Run: python plot_guardrail_results.py
+CTI and public benchmarks are plotted SEPARATELY (never blended).
+
+Usage (from repo root):
+    python src/plot_guardrail_results.py
+    python src/plot_guardrail_results.py --mode cti100
+    python src/plot_guardrail_results.py --mode legacy
+    python src/plot_guardrail_results.py --input path/to.json --plots-dir path/to/plots
 """
+
+from __future__ import annotations
+
+import argparse
 import json
 import os
+from pathlib import Path
+
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+
+# =============================================================================
+# CONFIG (CLI can override)
+# =============================================================================
+PLOT_MODE = "cti100"  # "legacy" | "cti100"
+
+INPUT_PATH_BY_MODE = {
+    "legacy": _REPO_ROOT / "experiments" / "results" / "guardrail_comparison.json",
+    "cti100": (
+        _REPO_ROOT
+        / "experiments"
+        / "results"
+        / "eval_100"
+        / "guardrail"
+        / "guardrail_comparison_cti_100.json"
+    ),
+}
+
+PLOTS_DIR_BY_MODE = {
+    "legacy": _REPO_ROOT / "experiments" / "results" / "plots",
+    "cti100": _REPO_ROOT / "experiments" / "results" / "eval_100" / "plots",
+}
+
+# Diagnostic markdown written next to the results JSON's parent folder
+TABLE_NAME_BY_MODE = {
+    "legacy": "guardrail_comparison_diagnostic_analysis.md",
+    "cti100": "guardrail_cti100_diagnostic_analysis.md",
+}
+
+# Filename prefix so artifacts are easy to tell apart
+PREFIX_BY_MODE = {
+    "legacy": "guardrail_",
+    "cti100": "guardrail_cti100_",
+}
+# =============================================================================
 
 METHOD_LABELS = {
     "current_repo_baseline": "Baseline\n(keyword)",
@@ -29,23 +78,34 @@ METHOD_COLORS = {
 METHODS = ["current_repo_baseline", "llm_guard", "nemoguardrails"]
 
 
-def load_results():
-    results_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "experiments", "results")
-    path = os.path.join(results_dir, "guardrail_comparison.json")
-    with open(path) as f:
+def load_results(input_path: Path, plots_dir: Path):
+    if not input_path.exists():
+        raise SystemExit(f"Results file not found: {input_path}")
+    with open(input_path, encoding="utf-8") as f:
         data = json.load(f)
-    plots_dir = os.path.join(results_dir, "plots")
-    os.makedirs(plots_dir, exist_ok=True)
-    return data, results_dir, plots_dir
+    plots_dir.mkdir(parents=True, exist_ok=True)
+    return data, input_path.parent, plots_dir
 
 
 def _available_methods(results):
-    """Skips any method that failed to load (has an 'error' key instead of scores)."""
+    """Skip methods that failed to load (error key instead of scores)."""
     return [m for m in METHODS if m in results and "error" not in results[m]]
+
+
+def _has_public(results) -> bool:
+    for m in _available_methods(results):
+        if results[m].get("public_benchmark"):
+            return True
+    return False
 
 
 def plot_precision_recall_f1(results, dataset_key, title_suffix, filename, plots_dir):
     methods = _available_methods(results)
+    # Skip methods missing this dataset block
+    methods = [m for m in methods if results[m].get(dataset_key)]
+    if not methods:
+        return None
+
     metrics = ["precision", "recall", "f1_score"]
     metric_labels = ["Precision", "Recall", "F1"]
 
@@ -67,43 +127,64 @@ def plot_precision_recall_f1(results, dataset_key, title_suffix, filename, plots
     ax.legend(loc="lower right")
     ax.grid(axis="y", alpha=0.3)
     plt.tight_layout()
-    out = os.path.join(plots_dir, filename)
+    out = os.path.join(str(plots_dir), filename)
     plt.savefig(out, dpi=150)
     plt.close()
     return out
 
 
-def plot_false_positive_rate(results, plots_dir):
+def plot_false_positive_rate(results, plots_dir, filename):
     methods = _available_methods(results)
     x = range(len(methods))
     width = 0.35
 
-    cti_fpr = [results[m]["cti_pilot"]["false_positive_rate"] * 100 for m in methods]
-    public_fpr = [results[m]["public_benchmark"]["false_positive_rate"] * 100
-                  if results[m].get("public_benchmark") else 0 for m in methods]
+    cti_fpr = [
+        results[m]["cti_pilot"]["false_positive_rate"] * 100
+        if results[m].get("cti_pilot")
+        else 0
+        for m in methods
+    ]
+    public_fpr = [
+        results[m]["public_benchmark"]["false_positive_rate"] * 100
+        if results[m].get("public_benchmark")
+        else 0
+        for m in methods
+    ]
 
     fig, ax = plt.subplots(figsize=(9, 5.5))
-    bars1 = ax.bar([i - width/2 for i in x], cti_fpr, width, label="CTI pilot set (domain-specific)", color="#DD8452")
-    bars2 = ax.bar([i + width/2 for i in x], public_fpr, width, label="Public benchmark (general)", color="#8172B2")
+    bars1 = ax.bar(
+        [i - width / 2 for i in x],
+        cti_fpr,
+        width,
+        label="CTI set (domain-specific)",
+        color="#DD8452",
+    )
+    bars2 = ax.bar(
+        [i + width / 2 for i in x],
+        public_fpr,
+        width,
+        label="Public benchmark (general)",
+        color="#8172B2",
+    )
     ax.bar_label(bars1, fmt="%.1f", fontsize=9, padding=2)
     ax.bar_label(bars2, fmt="%.1f", fontsize=9, padding=2)
 
     ax.set_xticks(list(x))
     ax.set_xticklabels([METHOD_LABELS[m] for m in methods])
     ax.set_ylabel("False Positive Rate (%)")
-    ax.set_title("False Positive Rate — the number that predicts real user friction")
+    ax.set_title("False Positive Rate — predicts real user friction")
     ax.legend()
     ax.grid(axis="y", alpha=0.3)
     plt.tight_layout()
-    out = os.path.join(plots_dir, "guardrail_false_positive_rate.png")
+    out = os.path.join(str(plots_dir), filename)
     plt.savefig(out, dpi=150)
     plt.close()
     return out
 
 
-def plot_latency(results, plots_dir):
+def plot_latency(results, plots_dir, filename):
     methods = _available_methods(results)
-    x = range(len(methods))
+    methods = [m for m in methods if results[m].get("cti_pilot")]
     latencies = [results[m]["cti_pilot"]["avg_latency_ms"] for m in methods]
     colors = [METHOD_COLORS[m] for m in methods]
 
@@ -112,76 +193,67 @@ def plot_latency(results, plots_dir):
     ax.bar_label(bars, fmt="%.3fms", fontsize=9, fontweight="bold", padding=4)
 
     ax.set_ylabel("Avg latency per query (ms, log scale)")
-    ax.set_title("Guardrail Detection Speed")
+    ax.set_title("Guardrail Detection Speed (CTI set)")
     ax.set_yscale("log")
     ax.grid(axis="y", alpha=0.3, which="both")
     plt.tight_layout()
-    out = os.path.join(plots_dir, "guardrail_latency_comparison.png")
+    out = os.path.join(str(plots_dir), filename)
     plt.savefig(out, dpi=150)
     plt.close()
     return out
 
 
-def save_summary_table(results, dataset, results_dir):
+def save_summary_table(results, dataset, out_dir: Path, filename: str):
     methods = _available_methods(results)
+    cti_pos = dataset.get("cti_positive", dataset.get("cti_pilot_positive", "?"))
+    cti_neg = dataset.get("cti_negative", dataset.get("cti_pilot_negative", "?"))
+
     lines = [
         f"# Guardrail Comparison Summary — {dataset.get('test_date', '')}",
         "",
-        f"CTI pilot set: {dataset['cti_pilot_positive']} positive + {dataset['cti_pilot_negative']} negative",
+        f"CTI set: {cti_pos} positive + {cti_neg} negative "
+        f"(mode={dataset.get('cti_set_mode', 'n/a')})",
         f"Public benchmark: {dataset.get('public_benchmark_examples', 0)} examples "
         f"({dataset.get('public_benchmark_source', 'n/a')})",
         "",
-        "## CTI Pilot Set (domain-specific)",
+        "## CTI set (domain-specific)",
         "",
         "| Method | Precision | Recall | F1 | FP Rate | Avg Latency |",
         "|---|---|---|---|---|---|",
     ]
     for m in methods:
-        r = results[m]["cti_pilot"]
+        r = results[m].get("cti_pilot")
+        if not r:
+            continue
         lines.append(
             f"| {METHOD_LABELS[m].replace(chr(10), ' ')} | {r['precision']*100:.1f}% | "
-            f"{r['recall']*100:.1f}% | {r['f1_score']*100:.1f}% | {r['false_positive_rate']*100:.1f}% | "
-            f"{r['avg_latency_ms']:.4f}ms |"
+            f"{r['recall']*100:.1f}% | {r['f1_score']*100:.1f}% | "
+            f"{r['false_positive_rate']*100:.1f}% | {r['avg_latency_ms']:.4f}ms |"
         )
 
-    lines += ["", "## Public Benchmark (general-purpose)", "",
-              "| Method | Precision | Recall | F1 | FP Rate | Avg Latency |", "|---|---|---|---|---|---|"]
+    lines += [
+        "",
+        "## Public Benchmark (general-purpose)",
+        "",
+        "| Method | Precision | Recall | F1 | FP Rate | Avg Latency |",
+        "|---|---|---|---|---|---|",
+    ]
     for m in methods:
         pb = results[m].get("public_benchmark")
         if not pb:
             continue
         lines.append(
             f"| {METHOD_LABELS[m].replace(chr(10), ' ')} | {pb['precision']*100:.1f}% | "
-            f"{pb['recall']*100:.1f}% | {pb['f1_score']*100:.1f}% | {pb['false_positive_rate']*100:.1f}% | "
-            f"{pb['avg_latency_ms']:.4f}ms |"
+            f"{pb['recall']*100:.1f}% | {pb['f1_score']*100:.1f}% | "
+            f"{pb['false_positive_rate']*100:.1f}% | {pb['avg_latency_ms']:.4f}ms |"
         )
 
-    out = os.path.join(results_dir, "guardrail_comparison_diagnostic_analysis.md")
-    with open(out, "w") as f:
-        f.write("\n".join(lines))
-    return out
+    out = out_dir / filename
+    out.write_text("\n".join(lines), encoding="utf-8")
+    return str(out)
 
 
 def _compute_three_way_accuracy(method_results: dict) -> dict:
-    """
-    Computes accuracy across 3 categories, using what we actually have measured:
-
-      - malicious accuracy = recall, averaged across CTI pilot + public benchmark
-        ("does it catch real attacks")
-      - benign accuracy = 1 - false_positive_rate on the PUBLIC benchmark's
-        generic benign text (travel, recipes, etc.)
-        ("does it wrongly block ordinary, non-security-flavored questions")
-      - over-defense accuracy = 1 - false_positive_rate on the CTI PILOT set's
-        benign queries (e.g. "password dumping from memory", "privilege
-        escalation to gain admin access") — these are legitimate questions
-        that use attack-adjacent vocabulary, so this measures whether the
-        detector over-reacts to security terminology even when nothing
-        malicious is happening. Not a published "over-defense" benchmark
-        (e.g. NotInject) — this is our own domain-specific proxy for the
-        same concept, built from data we already collected.
-
-    Returns dict with the 3 values plus their average.
-    """
     cti = method_results.get("cti_pilot") or {}
     public = method_results.get("public_benchmark") or {}
 
@@ -202,76 +274,133 @@ def _compute_three_way_accuracy(method_results: dict) -> dict:
     }
 
 
-def plot_accuracy_vs_efficiency_scatter(results, plots_dir):
-    """
-    Scatter plot: average accuracy (across benign / malicious / over-defense
-    proxy categories, see _compute_three_way_accuracy) vs time efficiency
-    (avg latency per query). One point per method. Lower-right is ideal
-    (fast AND accurate).
-    """
+def plot_accuracy_vs_efficiency_scatter(results, plots_dir, filename):
     methods = _available_methods(results)
+    methods = [m for m in methods if results[m].get("cti_pilot")]
 
     fig, ax = plt.subplots(figsize=(9, 6.5))
 
     for m in methods:
         scores = _compute_three_way_accuracy(results[m])
-        # use CTI pilot latency as the representative "time efficiency" figure
         latency = results[m]["cti_pilot"]["avg_latency_ms"]
         avg_acc_pct = scores["average_accuracy"] * 100
 
-        ax.scatter(latency, avg_acc_pct, s=220, color=METHOD_COLORS[m],
-                   edgecolors="black", linewidths=1.2, zorder=3)
+        ax.scatter(
+            latency,
+            avg_acc_pct,
+            s=220,
+            color=METHOD_COLORS[m],
+            edgecolors="black",
+            linewidths=1.2,
+            zorder=3,
+        )
         ax.annotate(
             METHOD_LABELS[m].replace("\n", " "),
             (latency, avg_acc_pct),
-            textcoords="offset points", xytext=(0, 14),
-            ha="center", fontsize=9, fontweight="bold",
+            textcoords="offset points",
+            xytext=(0, 14),
+            ha="center",
+            fontsize=9,
+            fontweight="bold",
         )
-        # small breakdown label under each point showing the 3 components
         breakdown = (
             f"mal:{scores['malicious_accuracy']*100:.0f}% "
             f"ben:{(scores['benign_accuracy'] or 0)*100:.0f}% "
             f"od:{(scores['over_defense_accuracy'] or 0)*100:.0f}%"
         )
-        ax.annotate(breakdown, (latency, avg_acc_pct),
-                    textcoords="offset points", xytext=(0, -18),
-                    ha="center", fontsize=7.5, color="dimgray")
+        ax.annotate(
+            breakdown,
+            (latency, avg_acc_pct),
+            textcoords="offset points",
+            xytext=(0, -18),
+            ha="center",
+            fontsize=7.5,
+            color="dimgray",
+        )
 
     ax.set_xlabel("Avg latency per query (ms, log scale) — time efficiency")
     ax.set_ylabel("Average accuracy (%) — malicious + benign + over-defense proxy")
-    ax.set_title("Injection Detection: Accuracy vs Time Efficiency\n"
-                  "(mal=malicious recall, ben=benign accuracy on public set, "
-                  "od=over-defense proxy on CTI benign set)")
+    ax.set_title(
+        "Injection Detection: Accuracy vs Time Efficiency\n"
+        "(mal=malicious recall, ben=benign accuracy on public set, "
+        "od=over-defense proxy on CTI benign set)"
+    )
     ax.set_xscale("log")
     ax.set_ylim(0, 105)
     ax.grid(alpha=0.3, which="both")
     plt.tight_layout()
-    out = os.path.join(plots_dir, "guardrail_accuracy_vs_efficiency_scatter.png")
+    out = os.path.join(str(plots_dir), filename)
     plt.savefig(out, dpi=150)
     plt.close()
     return out
 
 
+def parse_args():
+    p = argparse.ArgumentParser(description="Plot guardrail comparison results")
+    p.add_argument("--mode", choices=["legacy", "cti100"], default=None)
+    p.add_argument("--input", type=Path, default=None, help="Results JSON path")
+    p.add_argument("--plots-dir", type=Path, default=None, help="Directory for PNG plots")
+    return p.parse_args()
+
+
 def main():
-    data, results_dir, plots_dir = load_results()
+    args = parse_args()
+    mode = args.mode or PLOT_MODE
+    input_path = Path(args.input) if args.input else INPUT_PATH_BY_MODE[mode]
+    plots_dir = Path(args.plots_dir) if args.plots_dir else PLOTS_DIR_BY_MODE[mode]
+    prefix = PREFIX_BY_MODE[mode]
+    table_name = TABLE_NAME_BY_MODE[mode]
+
+    data, results_dir, plots_dir = load_results(input_path, plots_dir)
     results = data["results"]
-    dataset = data["dataset"]
+    dataset = dict(data.get("dataset") or {})
     dataset["test_date"] = data.get("test_date", "")
+    dataset["cti_set_mode"] = data.get("cti_set_mode", mode)
 
-    saved = [
-        plot_precision_recall_f1(results, "cti_pilot", "CTI Pilot Set (domain-specific)",
-                                  "guardrail_accuracy_cti_pilot.png", plots_dir),
-        plot_precision_recall_f1(results, "public_benchmark", "Public Benchmark (general-purpose)",
-                                  "guardrail_accuracy_public_benchmark.png", plots_dir),
-        plot_false_positive_rate(results, plots_dir),
-        plot_latency(results, plots_dir),
-        plot_accuracy_vs_efficiency_scatter(results, plots_dir),
-    ]
-    table_path = save_summary_table(results, dataset, results_dir)
+    saved = []
 
+    p = plot_precision_recall_f1(
+        results,
+        "cti_pilot",
+        f"CTI set ({mode})",
+        f"{prefix}accuracy_cti.png",
+        plots_dir,
+    )
+    if p:
+        saved.append(p)
+
+    if _has_public(results):
+        p = plot_precision_recall_f1(
+            results,
+            "public_benchmark",
+            "Public Benchmark (general-purpose)",
+            f"{prefix}accuracy_public_benchmark.png",
+            plots_dir,
+        )
+        if p:
+            saved.append(p)
+        saved.append(
+            plot_false_positive_rate(
+                results, plots_dir, f"{prefix}false_positive_rate.png"
+            )
+        )
+
+    saved.append(plot_latency(results, plots_dir, f"{prefix}latency_comparison.png"))
+    saved.append(
+        plot_accuracy_vs_efficiency_scatter(
+            results, plots_dir, f"{prefix}accuracy_vs_efficiency_scatter.png"
+        )
+    )
+
+    table_path = save_summary_table(results, dataset, Path(results_dir), table_name)
+
+    print(f"Mode  : {mode}")
+    print(f"Input : {input_path}")
+    print(f"Plots : {plots_dir}")
     print("Saved plots:")
     for path in saved:
-        print(f"  {path}")
+        if path:
+            print(f"  {path}")
     print("Saved table:")
     print(f"  {table_path}")
 
