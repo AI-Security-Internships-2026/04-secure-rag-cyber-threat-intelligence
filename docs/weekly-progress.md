@@ -435,6 +435,11 @@ No major blockers — this week was mostly about closing the gap between "what w
   - Grounding benchmark (threshold 0.40)
   - Adversarial full-pipeline harness
 - [x] Saved results and CTI-100 guardrail plots under `experiments/results/eval_100/`
+- [x] Completed **full guardrail-comparison write-up (issue #6)**
+  - Doc: `docs/guardrail-comparison.md`
+  - Baseline vs LLM Guard vs NeMo on pilot, CTI-100, and public deepset
+  - Production decision documented: keep keyword baseline for CPU/latency, limitations and future hybrid noted
+  - Live integration already in place via `is_prompt_injection` in `main.py` / `pipeline.py`
 
 ### Key n=100 numbers (brief)
 
