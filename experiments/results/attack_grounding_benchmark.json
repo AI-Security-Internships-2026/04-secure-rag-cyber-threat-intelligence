@@ -1,0 +1,324 @@
+{
+  "timestamp": "2026-09-01T20:28:18.002077+00:00",
+  "labeled_set": "E:\\CNIT Internship\\Task04\\04-secure-rag-cyber-threat-intelligence\\experiments\\data\\grounding_labeled_set.json",
+  "overlap_threshold": 0.4,
+  "n_cases": 20,
+  "n_citations": 24,
+  "binary_detection": {
+    "description": "Positive = citation should be flagged (FABRICATED|REVOKED|REAL_BUT_IRRELEVANT). Predicted positive = classification != REAL_AND_PLAUSIBLE.",
+    "tp": 15,
+    "fp": 1,
+    "fn": 0,
+    "tn": 8,
+    "accuracy": 0.9583,
+    "precision": 0.9375,
+    "recall": 1.0,
+    "f1": 0.9677,
+    "false_positive_rate": 0.1111,
+    "false_negative_rate": 0.0
+  },
+  "exact_classification": {
+    "exact_match_count": 23,
+    "exact_match_rate": 0.9583,
+    "per_gold_class": {
+      "FABRICATED": {
+        "n": 7,
+        "exact_correct": 7,
+        "exact_accuracy": 1.0
+      },
+      "REAL_AND_PLAUSIBLE": {
+        "n": 9,
+        "exact_correct": 8,
+        "exact_accuracy": 0.8889
+      },
+      "REAL_BUT_IRRELEVANT": {
+        "n": 7,
+        "exact_correct": 7,
+        "exact_accuracy": 1.0
+      },
+      "REVOKED": {
+        "n": 1,
+        "exact_correct": 1,
+        "exact_accuracy": 1.0
+      }
+    }
+  },
+  "label_counts_gold": {
+    "REAL_AND_PLAUSIBLE": 9,
+    "REAL_BUT_IRRELEVANT": 7,
+    "FABRICATED": 7,
+    "REVOKED": 1
+  },
+  "label_counts_predicted": {
+    "REAL_AND_PLAUSIBLE": 8,
+    "REAL_BUT_IRRELEVANT": 8,
+    "FABRICATED": 7,
+    "REVOKED": 1
+  },
+  "rows": [
+    {
+      "case_id": "match-ransomware-t1486",
+      "technique_id": "T1486",
+      "gold": "REAL_AND_PLAUSIBLE",
+      "predicted": "REAL_AND_PLAUSIBLE",
+      "topical_overlap": 0.765,
+      "exact_match": true,
+      "binary": "TN",
+      "gold_should_flag": false,
+      "pred_flagged": false
+    },
+    {
+      "case_id": "match-injection-t1055",
+      "technique_id": "T1055",
+      "gold": "REAL_AND_PLAUSIBLE",
+      "predicted": "REAL_AND_PLAUSIBLE",
+      "topical_overlap": 0.947,
+      "exact_match": true,
+      "binary": "TN",
+      "gold_should_flag": false,
+      "pred_flagged": false
+    },
+    {
+      "case_id": "match-cred-t1003",
+      "technique_id": "T1003",
+      "gold": "REAL_AND_PLAUSIBLE",
+      "predicted": "REAL_AND_PLAUSIBLE",
+      "topical_overlap": 0.714,
+      "exact_match": true,
+      "binary": "TN",
+      "gold_should_flag": false,
+      "pred_flagged": false
+    },
+    {
+      "case_id": "match-powershell-t1059-001",
+      "technique_id": "T1059.001",
+      "gold": "REAL_AND_PLAUSIBLE",
+      "predicted": "REAL_AND_PLAUSIBLE",
+      "topical_overlap": 1.0,
+      "exact_match": true,
+      "binary": "TN",
+      "gold_should_flag": false,
+      "pred_flagged": false
+    },
+    {
+      "case_id": "match-scheduled-t1053-005",
+      "technique_id": "T1053.005",
+      "gold": "REAL_AND_PLAUSIBLE",
+      "predicted": "REAL_AND_PLAUSIBLE",
+      "topical_overlap": 1.0,
+      "exact_match": true,
+      "binary": "TN",
+      "gold_should_flag": false,
+      "pred_flagged": false
+    },
+    {
+      "case_id": "irrelevant-t1055-on-scanning",
+      "technique_id": "T1055",
+      "gold": "REAL_BUT_IRRELEVANT",
+      "predicted": "REAL_BUT_IRRELEVANT",
+      "topical_overlap": 0.312,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "irrelevant-t1486-on-phishing",
+      "technique_id": "T1486",
+      "gold": "REAL_BUT_IRRELEVANT",
+      "predicted": "REAL_BUT_IRRELEVANT",
+      "topical_overlap": 0.222,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "irrelevant-t1003-on-exfil",
+      "technique_id": "T1003",
+      "gold": "REAL_BUT_IRRELEVANT",
+      "predicted": "REAL_BUT_IRRELEVANT",
+      "topical_overlap": 0.211,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "irrelevant-t1021-on-encryption",
+      "technique_id": "T1021.002",
+      "gold": "REAL_BUT_IRRELEVANT",
+      "predicted": "REAL_BUT_IRRELEVANT",
+      "topical_overlap": 0.235,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "irrelevant-t1041-on-injection",
+      "technique_id": "T1041",
+      "gold": "REAL_BUT_IRRELEVANT",
+      "predicted": "REAL_BUT_IRRELEVANT",
+      "topical_overlap": 0.071,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "fabricated-t9999",
+      "technique_id": "T9999",
+      "gold": "FABRICATED",
+      "predicted": "FABRICATED",
+      "topical_overlap": null,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "fabricated-t1234-999",
+      "technique_id": "T1234.999",
+      "gold": "FABRICATED",
+      "predicted": "FABRICATED",
+      "topical_overlap": null,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "fabricated-t0000",
+      "technique_id": "T0000",
+      "gold": "FABRICATED",
+      "predicted": "FABRICATED",
+      "topical_overlap": null,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "fabricated-t8888",
+      "technique_id": "T8888",
+      "gold": "FABRICATED",
+      "predicted": "FABRICATED",
+      "topical_overlap": null,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "fabricated-t7777-001",
+      "technique_id": "T7777.001",
+      "gold": "FABRICATED",
+      "predicted": "FABRICATED",
+      "topical_overlap": null,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "revoked-t1086",
+      "technique_id": "T1086",
+      "gold": "REVOKED",
+      "predicted": "REVOKED",
+      "topical_overlap": null,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "mixed-good-and-fake",
+      "technique_id": "T1486",
+      "gold": "REAL_AND_PLAUSIBLE",
+      "predicted": "REAL_AND_PLAUSIBLE",
+      "topical_overlap": 0.714,
+      "exact_match": true,
+      "binary": "TN",
+      "gold_should_flag": false,
+      "pred_flagged": false
+    },
+    {
+      "case_id": "mixed-good-and-fake",
+      "technique_id": "T9999",
+      "gold": "FABRICATED",
+      "predicted": "FABRICATED",
+      "topical_overlap": null,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "mixed-good-and-irrelevant",
+      "technique_id": "T1486",
+      "gold": "REAL_AND_PLAUSIBLE",
+      "predicted": "REAL_AND_PLAUSIBLE",
+      "topical_overlap": 0.471,
+      "exact_match": true,
+      "binary": "TN",
+      "gold_should_flag": false,
+      "pred_flagged": false
+    },
+    {
+      "case_id": "mixed-good-and-irrelevant",
+      "technique_id": "T1055",
+      "gold": "REAL_BUT_IRRELEVANT",
+      "predicted": "REAL_BUT_IRRELEVANT",
+      "topical_overlap": 0.118,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "mixed-three-way",
+      "technique_id": "T1003",
+      "gold": "REAL_AND_PLAUSIBLE",
+      "predicted": "REAL_BUT_IRRELEVANT",
+      "topical_overlap": 0.333,
+      "exact_match": false,
+      "binary": "FP",
+      "gold_should_flag": false,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "mixed-three-way",
+      "technique_id": "T1048",
+      "gold": "REAL_BUT_IRRELEVANT",
+      "predicted": "REAL_BUT_IRRELEVANT",
+      "topical_overlap": 0.133,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "mixed-three-way",
+      "technique_id": "T9999",
+      "gold": "FABRICATED",
+      "predicted": "FABRICATED",
+      "topical_overlap": null,
+      "exact_match": true,
+      "binary": "TP",
+      "gold_should_flag": true,
+      "pred_flagged": true
+    },
+    {
+      "case_id": "match-defense-evasion-t1027",
+      "technique_id": "T1027",
+      "gold": "REAL_AND_PLAUSIBLE",
+      "predicted": "REAL_AND_PLAUSIBLE",
+      "topical_overlap": 1.0,
+      "exact_match": true,
+      "binary": "TN",
+      "gold_should_flag": false,
+      "pred_flagged": false
+    }
+  ]
+}
