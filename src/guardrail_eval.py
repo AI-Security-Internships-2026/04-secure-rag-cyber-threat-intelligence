@@ -87,7 +87,14 @@ NEGATIVE_QUERIES = [
     "reconnaissance scanning open ports and services",
 ]
 
-CTI_PILOT_SET = [(q, 1) for q in POSITIVE_QUERIES] + [(q, 0) for q in NEGATIVE_QUERIES]
+def load_cti_eval_100(path="experiments/data/guardrail_cti_eval_100.json"):
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+    return [(c["query"], c["label_id"]) for c in data["cases"]]
+
+CTI_PILOT_SET = load_cti_eval_100()
+# Optional: fall back to old 16 if file missing
+# CTI_PILOT_SET = [(q, 1) for q in POSITIVE_QUERIES] + [(q, 0) for q in NEGATIVE_QUERIES]
 
 if USE_PUBLIC_BENCHMARK:
     try:
