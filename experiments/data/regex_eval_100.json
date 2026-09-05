@@ -1,0 +1,897 @@
+{
+  "description": "Held-out regex/privacy redaction accuracy set (100 texts). Separate from src/regex_test_set.py pilot (n=28).",
+  "label_schema": {
+    "expected": "List of [ENTITY_LABEL, exact_substring] that SHOULD be extracted/redacted. Empty list means nothing should be redacted."
+  },
+  "counts_by_category": {
+    "plain": 30,
+    "defanged": 25,
+    "safe": 20,
+    "trap": 25
+  },
+  "cases": [
+    {
+      "id": "rx-001",
+      "category": "plain",
+      "text": "Malware beacons to C2 server at 192.168.1.45 every 60 seconds.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "192.168.1.45"
+        ]
+      ]
+    },
+    {
+      "id": "rx-002",
+      "category": "plain",
+      "text": "The dropper hash is a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4.",
+      "expected": [
+        [
+          "FILE_HASH_MD5",
+          "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
+        ]
+      ]
+    },
+    {
+      "id": "rx-003",
+      "category": "plain",
+      "text": "SHA1 of the payload: da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "expected": [
+        [
+          "FILE_HASH_SHA1",
+          "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        ]
+      ]
+    },
+    {
+      "id": "rx-004",
+      "category": "plain",
+      "text": "Full SHA256 signature: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+      "expected": [
+        [
+          "FILE_HASH_SHA256",
+          "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+        ]
+      ]
+    },
+    {
+      "id": "rx-005",
+      "category": "plain",
+      "text": "Domain used for phishing: malicious-site.com",
+      "expected": [
+        [
+          "DOMAIN",
+          "malicious-site.com"
+        ]
+      ]
+    },
+    {
+      "id": "rx-006",
+      "category": "plain",
+      "text": "Contact analyst john.smith@company.com for more details.",
+      "expected": [
+        [
+          "EMAIL",
+          "john.smith@company.com"
+        ]
+      ]
+    },
+    {
+      "id": "rx-007",
+      "category": "plain",
+      "text": "Exploits CVE-2021-44228 (Log4Shell) vulnerability.",
+      "expected": [
+        [
+          "CVE",
+          "CVE-2021-44228"
+        ]
+      ]
+    },
+    {
+      "id": "rx-008",
+      "category": "plain",
+      "text": "Beaconing observed toward 10.0.0.8 on port 443.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "10.0.0.8"
+        ]
+      ]
+    },
+    {
+      "id": "rx-009",
+      "category": "plain",
+      "text": "Secondary C2 at 172.16.5.20 in the telemetry.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "172.16.5.20"
+        ]
+      ]
+    },
+    {
+      "id": "rx-010",
+      "category": "plain",
+      "text": "MD5 of stage-1: 5d41402abc4b2a76b9719d911017c592",
+      "expected": [
+        [
+          "FILE_HASH_MD5",
+          "5d41402abc4b2a76b9719d911017c592"
+        ]
+      ]
+    },
+    {
+      "id": "rx-011",
+      "category": "plain",
+      "text": "SHA1 loader: 2fd4e1c67a2d28fced849ee1bb76e7391b93eb12",
+      "expected": [
+        [
+          "FILE_HASH_SHA1",
+          "2fd4e1c67a2d28fced849ee1bb76e7391b93eb12"
+        ]
+      ]
+    },
+    {
+      "id": "rx-012",
+      "category": "plain",
+      "text": "SHA256 sample: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expected": [
+        [
+          "FILE_HASH_SHA256",
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        ]
+      ]
+    },
+    {
+      "id": "rx-013",
+      "category": "plain",
+      "text": "Phishing domain: login-office365-secure.net",
+      "expected": [
+        [
+          "DOMAIN",
+          "login-office365-secure.net"
+        ]
+      ]
+    },
+    {
+      "id": "rx-014",
+      "category": "plain",
+      "text": "Attacker email used: support@secure-update-check.com",
+      "expected": [
+        [
+          "EMAIL",
+          "support@secure-update-check.com"
+        ]
+      ]
+    },
+    {
+      "id": "rx-015",
+      "category": "plain",
+      "text": "Tracked as CVE-2023-23397 in the campaign notes.",
+      "expected": [
+        [
+          "CVE",
+          "CVE-2023-23397"
+        ]
+      ]
+    },
+    {
+      "id": "rx-016",
+      "category": "plain",
+      "text": "Host 203.0.113.15 answered the HTTPS beacon.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "203.0.113.15"
+        ]
+      ]
+    },
+    {
+      "id": "rx-017",
+      "category": "plain",
+      "text": "Payload hosted at updates-cdn-service.org",
+      "expected": [
+        [
+          "DOMAIN",
+          "updates-cdn-service.org"
+        ]
+      ]
+    },
+    {
+      "id": "rx-018",
+      "category": "plain",
+      "text": "Notify team lead at alice.wong@corp-example.com",
+      "expected": [
+        [
+          "EMAIL",
+          "alice.wong@corp-example.com"
+        ]
+      ]
+    },
+    {
+      "id": "rx-019",
+      "category": "plain",
+      "text": "Linked to CVE-2017-0144 (EternalBlue) exploitation.",
+      "expected": [
+        [
+          "CVE",
+          "CVE-2017-0144"
+        ]
+      ]
+    },
+    {
+      "id": "rx-020",
+      "category": "plain",
+      "text": "Internal scanner hit 192.168.100.50 during recon.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "192.168.100.50"
+        ]
+      ]
+    },
+    {
+      "id": "rx-021",
+      "category": "plain",
+      "text": "MD5 second stage: 098f6bcd4621d373cade4e832627b4f6",
+      "expected": [
+        [
+          "FILE_HASH_MD5",
+          "098f6bcd4621d373cade4e832627b4f6"
+        ]
+      ]
+    },
+    {
+      "id": "rx-022",
+      "category": "plain",
+      "text": "Domain sinkhole: badactor-infra.biz",
+      "expected": [
+        [
+          "DOMAIN",
+          "badactor-infra.biz"
+        ]
+      ]
+    },
+    {
+      "id": "rx-023",
+      "category": "plain",
+      "text": "Report CVE-2024-21412 to the patch owners.",
+      "expected": [
+        [
+          "CVE",
+          "CVE-2024-21412"
+        ]
+      ]
+    },
+    {
+      "id": "rx-024",
+      "category": "plain",
+      "text": "Exfil endpoint 198.51.100.23 logged in the proxy.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "198.51.100.23"
+        ]
+      ]
+    },
+    {
+      "id": "rx-025",
+      "category": "plain",
+      "text": "Contact: ir-team@example-soc.org for escalation.",
+      "expected": [
+        [
+          "EMAIL",
+          "ir-team@example-soc.org"
+        ]
+      ]
+    },
+    {
+      "id": "rx-026",
+      "category": "plain",
+      "text": "SHA1 of config: aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d",
+      "expected": [
+        [
+          "FILE_HASH_SHA1",
+          "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d"
+        ]
+      ]
+    },
+    {
+      "id": "rx-027",
+      "category": "plain",
+      "text": "Delivery domain: invoice-share-portal.com",
+      "expected": [
+        [
+          "DOMAIN",
+          "invoice-share-portal.com"
+        ]
+      ]
+    },
+    {
+      "id": "rx-028",
+      "category": "plain",
+      "text": "CVE-2022-30190 (Follina) referenced in the write-up.",
+      "expected": [
+        [
+          "CVE",
+          "CVE-2022-30190"
+        ]
+      ]
+    },
+    {
+      "id": "rx-029",
+      "category": "plain",
+      "text": "Management IP 10.10.10.10 appeared in lateral movement logs.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "10.10.10.10"
+        ]
+      ]
+    },
+    {
+      "id": "rx-030",
+      "category": "plain",
+      "text": "Analyst note: hash 7d793037a0760186574b0282f2f435e7 was dropped.",
+      "expected": [
+        [
+          "FILE_HASH_MD5",
+          "7d793037a0760186574b0282f2f435e7"
+        ]
+      ]
+    },
+    {
+      "id": "rx-031",
+      "category": "defanged",
+      "text": "C2 observed at 192[.]168[.]1[.]45 in the sandbox run.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "192[.]168[.]1[.]45"
+        ]
+      ]
+    },
+    {
+      "id": "rx-032",
+      "category": "defanged",
+      "text": "Second beacon IP: 10(.)0(.)0(.)5 per the pcap.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "10(.)0(.)0(.)5"
+        ]
+      ]
+    },
+    {
+      "id": "rx-033",
+      "category": "defanged",
+      "text": "Also seen: 172{.}16{.}0{.}9 as backup C2.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "172{.}16{.}0{.}9"
+        ]
+      ]
+    },
+    {
+      "id": "rx-034",
+      "category": "defanged",
+      "text": "Payload downloaded from evil[.]com/dropper.exe",
+      "expected": [
+        [
+          "DOMAIN",
+          "evil[.]com"
+        ]
+      ]
+    },
+    {
+      "id": "rx-035",
+      "category": "defanged",
+      "text": "Registered attacker infra at bad-domain[.]net for phishing kits.",
+      "expected": [
+        [
+          "DOMAIN",
+          "bad-domain[.]net"
+        ]
+      ]
+    },
+    {
+      "id": "rx-036",
+      "category": "defanged",
+      "text": "hxxp://malicious-updates.com/payload.bin was blocked.",
+      "expected": [
+        [
+          "DOMAIN",
+          "malicious-updates.com"
+        ]
+      ]
+    },
+    {
+      "id": "rx-037",
+      "category": "defanged",
+      "text": "Defanged host 8[.]8[.]8[.]8 is only an example resolver.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "8[.]8[.]8[.]8"
+        ]
+      ]
+    },
+    {
+      "id": "rx-038",
+      "category": "defanged",
+      "text": "URL written as hxxps://login[.]bank-secure[.]com/auth",
+      "expected": [
+        [
+          "DOMAIN",
+          "login[.]bank-secure[.]com"
+        ]
+      ]
+    },
+    {
+      "id": "rx-039",
+      "category": "defanged",
+      "text": "IOC: 185[.]220[.]101[.]1 associated with exit nodes.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "185[.]220[.]101[.]1"
+        ]
+      ]
+    },
+    {
+      "id": "rx-040",
+      "category": "defanged",
+      "text": "Domain form: attacker(dot)example(dot)org in the ticket.",
+      "expected": [
+        [
+          "DOMAIN",
+          "attacker(dot)example(dot)org"
+        ]
+      ]
+    },
+    {
+      "id": "rx-041",
+      "category": "defanged",
+      "text": "Email defanged: bad[.]actor[@]protonmail[.]com",
+      "expected": [
+        [
+          "EMAIL",
+          "bad[.]actor[@]protonmail[.]com"
+        ]
+      ]
+    },
+    {
+      "id": "rx-042",
+      "category": "defanged",
+      "text": "See 45[.]33[.]32[.]156 in the firewall deny logs.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "45[.]33[.]32[.]156"
+        ]
+      ]
+    },
+    {
+      "id": "rx-043",
+      "category": "defanged",
+      "text": "Phish kit at hxxp://secure-mail-check[.]xyz",
+      "expected": [
+        [
+          "DOMAIN",
+          "secure-mail-check[.]xyz"
+        ]
+      ]
+    },
+    {
+      "id": "rx-044",
+      "category": "defanged",
+      "text": "Bracketed IP 100[.]64[.]0[.]12 from CGNAT range.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "100[.]64[.]0[.]12"
+        ]
+      ]
+    },
+    {
+      "id": "rx-045",
+      "category": "defanged",
+      "text": "Domain evil-corp[.]co listed in the blocklist.",
+      "expected": [
+        [
+          "DOMAIN",
+          "evil-corp[.]co"
+        ]
+      ]
+    },
+    {
+      "id": "rx-046",
+      "category": "defanged",
+      "text": "Analyst wrote 1[.]2[.]3[.]4 as a placeholder C2.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "1[.]2[.]3[.]4"
+        ]
+      ]
+    },
+    {
+      "id": "rx-047",
+      "category": "defanged",
+      "text": "hxxp-link to updates[.]malware-cdn[.]net observed.",
+      "expected": [
+        [
+          "DOMAIN",
+          "updates[.]malware-cdn[.]net"
+        ]
+      ]
+    },
+    {
+      "id": "rx-048",
+      "category": "defanged",
+      "text": "Defanged CVE text still contains CVE-2021-34527.",
+      "expected": [
+        [
+          "CVE",
+          "CVE-2021-34527"
+        ]
+      ]
+    },
+    {
+      "id": "rx-049",
+      "category": "defanged",
+      "text": "IP 203[.]0[.]113[.]99 from documentation range.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "203[.]0[.]113[.]99"
+        ]
+      ]
+    },
+    {
+      "id": "rx-050",
+      "category": "defanged",
+      "text": "Site: credential-harvest[.]info redirected victims.",
+      "expected": [
+        [
+          "DOMAIN",
+          "credential-harvest[.]info"
+        ]
+      ]
+    },
+    {
+      "id": "rx-051",
+      "category": "defanged",
+      "text": "Paren form 11(.)22(.)33(.)44 in the intel note.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "11(.)22(.)33(.)44"
+        ]
+      ]
+    },
+    {
+      "id": "rx-052",
+      "category": "defanged",
+      "text": "Brace form 9{.}9{.}9{.}9 flagged by content filter.",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "9{.}9{.}9{.}9"
+        ]
+      ]
+    },
+    {
+      "id": "rx-053",
+      "category": "defanged",
+      "text": "Mixed note mentions evil[.]org and CVE-2019-0708 together.",
+      "expected": [
+        [
+          "DOMAIN",
+          "evil[.]org"
+        ],
+        [
+          "CVE",
+          "CVE-2019-0708"
+        ]
+      ]
+    },
+    {
+      "id": "rx-054",
+      "category": "defanged",
+      "text": "Host 77[.]88[.]21[.]11 with hash 44d88612fea8a8f36de82e1278abb02f",
+      "expected": [
+        [
+          "IP_ADDRESS",
+          "77[.]88[.]21[.]11"
+        ],
+        [
+          "FILE_HASH_MD5",
+          "44d88612fea8a8f36de82e1278abb02f"
+        ]
+      ]
+    },
+    {
+      "id": "rx-055",
+      "category": "defanged",
+      "text": "Mail relay abuse via spam[@]badmail[.]ru patterns.",
+      "expected": [
+        [
+          "EMAIL",
+          "spam[@]badmail[.]ru"
+        ]
+      ]
+    },
+    {
+      "id": "rx-056",
+      "category": "safe",
+      "text": "Technique documented at attack.mitre.org/techniques/T1110.",
+      "expected": []
+    },
+    {
+      "id": "rx-057",
+      "category": "safe",
+      "text": "See advisory on nvd.nist.gov for the full CVSS score.",
+      "expected": []
+    },
+    {
+      "id": "rx-058",
+      "category": "safe",
+      "text": "Source code hosted at github.com/mitre/cti.",
+      "expected": []
+    },
+    {
+      "id": "rx-059",
+      "category": "safe",
+      "text": "Reference: cve.mitre.org for the canonical record.",
+      "expected": []
+    },
+    {
+      "id": "rx-060",
+      "category": "safe",
+      "text": "Patch notes published on microsoft.com/security-updates.",
+      "expected": []
+    },
+    {
+      "id": "rx-061",
+      "category": "safe",
+      "text": "Documentation lives on learn.microsoft.com for defenders.",
+      "expected": []
+    },
+    {
+      "id": "rx-062",
+      "category": "safe",
+      "text": "ATT&CK navigator views are published via mitre.org resources.",
+      "expected": []
+    },
+    {
+      "id": "rx-063",
+      "category": "safe",
+      "text": "Public write-up available on microsoft.com/security.",
+      "expected": []
+    },
+    {
+      "id": "rx-064",
+      "category": "safe",
+      "text": "NIST publishes guidance at nist.gov for cyber frameworks.",
+      "expected": []
+    },
+    {
+      "id": "rx-065",
+      "category": "safe",
+      "text": "The CVE program portal is at cve.org for assignments.",
+      "expected": []
+    },
+    {
+      "id": "rx-066",
+      "category": "safe",
+      "text": "Open source rules on github.com/SigmaHQ/sigma help detection.",
+      "expected": []
+    },
+    {
+      "id": "rx-067",
+      "category": "safe",
+      "text": "Official KB articles on support.microsoft.com describe fixes.",
+      "expected": []
+    },
+    {
+      "id": "rx-068",
+      "category": "safe",
+      "text": "STIX distributions are on github.com/oasis-open related projects.",
+      "expected": []
+    },
+    {
+      "id": "rx-069",
+      "category": "safe",
+      "text": "Analysts reference attack.mitre.org for technique mappings.",
+      "expected": []
+    },
+    {
+      "id": "rx-070",
+      "category": "safe",
+      "text": "Vendor bulletin mirrored on microsoft.com without private IOCs.",
+      "expected": []
+    },
+    {
+      "id": "rx-071",
+      "category": "safe",
+      "text": "Training material cites nvd.nist.gov vulnerability summaries.",
+      "expected": []
+    },
+    {
+      "id": "rx-072",
+      "category": "safe",
+      "text": "Research paper links to mitre.org for taxonomy background.",
+      "expected": []
+    },
+    {
+      "id": "rx-073",
+      "category": "safe",
+      "text": "Internal wiki points to attack.mitre.org/tactics overview.",
+      "expected": []
+    },
+    {
+      "id": "rx-074",
+      "category": "safe",
+      "text": "Compliance mapping uses nist.gov control catalogs only.",
+      "expected": []
+    },
+    {
+      "id": "rx-075",
+      "category": "safe",
+      "text": "Public GitHub mirror github.com/example-org/docs has no secrets.",
+      "expected": []
+    },
+    {
+      "id": "rx-076",
+      "category": "trap",
+      "text": "The tool is currently at version 1.2.3.4 in our internal build.",
+      "expected": []
+    },
+    {
+      "id": "rx-077",
+      "category": "trap",
+      "text": "Malicious script saved as script.py on the compromised host.",
+      "expected": []
+    },
+    {
+      "id": "rx-078",
+      "category": "trap",
+      "text": "Config file located at settings.ini in the install directory.",
+      "expected": []
+    },
+    {
+      "id": "rx-079",
+      "category": "trap",
+      "text": "Build number 10.0.19041.1 was reported by the endpoint agent.",
+      "expected": []
+    },
+    {
+      "id": "rx-080",
+      "category": "trap",
+      "text": "Module version 2.4.1.0 failed signature validation.",
+      "expected": []
+    },
+    {
+      "id": "rx-081",
+      "category": "trap",
+      "text": "The process scored 0.0.0.0 in the sandbox reputation field as unknown.",
+      "expected": []
+    },
+    {
+      "id": "rx-082",
+      "category": "trap",
+      "text": "Filename report.docx was emailed to finance.",
+      "expected": []
+    },
+    {
+      "id": "rx-083",
+      "category": "trap",
+      "text": "Package release 3.3.3.3 is staged for QA only.",
+      "expected": []
+    },
+    {
+      "id": "rx-084",
+      "category": "trap",
+      "text": "No indicators of compromise were present in this benign log line.",
+      "expected": []
+    },
+    {
+      "id": "rx-085",
+      "category": "trap",
+      "text": "Discussed ATT&CK technique T1486 without embedding network IOCs.",
+      "expected": []
+    },
+    {
+      "id": "rx-086",
+      "category": "trap",
+      "text": "User opened budget.xlsx from the shared drive.",
+      "expected": []
+    },
+    {
+      "id": "rx-087",
+      "category": "trap",
+      "text": "Service pack level 6.1.7601.17514 noted on legacy hosts.",
+      "expected": []
+    },
+    {
+      "id": "rx-088",
+      "category": "trap",
+      "text": "The playbook step 4.5.6.7 is an internal numbering scheme.",
+      "expected": []
+    },
+    {
+      "id": "rx-089",
+      "category": "trap",
+      "text": "Binary named updater.exe was signed by the vendor.",
+      "expected": []
+    },
+    {
+      "id": "rx-090",
+      "category": "trap",
+      "text": "Relative path ..\\tools\\scan.ps1 is not a domain.",
+      "expected": []
+    },
+    {
+      "id": "rx-091",
+      "category": "trap",
+      "text": "String 1234:5678 looks like a port pair, not an email.",
+      "expected": []
+    },
+    {
+      "id": "rx-092",
+      "category": "trap",
+      "text": "Placeholder address 0.0.0.0 means bind-all in configs.",
+      "expected": []
+    },
+    {
+      "id": "rx-093",
+      "category": "trap",
+      "text": "Checksum field empty; value N/A rather than a hash.",
+      "expected": []
+    },
+    {
+      "id": "rx-094",
+      "category": "trap",
+      "text": "Meeting notes: focus on phishing awareness, no hashes listed.",
+      "expected": []
+    },
+    {
+      "id": "rx-095",
+      "category": "trap",
+      "text": "Detection rule id 1001 does not contain an IP address.",
+      "expected": []
+    },
+    {
+      "id": "rx-096",
+      "category": "trap",
+      "text": "The phrase 'dot com' in prose should not create a domain entity.",
+      "expected": []
+    },
+    {
+      "id": "rx-097",
+      "category": "trap",
+      "text": "Encrypted blob was stored without publishing the digest.",
+      "expected": []
+    },
+    {
+      "id": "rx-098",
+      "category": "trap",
+      "text": "Localhost testing used names only, no dotted quads in this sentence.",
+      "expected": []
+    },
+    {
+      "id": "rx-099",
+      "category": "trap",
+      "text": "Severity score 9.8 is CVSS-like but not a CVE identifier.",
+      "expected": []
+    },
+    {
+      "id": "rx-100",
+      "category": "trap",
+      "text": "Clean narrative about lateral movement with no concrete IOC values.",
+      "expected": []
+    }
+  ]
+}
