@@ -458,5 +458,21 @@ No major blockers — this week was mostly about closing the gap between "what w
 
 ---
 
+## Week 13 
+
+**Branch:** `maria-week-13`
+**PR link:**
+
+### Completed this week
+
+- Compiled and committed draft PDF to `docs/paper-draft.pdf` for issue #9
+- Opened PR against `dev` with paper-draft covering:
+  - System architecture (STIX/ATT&CK RAG, privacy filters, injection guardrail, ATT&CK grounding)
+  - Related work and comparison table
+  - Evaluation: retrieval P@k, regex/Presidio latency, guardrail pilot + public latencies, grounding pilot (n=24) and expanded grounding (n=100), CTI-100 keyword baseline with confusion matrices
+  - Elsevier-style GenAI declaration (Grok used for evaluation-set case text under fixed label rules)
+
+---
+
 
 _(Add a new section each week)_
