@@ -220,15 +220,14 @@ This decision was already reflected in earlier weekly work (baseline retained af
 
 ---
 
-## 8. Future work
+## 8. Hybrid Guardrail — Contribution 2 (Implemented and Evaluated in This Work)
 
-A natural next step that respects CPU and latency constraints without abandoning detection quality:
+The CTI-calibrated selective rule→ML cascade described below is **Contribution 2 of this work**, implemented in the research plan Path A, and fully evaluated in Issue 3 / §4.5 of the final manuscript. It is explicitly NOT future work. The two-stage routing respects CPU and latency constraints without abandoning detection quality:
 
-1. **Stage 1 (always on):** keywords + small **intent-family** pattern groups (override, role-switch, raw dump, disable-redaction, mass IOC list). Still sub-ms to a few ms.  
-2. **Stage 2 (rare):** only if stage 1 is negative but the query looks suspicious, run a **tiny local CPU classifier** (or LLM Guard) on that tail.  
+1. **Stage 1 (always on):** keywords + 5 rule-family **intent-family** pattern groups (override, role-switch, raw dump, disable-redaction, mass IOC list) with CTI-specific trigger-word carve-outs for 13 CTI terms (injection, dump, payload, exploit, shell, malware, credentials, bypass and related) that would otherwise auto-block. Routing output is one of BLOCK / ALLOW / ESCALATE. Still sub-ms to a few ms.  
+2. **Stage 2 (rare, ESCALATE path only):** only if stage 1 returns ESCALATE for a suspicious query, run PIGuard (primary) or LLM Guard (fallback) on that tail. NeMo heuristic is retained as a documented clean-negative baseline (0% recall on short CTI probes, 0% rate of false positives, not used in production).
 
-Normal analyst questions would keep near-keyword latency, while paraphrased attacks would get a second check. Any such work must use a **tune split disjoint from CTI-100** so held-out reporting stays valid.
-This hybrid is *recommended as future work only*.
+Normal analyst questions ALLOW → near-keyword latency with zero model cost. Paraphrased attacks that evade rules ESCALATE → get the second ML check. The 95/5, 90/10, and 75/25 benign/adversarial workload mixes (Issue 7, Part G) quantify the real median cost of selective escalation rather than assuming always-on ML latency. Any future refinement must still use a **tune split disjoint from CTI-100** so held-out reporting stays valid.
 
 ---
 
@@ -255,4 +254,4 @@ Three input guards were compared on CTI pilot, held-out CTI-100, and public deep
 - **LLM Guard** offers the best CTI-100 F1 (0.76) at ~100 ms per query and is the strongest generaliser of the three, at a cost that conflicts with a strict low-latency budget if applied to every request.  
 - **NeMo’s evaluated heuristic** contributes a clean negative result (0% recall) and is not used in production.
 
-The production system therefore **retains the keyword baseline**, documents the paraphrase limitation using CTI-100, relies on **redaction and output controls** for residual risk, and records a **CPU-friendly hybrid** only as future work.
+The prototype live endpoint therefore **retains the keyword baseline** as the default fast path, documents the paraphrase limitation using CTI-100 (keyword F1 collapses 0.80 pilot → 0.24 CTI-100 under paraphrase), relies on **typed aliasing, output scanning, and ATT&CK grounding** as mandatory backstops downstream, and ships the **CTI-calibrated hybrid guardrail (Contribution 2, Issue 3)** as the evaluated research candidate with quantified detection, over-defense rate, escalation rate, and latency trade-offs rather than treating it as future work.
