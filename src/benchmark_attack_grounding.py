@@ -20,6 +20,7 @@ Also reports per-class agreement (exact classification match).
 Usage:
     python -m src.benchmark_attack_grounding
     python -m src.benchmark_attack_grounding --threshold 0.40
+    python -m src.benchmark_attack_grounding --labeled experiments/data/grounding_eval_100.json --output experiments/results/attack_grounding_benchmark_100.json
 """
 
 from __future__ import annotations

@@ -1,0 +1,2364 @@
+{
+  "test_date": "2026-09-05",
+  "mode": "eval100",
+  "labeled_set": "E:\\CNIT Internship\\Task04\\04-secure-rag-cyber-threat-intelligence\\experiments\\data\\regex_eval_100.json",
+  "v1_baseline": {
+    "filter_version": "v1_baseline",
+    "total_test_cases": 100,
+    "true_positives": 30,
+    "false_positives": 15,
+    "false_negatives": 27,
+    "precision": 0.6667,
+    "recall": 0.5263,
+    "f1_score": 0.5882,
+    "eval_time_ms": 1.7
+  },
+  "v3_hardened": {
+    "filter_version": "v3_hardened",
+    "total_test_cases": 100,
+    "true_positives": 55,
+    "false_positives": 18,
+    "false_negatives": 2,
+    "precision": 0.7534,
+    "recall": 0.9649,
+    "f1_score": 0.8462,
+    "eval_time_ms": 2.78
+  },
+  "v1_detail": [
+    {
+      "id": "rx-001",
+      "category": "plain",
+      "text": "Malware beacons to C2 server at 192.168.1.45 every 60 seconds.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "192.168.1.45"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-002",
+      "category": "plain",
+      "text": "The dropper hash is a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4.",
+      "true_positives": [
+        [
+          "FILE_HASH_MD5",
+          "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-003",
+      "category": "plain",
+      "text": "SHA1 of the payload: da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "FILE_HASH_SHA1",
+          "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        ]
+      ]
+    },
+    {
+      "id": "rx-004",
+      "category": "plain",
+      "text": "Full SHA256 signature: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822...",
+      "true_positives": [
+        [
+          "FILE_HASH_SHA256",
+          "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-005",
+      "category": "plain",
+      "text": "Domain used for phishing: malicious-site.com",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "malicious-site.com"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-006",
+      "category": "plain",
+      "text": "Contact analyst john.smith@company.com for more details.",
+      "true_positives": [
+        [
+          "EMAIL",
+          "john.smith@company.com"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "company.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-007",
+      "category": "plain",
+      "text": "Exploits CVE-2021-44228 (Log4Shell) vulnerability.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2021-44228"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-008",
+      "category": "plain",
+      "text": "Beaconing observed toward 10.0.0.8 on port 443.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "10.0.0.8"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-009",
+      "category": "plain",
+      "text": "Secondary C2 at 172.16.5.20 in the telemetry.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "172.16.5.20"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-010",
+      "category": "plain",
+      "text": "MD5 of stage-1: 5d41402abc4b2a76b9719d911017c592",
+      "true_positives": [
+        [
+          "FILE_HASH_MD5",
+          "5d41402abc4b2a76b9719d911017c592"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-011",
+      "category": "plain",
+      "text": "SHA1 loader: 2fd4e1c67a2d28fced849ee1bb76e7391b93eb12",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "FILE_HASH_SHA1",
+          "2fd4e1c67a2d28fced849ee1bb76e7391b93eb12"
+        ]
+      ]
+    },
+    {
+      "id": "rx-012",
+      "category": "plain",
+      "text": "SHA256 sample: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991...",
+      "true_positives": [
+        [
+          "FILE_HASH_SHA256",
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-013",
+      "category": "plain",
+      "text": "Phishing domain: login-office365-secure.net",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "login-office365-secure.net"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-014",
+      "category": "plain",
+      "text": "Attacker email used: support@secure-update-check.com",
+      "true_positives": [
+        [
+          "EMAIL",
+          "support@secure-update-check.com"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "secure-update-check.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-015",
+      "category": "plain",
+      "text": "Tracked as CVE-2023-23397 in the campaign notes.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2023-23397"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-016",
+      "category": "plain",
+      "text": "Host 203.0.113.15 answered the HTTPS beacon.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "203.0.113.15"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-017",
+      "category": "plain",
+      "text": "Payload hosted at updates-cdn-service.org",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "updates-cdn-service.org"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-018",
+      "category": "plain",
+      "text": "Notify team lead at alice.wong@corp-example.com",
+      "true_positives": [
+        [
+          "EMAIL",
+          "alice.wong@corp-example.com"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "corp-example.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-019",
+      "category": "plain",
+      "text": "Linked to CVE-2017-0144 (EternalBlue) exploitation.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2017-0144"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-020",
+      "category": "plain",
+      "text": "Internal scanner hit 192.168.100.50 during recon.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "192.168.100.50"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-021",
+      "category": "plain",
+      "text": "MD5 second stage: 098f6bcd4621d373cade4e832627b4f6",
+      "true_positives": [
+        [
+          "FILE_HASH_MD5",
+          "098f6bcd4621d373cade4e832627b4f6"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-022",
+      "category": "plain",
+      "text": "Domain sinkhole: badactor-infra.biz",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DOMAIN",
+          "badactor-infra.biz"
+        ]
+      ]
+    },
+    {
+      "id": "rx-023",
+      "category": "plain",
+      "text": "Report CVE-2024-21412 to the patch owners.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2024-21412"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-024",
+      "category": "plain",
+      "text": "Exfil endpoint 198.51.100.23 logged in the proxy.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "198.51.100.23"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-025",
+      "category": "plain",
+      "text": "Contact: ir-team@example-soc.org for escalation.",
+      "true_positives": [
+        [
+          "EMAIL",
+          "ir-team@example-soc.org"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "example-soc.org"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-026",
+      "category": "plain",
+      "text": "SHA1 of config: aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "FILE_HASH_SHA1",
+          "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d"
+        ]
+      ]
+    },
+    {
+      "id": "rx-027",
+      "category": "plain",
+      "text": "Delivery domain: invoice-share-portal.com",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "invoice-share-portal.com"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-028",
+      "category": "plain",
+      "text": "CVE-2022-30190 (Follina) referenced in the write-up.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2022-30190"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-029",
+      "category": "plain",
+      "text": "Management IP 10.10.10.10 appeared in lateral movement logs.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "10.10.10.10"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-030",
+      "category": "plain",
+      "text": "Analyst note: hash 7d793037a0760186574b0282f2f435e7 was dropped.",
+      "true_positives": [
+        [
+          "FILE_HASH_MD5",
+          "7d793037a0760186574b0282f2f435e7"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-031",
+      "category": "defanged",
+      "text": "C2 observed at 192[.]168[.]1[.]45 in the sandbox run.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "192[.]168[.]1[.]45"
+        ]
+      ]
+    },
+    {
+      "id": "rx-032",
+      "category": "defanged",
+      "text": "Second beacon IP: 10(.)0(.)0(.)5 per the pcap.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "10(.)0(.)0(.)5"
+        ]
+      ]
+    },
+    {
+      "id": "rx-033",
+      "category": "defanged",
+      "text": "Also seen: 172{.}16{.}0{.}9 as backup C2.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "172{.}16{.}0{.}9"
+        ]
+      ]
+    },
+    {
+      "id": "rx-034",
+      "category": "defanged",
+      "text": "Payload downloaded from evil[.]com/dropper.exe",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DOMAIN",
+          "evil[.]com"
+        ]
+      ]
+    },
+    {
+      "id": "rx-035",
+      "category": "defanged",
+      "text": "Registered attacker infra at bad-domain[.]net for phishing kits.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DOMAIN",
+          "bad-domain[.]net"
+        ]
+      ]
+    },
+    {
+      "id": "rx-036",
+      "category": "defanged",
+      "text": "hxxp://malicious-updates.com/payload.bin was blocked.",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "malicious-updates.com"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-037",
+      "category": "defanged",
+      "text": "Defanged host 8[.]8[.]8[.]8 is only an example resolver.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "8[.]8[.]8[.]8"
+        ]
+      ]
+    },
+    {
+      "id": "rx-038",
+      "category": "defanged",
+      "text": "URL written as hxxps://login[.]bank-secure[.]com/auth",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DOMAIN",
+          "login[.]bank-secure[.]com"
+        ]
+      ]
+    },
+    {
+      "id": "rx-039",
+      "category": "defanged",
+      "text": "IOC: 185[.]220[.]101[.]1 associated with exit nodes.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "185[.]220[.]101[.]1"
+        ]
+      ]
+    },
+    {
+      "id": "rx-040",
+      "category": "defanged",
+      "text": "Domain form: attacker(dot)example(dot)org in the ticket.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DOMAIN",
+          "attacker(dot)example(dot)org"
+        ]
+      ]
+    },
+    {
+      "id": "rx-041",
+      "category": "defanged",
+      "text": "Email defanged: bad[.]actor[@]protonmail[.]com",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "EMAIL",
+          "bad[.]actor[@]protonmail[.]com"
+        ]
+      ]
+    },
+    {
+      "id": "rx-042",
+      "category": "defanged",
+      "text": "See 45[.]33[.]32[.]156 in the firewall deny logs.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "45[.]33[.]32[.]156"
+        ]
+      ]
+    },
+    {
+      "id": "rx-043",
+      "category": "defanged",
+      "text": "Phish kit at hxxp://secure-mail-check[.]xyz",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DOMAIN",
+          "secure-mail-check[.]xyz"
+        ]
+      ]
+    },
+    {
+      "id": "rx-044",
+      "category": "defanged",
+      "text": "Bracketed IP 100[.]64[.]0[.]12 from CGNAT range.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "100[.]64[.]0[.]12"
+        ]
+      ]
+    },
+    {
+      "id": "rx-045",
+      "category": "defanged",
+      "text": "Domain evil-corp[.]co listed in the blocklist.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DOMAIN",
+          "evil-corp[.]co"
+        ]
+      ]
+    },
+    {
+      "id": "rx-046",
+      "category": "defanged",
+      "text": "Analyst wrote 1[.]2[.]3[.]4 as a placeholder C2.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "1[.]2[.]3[.]4"
+        ]
+      ]
+    },
+    {
+      "id": "rx-047",
+      "category": "defanged",
+      "text": "hxxp-link to updates[.]malware-cdn[.]net observed.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DOMAIN",
+          "updates[.]malware-cdn[.]net"
+        ]
+      ]
+    },
+    {
+      "id": "rx-048",
+      "category": "defanged",
+      "text": "Defanged CVE text still contains CVE-2021-34527.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2021-34527"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-049",
+      "category": "defanged",
+      "text": "IP 203[.]0[.]113[.]99 from documentation range.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "203[.]0[.]113[.]99"
+        ]
+      ]
+    },
+    {
+      "id": "rx-050",
+      "category": "defanged",
+      "text": "Site: credential-harvest[.]info redirected victims.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DOMAIN",
+          "credential-harvest[.]info"
+        ]
+      ]
+    },
+    {
+      "id": "rx-051",
+      "category": "defanged",
+      "text": "Paren form 11(.)22(.)33(.)44 in the intel note.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "11(.)22(.)33(.)44"
+        ]
+      ]
+    },
+    {
+      "id": "rx-052",
+      "category": "defanged",
+      "text": "Brace form 9{.}9{.}9{.}9 flagged by content filter.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "9{.}9{.}9{.}9"
+        ]
+      ]
+    },
+    {
+      "id": "rx-053",
+      "category": "defanged",
+      "text": "Mixed note mentions evil[.]org and CVE-2019-0708 together.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2019-0708"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "DOMAIN",
+          "evil[.]org"
+        ]
+      ]
+    },
+    {
+      "id": "rx-054",
+      "category": "defanged",
+      "text": "Host 77[.]88[.]21[.]11 with hash 44d88612fea8a8f36de82e1278abb02f",
+      "true_positives": [
+        [
+          "FILE_HASH_MD5",
+          "44d88612fea8a8f36de82e1278abb02f"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "IP_ADDRESS",
+          "77[.]88[.]21[.]11"
+        ]
+      ]
+    },
+    {
+      "id": "rx-055",
+      "category": "defanged",
+      "text": "Mail relay abuse via spam[@]badmail[.]ru patterns.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": [
+        [
+          "EMAIL",
+          "spam[@]badmail[.]ru"
+        ]
+      ]
+    },
+    {
+      "id": "rx-056",
+      "category": "safe",
+      "text": "Technique documented at attack.mitre.org/techniques/T1110.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-057",
+      "category": "safe",
+      "text": "See advisory on nvd.nist.gov for the full CVSS score.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-058",
+      "category": "safe",
+      "text": "Source code hosted at github.com/mitre/cti.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-059",
+      "category": "safe",
+      "text": "Reference: cve.mitre.org for the canonical record.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-060",
+      "category": "safe",
+      "text": "Patch notes published on microsoft.com/security-updates.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-061",
+      "category": "safe",
+      "text": "Documentation lives on learn.microsoft.com for defenders.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "learn.microsoft.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-062",
+      "category": "safe",
+      "text": "ATT&CK navigator views are published via mitre.org resources.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-063",
+      "category": "safe",
+      "text": "Public write-up available on microsoft.com/security.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-064",
+      "category": "safe",
+      "text": "NIST publishes guidance at nist.gov for cyber frameworks.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "nist.gov"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-065",
+      "category": "safe",
+      "text": "The CVE program portal is at cve.org for assignments.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "cve.org"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-066",
+      "category": "safe",
+      "text": "Open source rules on github.com/SigmaHQ/sigma help detection.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-067",
+      "category": "safe",
+      "text": "Official KB articles on support.microsoft.com describe fixes.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "support.microsoft.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-068",
+      "category": "safe",
+      "text": "STIX distributions are on github.com/oasis-open related projects.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-069",
+      "category": "safe",
+      "text": "Analysts reference attack.mitre.org for technique mappings.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-070",
+      "category": "safe",
+      "text": "Vendor bulletin mirrored on microsoft.com without private IOCs.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-071",
+      "category": "safe",
+      "text": "Training material cites nvd.nist.gov vulnerability summaries.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-072",
+      "category": "safe",
+      "text": "Research paper links to mitre.org for taxonomy background.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-073",
+      "category": "safe",
+      "text": "Internal wiki points to attack.mitre.org/tactics overview.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-074",
+      "category": "safe",
+      "text": "Compliance mapping uses nist.gov control catalogs only.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "nist.gov"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-075",
+      "category": "safe",
+      "text": "Public GitHub mirror github.com/example-org/docs has no secrets.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-076",
+      "category": "trap",
+      "text": "The tool is currently at version 1.2.3.4 in our internal build.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "1.2.3.4"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-077",
+      "category": "trap",
+      "text": "Malicious script saved as script.py on the compromised host.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-078",
+      "category": "trap",
+      "text": "Config file located at settings.ini in the install directory.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-079",
+      "category": "trap",
+      "text": "Build number 10.0.19041.1 was reported by the endpoint agent.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-080",
+      "category": "trap",
+      "text": "Module version 2.4.1.0 failed signature validation.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "2.4.1.0"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-081",
+      "category": "trap",
+      "text": "The process scored 0.0.0.0 in the sandbox reputation field as unknown.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "0.0.0.0"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-082",
+      "category": "trap",
+      "text": "Filename report.docx was emailed to finance.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-083",
+      "category": "trap",
+      "text": "Package release 3.3.3.3 is staged for QA only.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "3.3.3.3"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-084",
+      "category": "trap",
+      "text": "No indicators of compromise were present in this benign log line.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-085",
+      "category": "trap",
+      "text": "Discussed ATT&CK technique T1486 without embedding network IOCs.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-086",
+      "category": "trap",
+      "text": "User opened budget.xlsx from the shared drive.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-087",
+      "category": "trap",
+      "text": "Service pack level 6.1.7601.17514 noted on legacy hosts.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-088",
+      "category": "trap",
+      "text": "The playbook step 4.5.6.7 is an internal numbering scheme.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "4.5.6.7"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-089",
+      "category": "trap",
+      "text": "Binary named updater.exe was signed by the vendor.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-090",
+      "category": "trap",
+      "text": "Relative path ..\\tools\\scan.ps1 is not a domain.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-091",
+      "category": "trap",
+      "text": "String 1234:5678 looks like a port pair, not an email.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-092",
+      "category": "trap",
+      "text": "Placeholder address 0.0.0.0 means bind-all in configs.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "0.0.0.0"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-093",
+      "category": "trap",
+      "text": "Checksum field empty; value N/A rather than a hash.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-094",
+      "category": "trap",
+      "text": "Meeting notes: focus on phishing awareness, no hashes listed.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-095",
+      "category": "trap",
+      "text": "Detection rule id 1001 does not contain an IP address.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-096",
+      "category": "trap",
+      "text": "The phrase 'dot com' in prose should not create a domain entity.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-097",
+      "category": "trap",
+      "text": "Encrypted blob was stored without publishing the digest.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-098",
+      "category": "trap",
+      "text": "Localhost testing used names only, no dotted quads in this sentence.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-099",
+      "category": "trap",
+      "text": "Severity score 9.8 is CVSS-like but not a CVE identifier.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-100",
+      "category": "trap",
+      "text": "Clean narrative about lateral movement with no concrete IOC values.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    }
+  ],
+  "v3_detail": [
+    {
+      "id": "rx-001",
+      "category": "plain",
+      "text": "Malware beacons to C2 server at 192.168.1.45 every 60 seconds.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "192.168.1.45"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-002",
+      "category": "plain",
+      "text": "The dropper hash is a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4.",
+      "true_positives": [
+        [
+          "FILE_HASH_MD5",
+          "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-003",
+      "category": "plain",
+      "text": "SHA1 of the payload: da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "true_positives": [
+        [
+          "FILE_HASH_SHA1",
+          "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-004",
+      "category": "plain",
+      "text": "Full SHA256 signature: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822...",
+      "true_positives": [
+        [
+          "FILE_HASH_SHA256",
+          "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-005",
+      "category": "plain",
+      "text": "Domain used for phishing: malicious-site.com",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "malicious-site.com"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-006",
+      "category": "plain",
+      "text": "Contact analyst john.smith@company.com for more details.",
+      "true_positives": [
+        [
+          "EMAIL",
+          "john.smith@company.com"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "company.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-007",
+      "category": "plain",
+      "text": "Exploits CVE-2021-44228 (Log4Shell) vulnerability.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2021-44228"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-008",
+      "category": "plain",
+      "text": "Beaconing observed toward 10.0.0.8 on port 443.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "10.0.0.8"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-009",
+      "category": "plain",
+      "text": "Secondary C2 at 172.16.5.20 in the telemetry.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "172.16.5.20"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-010",
+      "category": "plain",
+      "text": "MD5 of stage-1: 5d41402abc4b2a76b9719d911017c592",
+      "true_positives": [
+        [
+          "FILE_HASH_MD5",
+          "5d41402abc4b2a76b9719d911017c592"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-011",
+      "category": "plain",
+      "text": "SHA1 loader: 2fd4e1c67a2d28fced849ee1bb76e7391b93eb12",
+      "true_positives": [
+        [
+          "FILE_HASH_SHA1",
+          "2fd4e1c67a2d28fced849ee1bb76e7391b93eb12"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-012",
+      "category": "plain",
+      "text": "SHA256 sample: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991...",
+      "true_positives": [
+        [
+          "FILE_HASH_SHA256",
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-013",
+      "category": "plain",
+      "text": "Phishing domain: login-office365-secure.net",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "login-office365-secure.net"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-014",
+      "category": "plain",
+      "text": "Attacker email used: support@secure-update-check.com",
+      "true_positives": [
+        [
+          "EMAIL",
+          "support@secure-update-check.com"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "secure-update-check.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-015",
+      "category": "plain",
+      "text": "Tracked as CVE-2023-23397 in the campaign notes.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2023-23397"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-016",
+      "category": "plain",
+      "text": "Host 203.0.113.15 answered the HTTPS beacon.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "203.0.113.15"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-017",
+      "category": "plain",
+      "text": "Payload hosted at updates-cdn-service.org",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "updates-cdn-service.org"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-018",
+      "category": "plain",
+      "text": "Notify team lead at alice.wong@corp-example.com",
+      "true_positives": [
+        [
+          "EMAIL",
+          "alice.wong@corp-example.com"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "corp-example.com"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-019",
+      "category": "plain",
+      "text": "Linked to CVE-2017-0144 (EternalBlue) exploitation.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2017-0144"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-020",
+      "category": "plain",
+      "text": "Internal scanner hit 192.168.100.50 during recon.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "192.168.100.50"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-021",
+      "category": "plain",
+      "text": "MD5 second stage: 098f6bcd4621d373cade4e832627b4f6",
+      "true_positives": [
+        [
+          "FILE_HASH_MD5",
+          "098f6bcd4621d373cade4e832627b4f6"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-022",
+      "category": "plain",
+      "text": "Domain sinkhole: badactor-infra.biz",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "badactor-infra.biz"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-023",
+      "category": "plain",
+      "text": "Report CVE-2024-21412 to the patch owners.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2024-21412"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-024",
+      "category": "plain",
+      "text": "Exfil endpoint 198.51.100.23 logged in the proxy.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "198.51.100.23"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-025",
+      "category": "plain",
+      "text": "Contact: ir-team@example-soc.org for escalation.",
+      "true_positives": [
+        [
+          "EMAIL",
+          "ir-team@example-soc.org"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "example-soc.org"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-026",
+      "category": "plain",
+      "text": "SHA1 of config: aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d",
+      "true_positives": [
+        [
+          "FILE_HASH_SHA1",
+          "aaf4c61ddcc5e8a2dabede0f3b482cd9aea9434d"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-027",
+      "category": "plain",
+      "text": "Delivery domain: invoice-share-portal.com",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "invoice-share-portal.com"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-028",
+      "category": "plain",
+      "text": "CVE-2022-30190 (Follina) referenced in the write-up.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2022-30190"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-029",
+      "category": "plain",
+      "text": "Management IP 10.10.10.10 appeared in lateral movement logs.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "10.10.10.10"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-030",
+      "category": "plain",
+      "text": "Analyst note: hash 7d793037a0760186574b0282f2f435e7 was dropped.",
+      "true_positives": [
+        [
+          "FILE_HASH_MD5",
+          "7d793037a0760186574b0282f2f435e7"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-031",
+      "category": "defanged",
+      "text": "C2 observed at 192[.]168[.]1[.]45 in the sandbox run.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "192[.]168[.]1[.]45"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-032",
+      "category": "defanged",
+      "text": "Second beacon IP: 10(.)0(.)0(.)5 per the pcap.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "10(.)0(.)0(.)5"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-033",
+      "category": "defanged",
+      "text": "Also seen: 172{.}16{.}0{.}9 as backup C2.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "172{.}16{.}0{.}9"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-034",
+      "category": "defanged",
+      "text": "Payload downloaded from evil[.]com/dropper.exe",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "evil[.]com"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-035",
+      "category": "defanged",
+      "text": "Registered attacker infra at bad-domain[.]net for phishing kits.",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "bad-domain[.]net"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-036",
+      "category": "defanged",
+      "text": "hxxp://malicious-updates.com/payload.bin was blocked.",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "malicious-updates.com"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DEFANGED_URL",
+          "hxxp://malicious-updates.com/payload.bin"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-037",
+      "category": "defanged",
+      "text": "Defanged host 8[.]8[.]8[.]8 is only an example resolver.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "8[.]8[.]8[.]8"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-038",
+      "category": "defanged",
+      "text": "URL written as hxxps://login[.]bank-secure[.]com/auth",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "login[.]bank-secure[.]com"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DEFANGED_URL",
+          "hxxps://login[.]bank-secure[.]com/auth"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-039",
+      "category": "defanged",
+      "text": "IOC: 185[.]220[.]101[.]1 associated with exit nodes.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "185[.]220[.]101[.]1"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-040",
+      "category": "defanged",
+      "text": "Domain form: attacker(dot)example(dot)org in the ticket.",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "attacker(dot)example(dot)org"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-041",
+      "category": "defanged",
+      "text": "Email defanged: bad[.]actor[@]protonmail[.]com",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "protonmail[.]com"
+        ]
+      ],
+      "false_negatives": [
+        [
+          "EMAIL",
+          "bad[.]actor[@]protonmail[.]com"
+        ]
+      ]
+    },
+    {
+      "id": "rx-042",
+      "category": "defanged",
+      "text": "See 45[.]33[.]32[.]156 in the firewall deny logs.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "45[.]33[.]32[.]156"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-043",
+      "category": "defanged",
+      "text": "Phish kit at hxxp://secure-mail-check[.]xyz",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "secure-mail-check[.]xyz"
+        ]
+      ],
+      "false_positives": [
+        [
+          "DEFANGED_URL",
+          "hxxp://secure-mail-check[.]xyz"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-044",
+      "category": "defanged",
+      "text": "Bracketed IP 100[.]64[.]0[.]12 from CGNAT range.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "100[.]64[.]0[.]12"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-045",
+      "category": "defanged",
+      "text": "Domain evil-corp[.]co listed in the blocklist.",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "evil-corp[.]co"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-046",
+      "category": "defanged",
+      "text": "Analyst wrote 1[.]2[.]3[.]4 as a placeholder C2.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "1[.]2[.]3[.]4"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-047",
+      "category": "defanged",
+      "text": "hxxp-link to updates[.]malware-cdn[.]net observed.",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "updates[.]malware-cdn[.]net"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-048",
+      "category": "defanged",
+      "text": "Defanged CVE text still contains CVE-2021-34527.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2021-34527"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-049",
+      "category": "defanged",
+      "text": "IP 203[.]0[.]113[.]99 from documentation range.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "203[.]0[.]113[.]99"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-050",
+      "category": "defanged",
+      "text": "Site: credential-harvest[.]info redirected victims.",
+      "true_positives": [
+        [
+          "DOMAIN",
+          "credential-harvest[.]info"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-051",
+      "category": "defanged",
+      "text": "Paren form 11(.)22(.)33(.)44 in the intel note.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "11(.)22(.)33(.)44"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-052",
+      "category": "defanged",
+      "text": "Brace form 9{.}9{.}9{.}9 flagged by content filter.",
+      "true_positives": [
+        [
+          "IP_ADDRESS",
+          "9{.}9{.}9{.}9"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-053",
+      "category": "defanged",
+      "text": "Mixed note mentions evil[.]org and CVE-2019-0708 together.",
+      "true_positives": [
+        [
+          "CVE",
+          "CVE-2019-0708"
+        ],
+        [
+          "DOMAIN",
+          "evil[.]org"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-054",
+      "category": "defanged",
+      "text": "Host 77[.]88[.]21[.]11 with hash 44d88612fea8a8f36de82e1278abb02f",
+      "true_positives": [
+        [
+          "FILE_HASH_MD5",
+          "44d88612fea8a8f36de82e1278abb02f"
+        ],
+        [
+          "IP_ADDRESS",
+          "77[.]88[.]21[.]11"
+        ]
+      ],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-055",
+      "category": "defanged",
+      "text": "Mail relay abuse via spam[@]badmail[.]ru patterns.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "badmail[.]ru"
+        ]
+      ],
+      "false_negatives": [
+        [
+          "EMAIL",
+          "spam[@]badmail[.]ru"
+        ]
+      ]
+    },
+    {
+      "id": "rx-056",
+      "category": "safe",
+      "text": "Technique documented at attack.mitre.org/techniques/T1110.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-057",
+      "category": "safe",
+      "text": "See advisory on nvd.nist.gov for the full CVSS score.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-058",
+      "category": "safe",
+      "text": "Source code hosted at github.com/mitre/cti.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-059",
+      "category": "safe",
+      "text": "Reference: cve.mitre.org for the canonical record.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-060",
+      "category": "safe",
+      "text": "Patch notes published on microsoft.com/security-updates.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-061",
+      "category": "safe",
+      "text": "Documentation lives on learn.microsoft.com for defenders.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-062",
+      "category": "safe",
+      "text": "ATT&CK navigator views are published via mitre.org resources.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-063",
+      "category": "safe",
+      "text": "Public write-up available on microsoft.com/security.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-064",
+      "category": "safe",
+      "text": "NIST publishes guidance at nist.gov for cyber frameworks.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "nist.gov"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-065",
+      "category": "safe",
+      "text": "The CVE program portal is at cve.org for assignments.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "cve.org"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-066",
+      "category": "safe",
+      "text": "Open source rules on github.com/SigmaHQ/sigma help detection.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-067",
+      "category": "safe",
+      "text": "Official KB articles on support.microsoft.com describe fixes.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-068",
+      "category": "safe",
+      "text": "STIX distributions are on github.com/oasis-open related projects.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-069",
+      "category": "safe",
+      "text": "Analysts reference attack.mitre.org for technique mappings.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-070",
+      "category": "safe",
+      "text": "Vendor bulletin mirrored on microsoft.com without private IOCs.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-071",
+      "category": "safe",
+      "text": "Training material cites nvd.nist.gov vulnerability summaries.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-072",
+      "category": "safe",
+      "text": "Research paper links to mitre.org for taxonomy background.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-073",
+      "category": "safe",
+      "text": "Internal wiki points to attack.mitre.org/tactics overview.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-074",
+      "category": "safe",
+      "text": "Compliance mapping uses nist.gov control catalogs only.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "DOMAIN",
+          "nist.gov"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-075",
+      "category": "safe",
+      "text": "Public GitHub mirror github.com/example-org/docs has no secrets.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-076",
+      "category": "trap",
+      "text": "The tool is currently at version 1.2.3.4 in our internal build.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "1.2.3.4"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-077",
+      "category": "trap",
+      "text": "Malicious script saved as script.py on the compromised host.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-078",
+      "category": "trap",
+      "text": "Config file located at settings.ini in the install directory.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-079",
+      "category": "trap",
+      "text": "Build number 10.0.19041.1 was reported by the endpoint agent.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-080",
+      "category": "trap",
+      "text": "Module version 2.4.1.0 failed signature validation.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "2.4.1.0"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-081",
+      "category": "trap",
+      "text": "The process scored 0.0.0.0 in the sandbox reputation field as unknown.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "0.0.0.0"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-082",
+      "category": "trap",
+      "text": "Filename report.docx was emailed to finance.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-083",
+      "category": "trap",
+      "text": "Package release 3.3.3.3 is staged for QA only.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "3.3.3.3"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-084",
+      "category": "trap",
+      "text": "No indicators of compromise were present in this benign log line.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-085",
+      "category": "trap",
+      "text": "Discussed ATT&CK technique T1486 without embedding network IOCs.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-086",
+      "category": "trap",
+      "text": "User opened budget.xlsx from the shared drive.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-087",
+      "category": "trap",
+      "text": "Service pack level 6.1.7601.17514 noted on legacy hosts.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-088",
+      "category": "trap",
+      "text": "The playbook step 4.5.6.7 is an internal numbering scheme.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "4.5.6.7"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-089",
+      "category": "trap",
+      "text": "Binary named updater.exe was signed by the vendor.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-090",
+      "category": "trap",
+      "text": "Relative path ..\\tools\\scan.ps1 is not a domain.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-091",
+      "category": "trap",
+      "text": "String 1234:5678 looks like a port pair, not an email.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-092",
+      "category": "trap",
+      "text": "Placeholder address 0.0.0.0 means bind-all in configs.",
+      "true_positives": [],
+      "false_positives": [
+        [
+          "IP_ADDRESS",
+          "0.0.0.0"
+        ]
+      ],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-093",
+      "category": "trap",
+      "text": "Checksum field empty; value N/A rather than a hash.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-094",
+      "category": "trap",
+      "text": "Meeting notes: focus on phishing awareness, no hashes listed.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-095",
+      "category": "trap",
+      "text": "Detection rule id 1001 does not contain an IP address.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-096",
+      "category": "trap",
+      "text": "The phrase 'dot com' in prose should not create a domain entity.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-097",
+      "category": "trap",
+      "text": "Encrypted blob was stored without publishing the digest.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-098",
+      "category": "trap",
+      "text": "Localhost testing used names only, no dotted quads in this sentence.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-099",
+      "category": "trap",
+      "text": "Severity score 9.8 is CVSS-like but not a CVE identifier.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    },
+    {
+      "id": "rx-100",
+      "category": "trap",
+      "text": "Clean narrative about lateral movement with no concrete IOC values.",
+      "true_positives": [],
+      "false_positives": [],
+      "false_negatives": []
+    }
+  ]
+}
